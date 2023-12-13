@@ -30,7 +30,12 @@ const HomePage = (props) => {
   console.log('content: ', content);
 
   return (
-    <HomePageContent content={content} menuItems={menuItems} title={title} uri={props.uri} />
+    <HomePageContent
+      content={content}
+      menuItems={menuItems}
+      title={title}
+      uri={props.uri}
+    />
   );
 };
 

@@ -6,6 +6,8 @@ const sortMenuItemsByOrder = (menuItems) => {
   });
 };
 
-export default {
+const Helper = {
   sortMenuItemsByOrder,
 };
+
+export default Helper;

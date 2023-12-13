@@ -69,7 +69,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
           <p className="text-dark_green text-2xl leading-[44px]">The Studio</p>
         </div>
         <div className="max-w-[850px] ml-auto">
-          <p className="text-dark_green text-[36px] leading-[44px] mb-8">
+          <p className="text-dark_green text-4xl leading-[44px] mb-8">
             This is an area for a short paragraph about Frances Mildred. This
             will link through to the about us page. This should be between 25-35
             words no longer. It should not exceed four lines of copy.{' '}
@@ -78,7 +78,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
         </div>
       </section>
 
-      <section className="flex flex-col mt-[172px] pl-[100px] xl:ml-our_latest_work overflow-x-hidden">
+      <section className="flex flex-col mt-44 mb-20 pl-24 xl:ml-our_latest_work overflow-x-hidden">
         <div className="flex mb-5 text-dark_green text-2xl space-x-6">
           <p>Our latest work</p>
           <p className="animate-underline">
@@ -98,7 +98,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
                   <p className="text-2xl tracking-[0.48px]">
                     Bond St Townhouse
                   </p>
-                  <p className="text-[21px] tracking-[0.42px] uppercase">
+                  <p className="text-[21px] tracking-[0.42px] uppercase hover:underline">
                     <a href="/">View project</a>
                   </p>
                 </div>

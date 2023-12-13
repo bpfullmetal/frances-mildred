@@ -3,7 +3,7 @@ import ConsultationImage from '../assets/images/consultation.jpeg';
 
 const BookConsultation = () => {
   return (
-    <section className="py-36 bg-dark_red mt-20">
+    <section className="py-36 bg-dark_red">
       <div className="flex flex-col items-center justify-center max-w-main mx-auto px-5 sm:px-12">
         <p className="max-w-[330px] text-taupe text-base leading-[21px] tracking-[0.48px] text-center sm:max-w-[620px] sm:text-[21px] sm:leading-[24px] sm:tracking-[0.63px]">
           The considered way our projects wear, age, and patina is a deliberate

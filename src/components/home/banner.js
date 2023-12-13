@@ -12,6 +12,7 @@ const HomeBannerSection = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleScroll = () => {
@@ -28,7 +29,7 @@ const HomeBannerSection = () => {
   };
 
   return (
-    <section className={`relative h-home_banner`} onClick={handleBannerClick}>
+    <section className="relative h-home_banner" onClick={handleBannerClick}>
       <video autoPlay muted className="absolute w-full h-full object-cover">
         <source src={HomeBannerVideo} type="video/mp4"></source>
       </video>
