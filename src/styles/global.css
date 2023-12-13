@@ -55,6 +55,35 @@ header li:not(:first-child):hover::before {
   width: 100%;
 }
 
+/* SignUp Email Form */
+.signup-email {
+  display: flex;
+  justify-content: space-between;
+  max-width: 480px;
+  padding: 10px 0;
+  border-bottom: 1px solid #fff;
+}
+
+.signup-email input {
+  background-color: transparent;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 450;
+  line-height: normal;
+  letter-spacing: 0.45px;
+  border: none;
+  outline: none;
+}
+
+.signup-email .sign-up-btn {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 450;
+  line-height: normal;
+  letter-spacing: 0.45px;
+  cursor: pointer;
+}
+
 /* Underline animation */
 .animate-underline {
   position: relative;
