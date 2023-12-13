@@ -10,3 +10,66 @@ body {
   color: #fff;
   font-family: 'Haas Grot Text Web';
 }
+
+header li {
+  position: relative;
+}
+
+header li:first-child {
+  width: 40px;
+  overflow: hidden;
+}
+
+header li:first-child a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header li:first-child a img {
+  visibility: hidden;
+  position: absolute;
+  width: 76px;
+  max-width: unset;
+}
+
+header li:first-child:hover a span {
+  visibility: hidden;
+}
+
+header li:first-child:hover a img {
+  visibility: visible;
+}
+
+header li:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  height: 1px;
+  width: 0;
+  background-color: #000;
+  transition: width 0.3s ease-in-out;
+}
+
+header li:not(:first-child):hover::before {
+  width: 100%;
+}
+
+/* Underline animation */
+.animate-underline {
+  position: relative;
+}
+
+.animate-underline::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  height: 1px;
+  width: 0;
+  background-color: #15341c;
+  transition: width 0.3s ease-in-out;
+}
+
+.animate-underline:hover::before {
+  width: 100%;
+}
