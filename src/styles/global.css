@@ -55,6 +55,12 @@ header li:not(:first-child):hover::before {
   width: 100%;
 }
 
+header .logo svg,
+footer .logo svg {
+  width: auto;
+  height: 100%;
+}
+
 /* SignUp Email Form */
 .signup-email {
   display: flex;

@@ -1,15 +1,15 @@
 import React from 'react';
-import LetterAImage from '../assets/images/letter-A.svg';
-import LetterCImage from '../assets/images/letter-C.svg';
-import LetterDImage from '../assets/images/letter-D.svg';
-import LetterEImage from '../assets/images/letter-E.svg';
-import LetterFImage from '../assets/images/letter-F.svg';
-import LetterIImage from '../assets/images/letter-I.svg';
-import LetterLImage from '../assets/images/letter-L.svg';
-import LetterMImage from '../assets/images/letter-M.svg';
-import LetterNImage from '../assets/images/letter-N.svg';
-import LetterRImage from '../assets/images/letter-R.svg';
-import LetterSImage from '../assets/images/letter-S.svg';
+import LetterA from '../assets/js/icons/letter-a';
+import LetterC from '../assets/js/icons/letter-c';
+import LetterD from '../assets/js/icons/letter-d';
+import LetterE from '../assets/js/icons/letter-e';
+import LetterF from '../assets/js/icons/letter-f';
+import LetterI from '../assets/js/icons/letter-i';
+import LetterL from '../assets/js/icons/letter-l';
+import LetterM from '../assets/js/icons/letter-m';
+import LetterN from '../assets/js/icons/letter-n';
+import LetterR from '../assets/js/icons/letter-r';
+import LetterS from '../assets/js/icons/letter-s';
 
 const FooterSection = ({ menuItems }) => {
   return (
@@ -53,107 +53,51 @@ const FooterSection = ({ menuItems }) => {
           </div>
         </div>
 
-        <div className="flex flex-col mt-24 space-y-6 sm:space-y-24 sm:mt-64">
+        <div className="logo flex flex-col mt-24 space-y-6 sm:space-y-24 sm:mt-64">
           <div className="flex justify-between">
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterFImage}
-                alt="letter F"
-              />
+              <LetterF />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterRImage}
-                alt="letter R"
-              />
+              <LetterR />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterAImage}
-                alt="letter A"
-              />
+              <LetterA />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterNImage}
-                alt="letter N"
-              />
+              <LetterN />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterCImage}
-                alt="letter C"
-              />
+              <LetterC />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterEImage}
-                alt="letter E"
-              />
+              <LetterE />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterSImage}
-                alt="letter S"
-              />
+              <LetterS />
             </div>
           </div>
           <div className="flex justify-between">
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterMImage}
-                alt="letter M"
-              />
+              <LetterM />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterIImage}
-                alt="letter I"
-              />
+              <LetterI />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterLImage}
-                alt="letter L"
-              />
+              <LetterL />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterDImage}
-                alt="letter D"
-              />
+              <LetterD />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterRImage}
-                alt="letter R"
-              />
+              <LetterR />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterEImage}
-                alt="letter E"
-              />
+              <LetterE />
             </div>
             <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
-              <img
-                className="w-auto h-full"
-                src={LetterDImage}
-                alt="letter D"
-              />
+              <LetterD />
             </div>
           </div>
         </div>
