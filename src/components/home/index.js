@@ -52,24 +52,35 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
 
       <section className="relative flex items-center">
         <div className="">
-          <img className="" src={HomeImage1} alt="" />
+          <img
+            className="min-h-screen rounded-none object-cover"
+            src={HomeImage1}
+            alt=""
+          />
         </div>
-        <div className="absolute flex flex-col justify-center max-w-main m-auto">
-          <p className="max-w-[630px] text-white text-4xl leading-[44px] pl-8 mb-4">
-            This is an area for a short paragraph about the latest project.
-          </p>
-          <a className="text-2xl text-white pl-8 underline" href="/">
-            View Project
-          </a>
+        <div className="absolute w-full h-full">
+          <div className="sticky top-[600px] max-w-main mx-auto px-5 pb-40 mt-[600px] sm:px-12">
+            <p className="max-w-[630px] text-white text-3xl leading-[37px] mb-4 sm:4xl sm:leading-[44px] lg:pl-8">
+              This is an area for a short paragraph about the latest project.
+            </p>
+            <a
+              className="text-base text-white tracking-[0.48px] underline sm:text-2xl lg:pl-8"
+              href="/"
+            >
+              View Project
+            </a>
+          </div>
         </div>
       </section>
 
-      <section className="flex max-w-main mx-auto pt-4 px-12">
-        <div className="">
-          <p className="text-dark_green text-2xl leading-[44px]">The Studio</p>
+      <section className="flex flex-col max-w-main mx-auto pt-14 px-5 space-y-32 sm:px-12 lg:flex-row lg:space-y-0">
+        <div className="lg:pl-8">
+          <p className="text-dark_green text-xl leading-[44px] sm:text-2xl">
+            The Studio
+          </p>
         </div>
-        <div className="max-w-[850px] ml-auto">
-          <p className="text-dark_green text-4xl leading-[44px] mb-8">
+        <div className="lg:max-w-[680px] ml-auto xl:max-w-[900px]">
+          <p className="text-dark_green text-3xl leading-[37px] mb-6 sm:text-4xl sm:leading-[44px] sm:mb-8">
             This is an area for a short paragraph about Frances Mildred. This
             will link through to the about us page. This should be between 25-35
             words no longer. It should not exceed four lines of copy.{' '}
@@ -78,27 +89,23 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
         </div>
       </section>
 
-      <section className="flex flex-col mt-44 mb-20 pl-24 xl:ml-our_latest_work overflow-x-hidden">
-        <div className="flex mb-5 text-dark_green text-2xl space-x-6">
+      <section className="flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 xl:ml-our_latest_work">
+        <div className="flex justify-between text-dark_green text-xl mb-5 sm:justify-start sm:text-2xl">
           <p>Our latest work</p>
-          <p className="animate-underline">
+          <p className="animate-underline ml-6 mr-5">
             <a href="/">View all work</a>
           </p>
         </div>
-        <div>
+        <div className="project-carousel -ml-2.5 sm:ml-0">
           <Slider {...sliderSettings}>
             {latestProjects.map((project) => (
-              <div
-                className="flex flex-col px-0.5"
-                key={project.id}
-                style={{ width: 490 }}
-              >
+              <div className="flex flex-col px-2.5 sm:px-0.5" key={project.id}>
                 <img className="" src={project.image} alt="project 1" />
-                <div className="flex items-center space-x-7 text-dark_green mt-4">
-                  <p className="text-2xl tracking-[0.48px]">
+                <div className="flex flex-col items-start space-y-3 text-dark_green mt-4 sm:flex-row sm:items-center sm:space-x-7 sm:space-y-0">
+                  <p className="text-xl tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px]">
                     Bond St Townhouse
                   </p>
-                  <p className="text-[21px] tracking-[0.42px] uppercase hover:underline">
+                  <p className="text-base tracking-[0.32px] uppercase animate-underline sm:text-[21px] sm:tracking-[0.42px]">
                     <a href="/">View project</a>
                   </p>
                 </div>
