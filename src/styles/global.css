@@ -11,6 +11,12 @@ body {
   font-family: 'Haas Grot Text Web';
 }
 
+img {
+  border-radius: 4px;
+}
+
+/* Header */
+
 header li {
   position: relative;
 }
@@ -90,6 +96,20 @@ footer .logo svg {
   cursor: pointer;
 }
 
+/* Discover Projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 0.3fr 0.4fr 0.3fr;
+  gap: 60px 5px;
+}
+
+/* Work */
+.work-project-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 /* Underline animation */
 .animate-underline {
   position: relative;
@@ -107,4 +127,26 @@ footer .logo svg {
 
 .animate-underline:hover::before {
   width: 100%;
+}
+
+.projects-grid .animate-underline::before {
+  bottom: -4px;
+  background-color: #fff;
+}
+
+.work .animate-underline::before {
+  bottom: -4px;
+}
+
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 148px;
+  }
 }
