@@ -55,48 +55,48 @@ const FooterSection = ({ menuItems }) => {
 
         <div className="logo flex flex-col mt-24 space-y-6 sm:space-y-24 sm:mt-64">
           <div className="flex justify-between">
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterF />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterR />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterA />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterN />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterC />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterE />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterS />
             </div>
           </div>
           <div className="flex justify-between">
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterM />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterI />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterL />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterD />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterR />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterE />
             </div>
-            <div className="h-[30px] sm:h-[60px] md:h-[90px] lg:h-[113px]">
+            <div className="h-8 sm:h-16 md:h-24 lg:h-28">
               <LetterD />
             </div>
           </div>

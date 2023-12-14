@@ -1,10 +1,5 @@
 import * as React from 'react';
 import AboutBannerVideo from '../../assets/images/about-banner.mp4';
-import ProjectImage1 from '../../assets/images/project-img-1.jpeg';
-import ProjectImage2 from '../../assets/images/project-img-2.jpeg';
-import ProjectImage3 from '../../assets/images/project-img-3.jpeg';
-import ProjectImage4 from '../../assets/images/project-img-4.jpeg';
-import ProjectImage5 from '../../assets/images/project-img-5.jpeg';
 import TeamImage1 from '../../assets/images/home-img-2.png';
 import TeamImage2 from '../../assets/images/team-img-2.png';
 import TeamImage3 from '../../assets/images/team-img-3.png';
@@ -14,29 +9,6 @@ import HeaderMenu from '../header-menu';
 
 const AboutPageContent = ({ content, menuItems, title, uri }) => {
   const [openedPositions, setOpenedPositions] = React.useState([]);
-
-  const latestProjects = [
-    {
-      id: 1,
-      image: ProjectImage1,
-    },
-    {
-      id: 2,
-      image: ProjectImage2,
-    },
-    {
-      id: 3,
-      image: ProjectImage3,
-    },
-    {
-      id: 4,
-      image: ProjectImage4,
-    },
-    {
-      id: 5,
-      image: ProjectImage5,
-    },
-  ];
 
   const openingPositionsData = [
     {
