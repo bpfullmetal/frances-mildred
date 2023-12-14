@@ -19,11 +19,11 @@ const FooterSection = ({ menuItems }) => {
           <div className="flex flex-col mr-0 mb-40 md:mr-10 md:mb-0">
             <ul className="flex flex-col mb-12 sm:flex-row sm:mb-24 sm:space-x-6">
               {menuItems.map((item, i) => (
-                <li key={i} className="py-2">
+                <li key={i} className="w-fit py-2">
                   <a href={item.url}>{item.label}</a>
                 </li>
               ))}
-              <li className="py-2">
+              <li className="w-fit py-2">
                 <a href="/">Instagram</a>
               </li>
             </ul>

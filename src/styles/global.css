@@ -17,7 +17,8 @@ img {
 
 /* Header */
 
-header li {
+header li,
+footer li {
   position: relative;
 }
 
@@ -47,7 +48,8 @@ header li:first-child:hover a img {
   visibility: visible;
 }
 
-header li:not(:first-child)::before {
+header li:not(:first-child)::before,
+footer li::before {
   content: '';
   position: absolute;
   bottom: 12px;
@@ -57,7 +59,13 @@ header li:not(:first-child)::before {
   transition: width 0.3s ease-in-out;
 }
 
-header li:not(:first-child):hover::before {
+footer li::before {
+  bottom: 8px;
+  background-color: #fff;
+}
+
+header li:not(:first-child):hover::before,
+footer li:hover::before {
   width: 100%;
 }
 
@@ -94,6 +102,11 @@ footer .logo svg {
   line-height: normal;
   letter-spacing: 0.45px;
   cursor: pointer;
+}
+
+/* Home - Our latest work */
+.project-carousel .slick-slide {
+  width: 490px !important;
 }
 
 /* Discover Projects */
@@ -145,6 +158,10 @@ footer .logo svg {
 }
 
 @media (max-width: 640px) {
+  .project-carousel .slick-slide {
+    width: calc(100vw - 3.5rem) !important;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 148px;

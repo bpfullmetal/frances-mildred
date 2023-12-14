@@ -29,6 +29,12 @@ module.exports = {
         'our_latest_work': 'calc((100vw - 1440px) / 2)'
       }
     },
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1440px',
+    }
   },
   plugins: [],
 }
