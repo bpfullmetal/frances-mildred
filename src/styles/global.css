@@ -131,7 +131,7 @@ footer .logo svg {
 .animate-underline::before {
   content: '';
   position: absolute;
-  bottom: 4px;
+  bottom: 0;
   height: 1px;
   width: 0;
   background-color: #15341c;
@@ -151,6 +151,11 @@ footer .logo svg {
   bottom: -4px;
 }
 
+/* Scroll Reveal */
+.scroll-reveal:not(.fade-in) {
+  opacity: 0;
+}
+
 @media (max-width: 1024px) {
   .projects-grid {
     grid-template-columns: 1fr 1fr;
@@ -165,5 +170,32 @@ footer .logo svg {
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 148px;
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation fade-in
+ * ----------------------------------------
+ */
+.fade-in {
+  -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

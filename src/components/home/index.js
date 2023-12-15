@@ -13,6 +13,24 @@ import HeaderMenu from '../header-menu';
 import HomeBannerSection from './banner';
 
 const HomePageContent = ({ content, menuItems, title, uri }) => {
+  const imageRef = React.useRef(null);
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleScroll = () => {
+    const imageEle = imageRef.current;
+    if (imageEle) {
+      const scrollOffsetTop = imageEle.getBoundingClientRect().top;
+      if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+        imageEle.classList.add('fade-in');
+      }
+    }
+  };
+
   const sliderSettings = {
     className: 'slider variable-width',
     dots: false,
@@ -64,7 +82,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
               This is an area for a short paragraph about the latest project.
             </p>
             <a
-              className="text-base text-white tracking-[0.48px] underline sm:text-2xl lg:pl-8"
+              className="text-base text-white leading-tight tracking-[0.48px] underline sm:text-2xl lg:pl-8"
               href="/"
             >
               View Project
@@ -85,12 +103,14 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
             will link through to the about us page. This should be between 25-35
             words no longer. It should not exceed four lines of copy.{' '}
           </p>
-          <img src={HomeImage2} alt="" />
+          <div className="scroll-reveal" ref={imageRef}>
+            <img src={HomeImage2} alt="" />
+          </div>
         </div>
       </section>
 
       <section className="flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 xl:ml-our_latest_work">
-        <div className="flex justify-between text-dark_green text-xl mb-5 sm:justify-start sm:text-2xl">
+        <div className="flex justify-between text-dark_green text-xl leading-tight mb-5 sm:justify-start sm:text-2xl">
           <p>Our latest work</p>
           <p className="animate-underline ml-6 mr-5">
             <a href="/">View all work</a>
