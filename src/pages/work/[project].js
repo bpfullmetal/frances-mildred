@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import WorkPageContent from '../components/work';
-import Helper from '../helper';
+import WorkProjectPageContent from '../../components/work/project';
+import Helper from '../../helper';
 
-const WorkPage = (props) => {
+const WorkProjectPage = (props) => {
   const data = useStaticQuery(graphql`
     {
       wpPage(uri: { eq: "/" }) {
@@ -29,8 +29,10 @@ const WorkPage = (props) => {
   console.log('title: ', title);
   console.log('content: ', content);
 
+  console.log('props: ', props);
+
   return (
-    <WorkPageContent
+    <WorkProjectPageContent
       content={content}
       menuItems={menuItems}
       title={title}
@@ -39,6 +41,6 @@ const WorkPage = (props) => {
   );
 };
 
-export default WorkPage;
+export default WorkProjectPage;
 
 export const Head = () => <title>Work - Frances Mildred</title>;

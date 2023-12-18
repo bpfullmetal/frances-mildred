@@ -11,6 +11,7 @@ module.exports = {
         'dark_green': '#15341C',
         'dark_red': '#521414',
         'light_gray': '#D9D7CF',
+        'taupe': '#C5C1B9',
       },
       colors: {
         'dark_green': '#15341C',
