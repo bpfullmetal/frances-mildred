@@ -13,7 +13,7 @@ import LetterS from '../assets/js/icons/letter-s';
 
 const FooterSection = ({ menuItems }) => {
   return (
-    <footer className="bg-dark_green pt-12 pb-8 sm:pt-7 sm:pb-14">
+    <footer className="relative bg-dark_green pt-12 pb-8 sm:pt-7 sm:pb-14">
       <div className="flex flex-col max-w-main mx-auto px-5 sm:px-12">
         <div className="flex flex-col justify-between md:flex-row">
           <div className="flex flex-col mr-0 mb-40 md:mr-10 md:mb-0">

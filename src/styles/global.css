@@ -123,6 +123,35 @@ footer .logo svg {
   width: 100%;
 }
 
+/* Work Project */
+.work-project .image-reveal img {
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0, 0, 0.58, 1),
+    filter 0.4s cubic-bezier(0, 0, 0.58, 1);
+}
+
+.work-project .image-reveal.reveal img {
+  filter: blur(0);
+  opacity: 1;
+}
+
+.next-project img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-clip-path: url(#next-project-image-mask);
+  clip-path: url(#next-project-image-mask);
+}
+
+.next-project svg path {
+  transform: scale(1)
+    translate(calc((100vw - 660px) / 2), calc((100vh - 440px) / 2));
+}
+
 /* Underline animation */
 .animate-underline {
   position: relative;

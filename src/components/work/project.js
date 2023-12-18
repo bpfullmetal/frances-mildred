@@ -37,17 +37,17 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
   ];
 
   const [revealProjectInfo, setRevealProjectInfo] = React.useState(false);
-  const [imageRefs, setImageRefs] = React.useState([]);
+  const [imageRefs] = React.useState(
+    Array(imageBlocksData.length)
+      .fill()
+      .map((_) => {
+        return React.useRef();
+      })
+  );
+  const nextProjectAfterEleRef = React.useRef();
+  const imageMaskRef = React.useRef();
 
   React.useEffect(() => {
-    setImageRefs(
-      Array(imageBlocksData)
-        .fill()
-        .map((_) => {
-          return React.createRef();
-        })
-    );
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,11 +58,45 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
       const imageEle = ref.current;
       if (imageEle) {
         const scrollOffsetTop = imageEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - window.innerHeight * 0.4 < 0) {
-          imageEle.classList.add('fade-in');
+        if (scrollOffsetTop - window.innerHeight * 0.6 < 0) {
+          imageEle.classList.add('reveal');
         }
       }
     });
+
+    const imageMaskEle = imageMaskRef.current;
+    const nextProjectAfterEle = nextProjectAfterEleRef.current;
+
+    if (imageMaskEle && nextProjectAfterEle) {
+      const initialMaskWidth = 660;
+      const initialMaskHeight = 440;
+      let maskScale = 1;
+      let translateX = (window.innerWidth - initialMaskWidth) / 2;
+      let translateY = (window.innerHeight - initialMaskHeight) / 2;
+      const scrollMovePos =
+        window.innerHeight * 1.5 -
+        nextProjectAfterEle.getBoundingClientRect().top;
+
+      if (scrollMovePos > 0 && scrollMovePos < window.innerHeight * 1.5) {
+        maskScale =
+          1 +
+          ((Math.floor(window.innerWidth / initialMaskWidth) * scrollMovePos) /
+            window.innerHeight) *
+            2;
+        if (maskScale > 3) {
+          maskScale = 3;
+        }
+        translateX =
+          ((window.innerWidth - initialMaskWidth * maskScale) / 2 / maskScale) *
+          1;
+        translateY =
+          ((window.innerHeight - initialMaskHeight * maskScale) /
+            2 /
+            maskScale) *
+          1;
+        imageMaskEle.style.transform = `scale(${maskScale}) translate(${translateX}px, ${translateY}px)`;
+      }
+    }
   };
 
   const size2Class = {
@@ -146,16 +180,18 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
           <div className="flex flex-col">
             {imageBlocksData.map((block, i) => (
               <div
-                className={`min-h-[90vh] flex flex-col items-start space-x-20 ${
-                  block.pos ? pos2Class[block.pos] : ''
-                } sm:items-center`}
+                className={`min-h-[90vh] flex flex-col items-start ${
+                  block.text ? 'space-x-20' : ''
+                } ${block.pos ? pos2Class[block.pos] : ''} sm:items-center`}
                 key={i}
-                ref={imageRefs[i]}
               >
                 <div className="flex-1 text-taupe text-sm_extra leading-[24px]">
                   {block.text}
                 </div>
-                <div className={`${size2Class[block.size]} flex`}>
+                <div
+                  className={`image-reveal ${size2Class[block.size]} flex`}
+                  ref={imageRefs[i]}
+                >
                   <img
                     className="w-full h-full object-cover"
                     src={block.image}
@@ -167,6 +203,28 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
           </div>
         </div>
       </section>
+
+      <section className="sticky top-0 next-project mb-[50vh]">
+        <div className="flex items-center justify-center w-screen h-screen">
+          <img src={ProjectDetailImage1} alt="next project" />
+          <svg width="0" height="0">
+            <clipPath id="next-project-image-mask">
+              <path
+                ref={imageMaskRef}
+                d="M 0.034 -0.034 L 660 -0.049 L 660 440 L 0 440 L 0 0 L 0.034 -0.034 Z"
+              />
+            </clipPath>
+          </svg>
+          <p className="relative max-w-[220px] text-[58px] leading-[58px] text-center">
+            Project Name
+          </p>
+        </div>
+      </section>
+
+      <section
+        className="next-project-after"
+        ref={nextProjectAfterEleRef}
+      ></section>
 
       <BookConsultation />
       <FooterSection menuItems={menuItems.filter((item) => item.url !== '/')} />
