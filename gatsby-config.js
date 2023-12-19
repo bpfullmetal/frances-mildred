@@ -9,7 +9,7 @@ module.exports = {
   plugins: [{
     resolve: 'gatsby-source-wordpress',
     options: {
-      "url": "http://localhost:8888/frances-mildred/graphql"
+      "url": "https://fullmetalworkshop.com/clients/francesmildred/graphql"
     }
   }, "gatsby-plugin-image", "gatsby-plugin-sharp", "gatsby-transformer-sharp", "gatsby-plugin-postcss", /*"gatsby-plugin-google-gtag", */"gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
