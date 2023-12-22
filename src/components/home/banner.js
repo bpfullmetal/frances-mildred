@@ -1,5 +1,16 @@
 import * as React from 'react';
 import HomeBannerVideo from '../../assets/images/home-banner.mp4';
+import LetterA from '../../assets/js/icons/letter-a';
+import LetterC from '../../assets/js/icons/letter-c';
+import LetterD from '../../assets/js/icons/letter-d';
+import LetterE from '../../assets/js/icons/letter-e';
+import LetterF from '../../assets/js/icons/letter-f';
+import LetterI from '../../assets/js/icons/letter-i';
+import LetterL from '../../assets/js/icons/letter-l';
+import LetterM from '../../assets/js/icons/letter-m';
+import LetterN from '../../assets/js/icons/letter-n';
+import LetterR from '../../assets/js/icons/letter-r';
+import LetterS from '../../assets/js/icons/letter-s';
 
 const HomeBannerSection = () => {
   const [startAnimate, setStartAnimate] = React.useState(false);
@@ -29,34 +40,65 @@ const HomeBannerSection = () => {
   };
 
   return (
-    <section className="relative h-home_banner" onClick={handleBannerClick}>
+    <section
+      className="relative h-home_banner home-banner"
+      onClick={handleBannerClick}
+    >
       <video autoPlay muted className="absolute w-full h-full object-cover">
         <source src={HomeBannerVideo} type="video/mp4"></source>
       </video>
-      <div className="relative h-full flex flex-col items-center justify-center text-white text-4xl uppercase">
-        <p className="space-x-[40px]">
-          <span>f</span>
-          <span>r</span>
-          <span>a</span>
-          <span>n</span>
-          <span>c</span>
-          <span>e</span>
-          <span>s</span>
-        </p>
+      <div className="relative h-full flex flex-col items-center justify-center uppercase">
+        <div className="flex justify-between w-[400px]">
+          <div className="flex justify-center w-8 h-9">
+            <LetterF />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterR />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterA />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterN />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterC />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterE />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterS />
+          </div>
+        </div>
         <div
           className={`transition-[height] ease-in-out duration-1000 ${
             startAnimate ? 'h-1/2' : 'h-0'
           }`}
         ></div>
-        <p className="space-x-[40px]">
-          <span>m</span>
-          <span>i</span>
-          <span>l</span>
-          <span>d</span>
-          <span>r</span>
-          <span>e</span>
-          <span>d</span>
-        </p>
+        <div className="flex justify-between w-[400px]">
+          <div className="flex justify-center w-8 h-9">
+            <LetterM />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterI />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterL />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterD />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterR />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterE />
+          </div>
+          <div className="flex justify-center w-8 h-9">
+            <LetterD />
+          </div>
+        </div>
       </div>
     </section>
   );
