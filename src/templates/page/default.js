@@ -26,6 +26,46 @@ export const pageQuery = graphql`
       wpPage(id: { eq: $id }) {
           id
           title
+          editorBlocks {
+            renderedHtml
+            __typename
+            ... on WpCoreParagraph {
+              attributes {
+                content
+              }
+            }
+            ... on WpAcfLogoBanner {
+              logoBannerFields {
+                backgroundImage {
+                  node {
+                    localFile {
+                      childImageSharp {
+                        gatsbyImageData(
+                          layout: CONSTRAINED
+                          width: 800  # Adjust the width as needed
+                          placeholder: BLURRED
+                        )
+                      }
+                    }
+                    sourceUrl
+                    altText
+                    mediaDetails {
+                      width
+                      height
+                    }
+                    caption
+                    description
+                    title
+                  }
+                }
+                backgroundVideo {
+                  node {
+                    mediaItemUrl
+                  }
+                }
+              }
+            }
+          }
           content
           contentType {
               node {
