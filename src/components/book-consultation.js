@@ -22,7 +22,7 @@ const BookConsultation = () => {
       if (scrollRevealEle) {
         const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
         if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-          if (i == 1) {
+          if (i === 1) {
             setTimeout(() => scrollRevealEle.classList.add('reveal'), 250);
           } else {
             scrollRevealEle.classList.add('reveal');

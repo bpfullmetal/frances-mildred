@@ -114,6 +114,10 @@ footer .logo svg {
   width: 490px !important;
 }
 
+.project-carousel .slick-slide img:not(.fade-in) {
+  opacity: 0;
+}
+
 /* Discover Projects */
 .projects-grid {
   display: grid;
@@ -235,5 +239,32 @@ footer .logo svg {
   100% {
     opacity: 1;
     transform: translateY(0px);
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation fade-in
+ * ----------------------------------------
+ */
+.fade-in {
+  -webkit-animation: fade-in 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

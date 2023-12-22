@@ -13,7 +13,21 @@ import HeaderMenu from '../header-menu';
 import HomeBannerSection from './banner';
 
 const HomePageContent = ({ content, menuItems, title, uri }) => {
-  const imageRef = React.useRef(null);
+  const [scrollRevealRefs] = React.useState(
+    Array(3)
+      .fill()
+      .map((_) => {
+        return React.useRef();
+      })
+  );
+  const [latestWorkRefs] = React.useState(
+    Array(5)
+      .fill()
+      .map((_) => {
+        return React.useRef();
+      })
+  );
+  const latestWorkCarouselRef = React.useRef();
 
   React.useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -22,11 +36,32 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
   }, []);
 
   const handleScroll = () => {
-    const imageEle = imageRef.current;
-    if (imageEle) {
-      const scrollOffsetTop = imageEle.getBoundingClientRect().top;
-      if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-        imageEle.classList.add('reveal');
+    scrollRevealRefs.forEach((ref, i) => {
+      const scrollRevealEle = ref.current;
+      if (scrollRevealEle) {
+        const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
+        if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+          if (i === 1) {
+            setTimeout(() => scrollRevealEle.classList.add('reveal'), 500);
+          } else if (i === 2) {
+            setTimeout(() => scrollRevealEle.classList.add('reveal'), 250);
+          } else {
+            scrollRevealEle.classList.add('reveal');
+          }
+        }
+      }
+    });
+
+    const latestWorkCarousel = latestWorkCarouselRef.current;
+    if (latestWorkCarousel) {
+      const scrollOffsetTop = latestWorkCarousel.getBoundingClientRect().top;
+      if (scrollOffsetTop - window.innerHeight * 0.6 < 0) {
+        latestWorkRefs.forEach((ref, i) => {
+          const slideItemRef = ref.current;
+          if (slideItemRef) {
+            setTimeout(() => slideItemRef.classList.add('fade-in'), 500 * i);
+          }
+        });
       }
     }
   };
@@ -93,17 +128,23 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
 
       <section className="flex flex-col max-w-main mx-auto pt-14 px-5 space-y-32 sm:px-12 lg:flex-row lg:space-y-0">
         <div className="lg:pl-8">
-          <p className="text-dark_green text-xl leading-[44px] sm:text-2xl">
+          <p
+            className="scroll-reveal text-dark_green text-xl leading-[44px] sm:text-2xl"
+            ref={scrollRevealRefs[0]}
+          >
             The Studio
           </p>
         </div>
         <div className="lg:max-w-[680px] ml-auto xl:max-w-[900px]">
-          <p className="text-dark_green text-3xl leading-[37px] mb-6 sm:text-4xl sm:leading-[44px] sm:mb-8">
+          <p
+            className="scroll-reveal text-dark_green text-3xl leading-[37px] mb-6 sm:text-4xl sm:leading-[44px] sm:mb-8"
+            ref={scrollRevealRefs[1]}
+          >
             This is an area for a short paragraph about Frances Mildred. This
             will link through to the about us page. This should be between 25-35
             words no longer. It should not exceed four lines of copy.{' '}
           </p>
-          <div className="scroll-reveal" ref={imageRef}>
+          <div className="scroll-reveal" ref={scrollRevealRefs[2]}>
             <img src={HomeImage2} alt="" />
           </div>
         </div>
@@ -116,11 +157,20 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
             <a href="/">View all work</a>
           </p>
         </div>
-        <div className="project-carousel -ml-2.5 sm:ml-0">
+        <div
+          className="project-carousel -ml-2.5 sm:ml-0"
+          ref={latestWorkCarouselRef}
+        >
           <Slider {...sliderSettings}>
-            {latestProjects.map((project) => (
+            {latestProjects.map((project, i) => (
               <div className="flex flex-col px-2.5 sm:px-0.5" key={project.id}>
-                <img className="" src={project.image} alt="project 1" />
+                <div className="bg-[#f8f8f8]">
+                  <img
+                    src={project.image}
+                    alt="project 1"
+                    ref={latestWorkRefs[i]}
+                  />
+                </div>
                 <div className="flex flex-col items-start space-y-3 text-dark_green mt-4 sm:flex-row sm:items-center sm:space-x-7 sm:space-y-0">
                   <p className="text-xl tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px]">
                     Bond St Townhouse
