@@ -26,7 +26,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
     if (imageEle) {
       const scrollOffsetTop = imageEle.getBoundingClientRect().top;
       if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-        imageEle.classList.add('fade-in');
+        imageEle.classList.add('reveal');
       }
     }
   };

@@ -26,9 +26,9 @@ const HeaderMenu = ({ menuItems, currentURI }) => {
       <ul className="hidden justify-between sm:flex">
         {menuItems.map((item, i) => (
           <li key={i} className="text-black text-sm py-3">
-            <a href={item.url}>
+            <a href={item.label === 'Home' ? '/' : item.url}>
               <span>{item.label}</span>
-              {item.url === '/' && (
+              {item.label === 'Home' && (
                 <img src={LogoMonogramGif} alt="logo monogram" />
               )}
             </a>
