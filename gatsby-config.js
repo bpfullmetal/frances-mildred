@@ -17,7 +17,9 @@ module.exports = {
       resolve: 'gatsby-theme-headless-wordpress',
       options: {
          templatesPath: `./src/templates`, 
+         useACF: true,
          excludedNodeTypes: [`MediaItem`], // excludes creating pages for individual media items
+         excludedRoutes: ['**/category/**', '**/tag/**'],
          type: {
           __all: { 
             postsPerPage: 999
@@ -44,8 +46,8 @@ module.exports = {
     }, {
       resolve: 'gatsby-source-filesystem',
       options: {
-        "name": "pages",
-        "path": "./src/pages/"
+        name: "pages",
+        path: "./src/pages/"
       },
       __key: "pages"
     }

@@ -35,7 +35,7 @@ export const pageQuery = graphql`
               }
             }
             ... on WpAcfLogoBanner {
-              logoBannerFields {
+              blockLogoBanner {
                 backgroundImage {
                   node {
                     localFile {
