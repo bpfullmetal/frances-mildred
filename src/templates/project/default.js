@@ -15,9 +15,6 @@ const ProjectSingle = ({ data }) => {
     const { wpProject } = data;
     const { title, uri } = wpProject
 
-    // const menuItems = Helper.sortMenuItemsByOrder(allWpMenuItem.nodes);
-    const menuItems = []
-
     const imageBlocksData = [
         {
           text: 'Lorem Ipsum is simply dummy text of the interior and architect industry.',
@@ -123,7 +120,7 @@ const ProjectSingle = ({ data }) => {
     
       return (
         <main>
-          <HeaderMenu menuItems={menuItems} currentURI={uri} />
+          <HeaderMenu currentURI={uri} />
         {title}
           <section className="h-screen">
             <div className="w-full h-full">
@@ -132,6 +129,7 @@ const ProjectSingle = ({ data }) => {
                 src={ProjectDetailImage1}
                 alt="project detail banner"
               />
+              <h1>{ title }</h1>
             </div>
           </section>
     
@@ -236,7 +234,7 @@ const ProjectSingle = ({ data }) => {
           ></section>
     
           <BookConsultation />
-          <FooterSection menuItems={menuItems.filter((item) => item.url !== '/')} />
+          <FooterSection />
         </main>
       );
 };
