@@ -32,7 +32,7 @@ const HeaderMenu = ({ currentURI }) => {
       `}
       render={(data) => {
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
-        console.log('menuItems: ', menuItems);
+        // console.log('menuItems: ', menuItems);
 
         if (menuItems.length < 1) {
           return <></>;

@@ -69,15 +69,6 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
     }
   };
 
-  const sliderSettings = {
-    className: 'slider variable-width',
-    dots: false,
-    infinite: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    variableWidth: true,
-  };
-
   const latestProjects = [
     {
       id: 1,

@@ -29,7 +29,7 @@ const FooterSection = ({ menuItems }) => {
       `}
       render={(data) => {
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
-        console.log('menuItems: ', menuItems);
+        // console.log('menuItems: ', menuItems);
         return (
           <footer className="relative bg-dark_green pt-12 pb-8 sm:pt-7 sm:pb-14">
             <div className="flex flex-col max-w-main mx-auto px-5 sm:px-12">
