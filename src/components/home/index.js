@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Slider from 'react-slick';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import HomeImage1 from '../../assets/images/home-img-1.jpeg';
 import HomeImage2 from '../../assets/images/home-img-2.png';
 import ProjectImage1 from '../../assets/images/project-img-1.jpeg';
@@ -11,6 +11,9 @@ import BookConsultation from '../book-consultation';
 import FooterSection from '../footer-section';
 import HeaderMenu from '../header-menu';
 import HomeBannerSection from './banner';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const HomePageContent = ({ content, menuItems, title, uri }) => {
   const [scrollRevealRefs] = React.useState(
@@ -104,7 +107,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
       <section className="relative flex items-center">
-        <div className="">
+        <div>
           <img
             className="min-h-screen rounded-none object-cover"
             src={HomeImage1}
@@ -161,29 +164,33 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
           className="project-carousel -ml-2.5 sm:ml-0"
           ref={latestWorkCarouselRef}
         >
-          <Slider {...sliderSettings}>
+          <Swiper slidesPerView={'auto'} spaceBetween={4}>
             {latestProjects.map((project, i) => (
-              <div className="flex flex-col px-2.5 sm:px-0.5" key={project.id}>
-                <div className="bg-[#f8f8f8]">
-                  <img
-                    src={project.image}
-                    alt="project 1"
-                    ref={latestWorkRefs[i]}
-                  />
-                </div>
-                <div className="flex flex-col flex-wrap items-start text-dark_green sm:flex-row sm:items-center">
-                  <p className="text-xl tracking-[0.4px] mt-4 mr-3 sm:text-2xl sm:tracking-[0.48px] sm:mr-7">
-                    Bond St Townhouse
-                  </p>
-                  <p className="text-base tracking-[0.32px] uppercase animate-underline mt-4 sm:text-[21px] sm:tracking-[0.42px]">
-                    <a className="whitespace-nowrap" href="/">
-                      View project
+              <SwiperSlide key={project.id}>
+                <div className="flex flex-col px-2 sm:px-0.5">
+                  <div className="swiper-slide-image bg-[#f8f8f8] rounded">
+                    <a href="/">
+                      <img
+                        src={project.image}
+                        alt="project 1"
+                        ref={latestWorkRefs[i]}
+                      />
                     </a>
-                  </p>
+                  </div>
+                  <div className="flex flex-col flex-wrap items-start text-dark_green sm:flex-row sm:items-center">
+                    <p className="text-xl leading-[20px] tracking-[0.4px] mt-4 mr-3 sm:text-2xl sm:tracking-[0.48px] sm:mr-7">
+                      Bond St Townhouse
+                    </p>
+                    <p className="text-base leading-[16px] tracking-[0.32px] uppercase animate-underline mt-4 sm:text-[21px] sm:leading-[20px] sm:tracking-[0.42px]">
+                      <a className="whitespace-nowrap" href="/">
+                        View project
+                      </a>
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-          </Slider>
+          </Swiper>
         </div>
       </section>
 
