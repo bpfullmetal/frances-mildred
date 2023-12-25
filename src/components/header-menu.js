@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { graphql, StaticQuery } from 'gatsby';
 import LogoMonogramGif from '../assets/images/logo-monogram.gif';
 import LetterA from '../assets/js/icons/letter-a';
 import LetterC from '../assets/js/icons/letter-c';
@@ -11,7 +12,6 @@ import LetterM from '../assets/js/icons/letter-m';
 import LetterN from '../assets/js/icons/letter-n';
 import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
-import { graphql, StaticQuery } from 'gatsby';
 
 const HeaderMenu = ({ currentURI }) => {
   const [isOpened, setIsOpened] = React.useState(false);
@@ -46,9 +46,10 @@ const HeaderMenu = ({ currentURI }) => {
               {menuItems.map((item, i) => (
                 <li key={i} className="text-black text-sm py-3">
                   <a href={item.label === 'Home' ? '/' : item.url}>
-                    <span>{item.label}</span>
-                    {item.label === 'Home' && (
-                      <img src={LogoMonogramGif} alt="logo monogram" />
+                    {item.label === 'Home' ? (
+                      <div className="home-logo"></div>
+                    ) : (
+                      <span>{item.label}</span>
                     )}
                   </a>
                 </li>

@@ -4,7 +4,7 @@
 
 @import '~slick-carousel/slick/slick.css';
 @import '~slick-carousel/slick/slick-theme.css';
-@import '../assets/fonts/Web/fonts.css';
+@import '../assets/fonts/fonts.css';
 
 body {
   color: #fff;
@@ -33,19 +33,19 @@ header li:first-child a {
   justify-content: center;
 }
 
-header li:first-child a img {
-  visibility: hidden;
+header .home-logo {
   position: absolute;
-  width: 76px;
-  max-width: unset;
+  background-image: url(../assets/images/icon.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 48px;
+  height: 48px;
 }
 
-header li:first-child:hover a span {
-  visibility: hidden;
-}
-
-header li:first-child:hover a img {
-  visibility: visible;
+header li:hover .home-logo {
+  background-image: url(../assets/images/logo-monogram.gif);
+  width: 68px;
+  height: 88px;
 }
 
 header li:not(:first-child)::before,

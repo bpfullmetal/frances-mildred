@@ -129,7 +129,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
       <section className="flex flex-col max-w-main mx-auto pt-14 px-5 space-y-32 sm:px-12 lg:flex-row lg:space-y-0">
         <div className="lg:pl-8">
           <p
-            className="scroll-reveal text-dark_green text-xl leading-[44px] sm:text-2xl"
+            className="scroll-reveal text-dark_green text-xl leading-[44px] sm:text-[22px]"
             ref={scrollRevealRefs[0]}
           >
             The Studio
@@ -151,7 +151,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
       </section>
 
       <section className="flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 xl:ml-our_latest_work">
-        <div className="flex justify-between text-dark_green text-xl leading-tight mb-5 sm:justify-start sm:text-2xl">
+        <div className="flex justify-between text-dark_green text-xl leading-tight mb-5 sm:justify-start sm:text-[22px]">
           <p>Our latest work</p>
           <p className="animate-underline ml-6 mr-5">
             <a href="/">View all work</a>
@@ -171,12 +171,14 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
                     ref={latestWorkRefs[i]}
                   />
                 </div>
-                <div className="flex flex-col items-start space-y-3 text-dark_green mt-4 sm:flex-row sm:items-center sm:space-x-7 sm:space-y-0">
-                  <p className="text-xl tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px]">
+                <div className="flex flex-col flex-wrap items-start text-dark_green sm:flex-row sm:items-center">
+                  <p className="text-xl tracking-[0.4px] mt-4 mr-3 sm:text-2xl sm:tracking-[0.48px] sm:mr-7">
                     Bond St Townhouse
                   </p>
-                  <p className="text-base tracking-[0.32px] uppercase animate-underline sm:text-[21px] sm:tracking-[0.42px]">
-                    <a href="/">View project</a>
+                  <p className="text-base tracking-[0.32px] uppercase animate-underline mt-4 sm:text-[21px] sm:tracking-[0.42px]">
+                    <a className="whitespace-nowrap" href="/">
+                      View project
+                    </a>
                   </p>
                 </div>
               </div>
