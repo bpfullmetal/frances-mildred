@@ -3,9 +3,8 @@ import { useStaticQuery, graphql } from 'gatsby';
 import AboutPageContent from '../../components/about';
 
 const AboutPage = ({ data }) => {
-
   const { wpPage, allWpMenuItem } = data;
-    console.log('ABOUT TEMPLATE DATA', wpPage)
+  console.log('ABOUT TEMPLATE DATA', wpPage);
 
   const menuItems = allWpMenuItem.nodes.sort((a, b) => {
     if (a.order < b.order) return -1;
@@ -35,28 +34,29 @@ export const Head = () => <title>About - Frances Mildred</title>;
 
 export const pageQuery = graphql`
   query ($id: String!) {
-      wpPage(id: { eq: $id }) {
-          content
-          contentType {
-              node {
-                  isFrontPage
-                  isPostsPage
-              }
-          }
-          id
-          slug
-          status
-          template {
-              templateName
-          }
-          title
-          uri
+    wpPage(id: { eq: $id }) {
+      content
+      contentType {
+        node {
+          isFrontPage
+          isPostsPage
+        }
       }
-      allWpMenuItem {
-          nodes {
-              order
-              label
-              url
-          }
+      id
+      slug
+      status
+      template {
+        templateName
       }
-  }`
+      title
+      uri
+    }
+    allWpMenuItem {
+      nodes {
+        order
+        label
+        url
+      }
+    }
+  }
+`;

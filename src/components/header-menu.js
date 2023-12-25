@@ -18,7 +18,7 @@ const HeaderMenu = ({ currentURI }) => {
 
   return (
     <StaticQuery
-      query = {graphql`
+      query={graphql`
         query {
           wpMenu(locations: { eq: GATSBY_HEADER_MENU }) {
             menuItems {
@@ -30,12 +30,12 @@ const HeaderMenu = ({ currentURI }) => {
           }
         }
       `}
-      render ={ data => {
+      render={(data) => {
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
         console.log('menuItems: ', menuItems);
 
         if (menuItems.length < 1) {
-          return <></>
+          return <></>;
         }
 
         // Rest of your component logic...
@@ -62,8 +62,9 @@ const HeaderMenu = ({ currentURI }) => {
                 Menu
               </div>
               <div
-                className={`${isOpened ? 'translate-0' : '-translate-x-full'
-                  } fixed top-0 w-screen h-screen `}
+                className={`${
+                  isOpened ? 'translate-0' : '-translate-x-full'
+                } fixed top-0 w-screen h-screen `}
               >
                 <div className="h-full flex flex-col items-center bg-white">
                   <div
