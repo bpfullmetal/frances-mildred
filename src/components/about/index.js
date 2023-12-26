@@ -6,9 +6,49 @@ import TeamImage3 from '../../assets/images/team-img-3.png';
 import BookConsultation from '../book-consultation';
 import FooterSection from '../footer-section';
 import HeaderMenu from '../header-menu';
+import TeamStudioFeatured from './team-studio-featured';
+import TeamStudioItem from './team-studio-item';
 
 const AboutPageContent = ({ content, menuItems, title, uri }) => {
   const [openedPositions, setOpenedPositions] = React.useState([]);
+  const [isPageEntered, setIsPageEntered] = React.useState(false);
+  const [byTheNumberIndex, setByTheNumberIndex] = React.useState(-1);
+  const [nIntervalId, setNIntervalId] = React.useState(null);
+  const [intervalCount, setIntervalCount] = React.useState(0);
+  const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
+    Array(4).fill(false)
+  );
+
+  const byTheNumberRef = React.useRef();
+  const ourTeamRefs = Array(3)
+    .fill()
+    .map((_) => {
+      return React.useRef();
+    });
+  const teamMemberRefs = Array(4)
+    .fill()
+    .map((_) => {
+      return React.useRef();
+    });
+
+  const byTheNumberItems = [
+    {
+      value: 28,
+      name: 'Projects complete',
+    },
+    {
+      value: 11,
+      name: 'Humans',
+    },
+    {
+      value: 3,
+      name: 'Dogs',
+    },
+    {
+      value: 13,
+      name: 'Plants',
+    },
+  ];
 
   const openingPositionsData = [
     {
@@ -33,6 +73,108 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       ],
     },
   ];
+
+  React.useEffect(() => {
+    setTimeout(() => setIsPageEntered(true), 500);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (
+      !nIntervalId &&
+      byTheNumberIndex > -1 &&
+      byTheNumberIndex < byTheNumberItems.length
+    ) {
+      if (intervalCount < 1) {
+        const intervalId = setInterval(
+          () => setIntervalCount((old) => old + 1),
+          1500 / byTheNumberItems[byTheNumberIndex].value
+        );
+        setNIntervalId(intervalId);
+      }
+    }
+  }, [byTheNumberIndex, byTheNumberItems, intervalCount, nIntervalId]);
+
+  React.useEffect(() => {
+    if (
+      nIntervalId &&
+      byTheNumberIndex > -1 &&
+      byTheNumberIndex < byTheNumberItems.length
+    ) {
+      if (intervalCount >= byTheNumberItems[byTheNumberIndex].value) {
+        clearInterval(nIntervalId);
+        setTimeout(() => {
+          setNIntervalId(null);
+          setByTheNumberIndex((old) => old + 1);
+          setIntervalCount(0);
+        }, 500);
+      }
+    }
+  }, [byTheNumberIndex, byTheNumberItems, intervalCount, nIntervalId]);
+
+  const handleScroll = () => {
+    const byTheNumberEle = byTheNumberRef.current;
+    if (byTheNumberEle) {
+      if (!byTheNumberEle.classList.value.includes('animate')) {
+        const scrollOffsetTop = byTheNumberEle.getBoundingClientRect().top;
+        if (scrollOffsetTop - window.innerHeight * 0.6 < 0) {
+          byTheNumberEle.classList.add('animate');
+          setByTheNumberIndex(0);
+        }
+      }
+    }
+
+    ourTeamRefs.forEach((ref, i) => {
+      const scrollRevealEle = ref.current;
+      if (scrollRevealEle) {
+        if (!scrollRevealEle.classList.value.includes(' animate')) {
+          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
+          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+            if (i === 1) {
+              setTimeout(() => scrollRevealEle.classList.add('reveal'), 1000);
+            } else {
+              scrollRevealEle.classList.add('reveal');
+            }
+            scrollRevealEle.classList.add('animate');
+          }
+        }
+      }
+    });
+
+    teamMemberRefs.forEach((ref, i) => {
+      const scrollRevealEle = ref.current;
+      if (scrollRevealEle) {
+        if (!scrollRevealEle.classList.value.includes('animate')) {
+          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
+          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+            if (window.innerWidth < 768) {
+              setTeamMembersAnimate((old) =>
+                Array.from(old).map((v, j) => (i === j ? true : v))
+              );
+            } else {
+              if (i % 2) {
+                setTimeout(
+                  () =>
+                    setTeamMembersAnimate((old) =>
+                      Array.from(old).map((v, j) => (i === j ? true : v))
+                    ),
+                  500
+                );
+              } else {
+                setTeamMembersAnimate((old) =>
+                  Array.from(old).map((v, j) => (i === j ? true : v))
+                );
+              }
+            }
+            scrollRevealEle.classList.add('animate');
+          }
+        }
+      }
+    });
+  };
 
   const handlePositionNameClicked = (posIndex) => {
     if (openedPositions.includes(posIndex)) {
@@ -71,18 +213,34 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
         <div className="relative w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="relative max-w-[860px] flex flex-col ml-auto">
             <div className="h-screen">
-              <p className="text-4xl leading-[45px] pt-[400px]">
+              <p
+                className={`animate-reveal text-4xl leading-[45px] pt-[400px] ${
+                  isPageEntered ? 'reveal' : ''
+                }`}
+              >
                 This is an area for a short paragraph about Frances Mildred.
                 This should be between 50-75 words no longer. Lorem Ipsum is
                 simply dummy text of the printing and typesetting industry.
               </p>
             </div>
-            <div className="h-[60vh]">
+            <div className="h-[60vh]" ref={byTheNumberRef}>
               <p className="text-sm pt-[50px] pb-5">By the number</p>
-              <p className="text-4xl leading-[40px]">28 Projects complete</p>
-              <p className="text-4xl leading-[40px]">11 Humans</p>
-              <p className="text-4xl leading-[40px]">3 Dogs</p>
-              <p className="text-4xl leading-[40px]">13 Plants</p>
+              {byTheNumberItems.map((item, i) => (
+                <p className="text-4xl leading-[40px]" key={i}>
+                  {i > byTheNumberIndex
+                    ? ''
+                    : i === byTheNumberIndex
+                    ? intervalCount
+                    : item.value}{' '}
+                  <span
+                    className={`${
+                      i < byTheNumberIndex ? 'fade-in' : 'opacity-0'
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                </p>
+              ))}
             </div>
           </div>
         </div>
@@ -91,98 +249,63 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       <section id="studio" className="bg-dark_red py-48">
         <div className="flex justify-end w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="flex justify-end">
-            <p className="w-[200px] text-[65px] leading-[65px] tracking-[0.65px] mr-10">
+            <p
+              className="animate-reveal w-[200px] text-[65px] leading-[65px] tracking-[0.65px] mr-10"
+              ref={ourTeamRefs[0]}
+            >
               Our Team
             </p>
           </div>
           <div className="max-w-[860px] flex flex-col">
             <div className="flex flex-col">
-              <div className="">
+              <div className="animate-reveal" ref={ourTeamRefs[1]}>
                 <img src={TeamImage1} alt="our team 1" />
               </div>
-              <p className="max-w-[280px] text-sm_extra leading-[20px] mt-5">
+              <p
+                className="animate-reveal max-w-[280px] text-sm_extra leading-[20px] mt-5"
+                ref={ourTeamRefs[2]}
+              >
                 This is an area for a short introduction about our team members.
               </p>
             </div>
 
             <div className="flex flex-col mt-48">
-              <div className="w-[500px] h-[360px]">
-                <img
-                  className="w-full h-full object-cover"
-                  src={TeamImage2}
-                  alt="our team 2"
-                />
-              </div>
-              <div className="max-w-[420px] text-sm_extra leading-[20px] mt-8">
-                <p className="text-4xl leading-[44px] mb-10">
-                  Lauren MacCuaig Director
-                </p>
-                <p className="text-sm_extra leading-[20px] tracking-[0.45px] mb-5">
-                  Lauren has always had a love for materials, textures, colors,
-                  and space. Before creating Frances Mildred, she worked at MADE
-                  for a number of years, and at Terrain, a New York based
-                  landscape
-                </p>
-                <a
-                  className="text-sm leading-[20px] tracking-[0.42px] underline uppercase"
-                  href="/"
-                >
-                  Read More
-                </a>
-              </div>
+              <TeamStudioFeatured
+                data={{
+                  image: TeamImage2,
+                  alt: 'our team 2',
+                  name: 'Lauren MacCuaig',
+                  role: 'Director',
+                  bio: 'Lauren has always had a love for materials, textures, colors, and space. Before creating Frances Mildred, she worked at MADE for a number of years, and at Terrain, a New York based landscape',
+                }}
+              />
             </div>
 
             <div className="flex flex-col mt-24 ml-auto">
-              <div className="w-[500px] h-[360px]">
-                <img
-                  className="w-full h-full object-cover"
-                  src={TeamImage3}
-                  alt="our team 3"
-                />
-              </div>
-              <div className="max-w-[420px] text-sm_extra leading-[20px] mt-8">
-                <p className="max-w-[260px] text-4xl leading-[44px] mb-10">
-                  Brian Papa Director
-                </p>
-                <p className="text-sm_extra leading-[20px] tracking-[0.45px] mb-5">
-                  Brian cares most deeply for how things are put together, and
-                  the beauty that arises from a careful assembly of materials.
-                  Prior to launching Frances Mildred with Lauren.
-                </p>
-                <a
-                  className="text-sm leading-[20px] tracking-[0.42px] underline uppercase"
-                  href="/"
-                >
-                  Read More
-                </a>
-              </div>
+              <TeamStudioFeatured
+                data={{
+                  image: TeamImage3,
+                  alt: 'our team 3',
+                  name: 'Brian Papa',
+                  role: 'Director',
+                  bio: 'Brian cares most deeply for how things are put together, and the beauty that arises from a careful assembly of materials. Prior to launching Frances Mildred with Lauren.',
+                }}
+              />
             </div>
 
             <div className="flex flex-wrap mt-48">
               {Array(4)
                 .fill(1)
                 .map((_, i) => (
-                  <div
-                    className="w-[360px] flex flex-col pt-2 mr-6 mb-24 border-t"
-                    key={i}
-                  >
-                    <p className="text-4xl leading-[44px] mb-3">
-                      Jacqui Robbins
-                    </p>
-                    <p className="text-xs tracking-[0.24px] uppercase mb-9">
-                      Designer
-                    </p>
-                    <p className="">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s{' '}
-                      <a
-                        className="text-sm_extra leading-[20px] tracking-[0.45px] underline uppercase"
-                        href="/"
-                      >
-                        READ MORE
-                      </a>
-                    </p>
+                  <div key={i} ref={teamMemberRefs[i]}>
+                    <TeamStudioItem
+                      data={{
+                        name: 'Jacqui Robbins',
+                        role: 'Designer',
+                        bio: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s`,
+                      }}
+                      animate={teamMembersAnimate[i]}
+                    />
                   </div>
                 ))}
             </div>

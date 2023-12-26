@@ -263,6 +263,11 @@ footer .logo svg {
   }
 }
 
+.animate-reveal:not(.reveal) {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
 /**
  * ----------------------------------------
  * animation reveal
