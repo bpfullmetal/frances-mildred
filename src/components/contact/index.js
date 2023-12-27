@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ContactBannerImage from '../../assets/images/contact-banner.png';
+import AboutBannerVideo from '../../assets/images/about-banner.mp4';
 import LogoIconGif from '../../assets/images/logo-monogram.gif';
 import LetterA from '../../assets/js/icons/letter-a';
 import LetterC from '../../assets/js/icons/letter-c';
@@ -20,13 +20,14 @@ const ContactPageContent = ({ content, menuItems, title, uri }) => {
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
       <footer className="relative flex-1">
-        <div className="absolute w-full h-full">
-          <img
-            className="w-full h-full rounded-none object-cover"
-            src={ContactBannerImage}
-            alt="contact banner"
-          />
-        </div>
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute w-full h-full object-cover"
+        >
+          <source src={AboutBannerVideo} type="video/mp4"></source>
+        </video>
 
         <div className="relative h-full flex flex-col justify-between max-w-main mx-auto px-5 sm:px-12">
           <div className="flex items-center justify-between py-20">
