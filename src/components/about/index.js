@@ -18,6 +18,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
     Array(4).fill(false)
   );
+  const [beginApplyAnimate, setBeginApplyAnimate] = React.useState(false);
 
   const byTheNumberRef = React.useRef();
   const ourTeamRefs = Array(3)
@@ -26,6 +27,18 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       return React.useRef();
     });
   const teamMemberRefs = Array(4)
+    .fill()
+    .map((_) => {
+      return React.useRef();
+    });
+  const openingsTitleRef = React.useRef();
+  const openingJobRefs = Array(3)
+    .fill()
+    .map((_) => {
+      return React.useRef();
+    });
+  const applyRef = React.useRef();
+  const applyContentRefs = Array(3)
     .fill()
     .map((_) => {
       return React.useRef();
@@ -174,6 +187,54 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
         }
       }
     });
+
+    const openingsTitleEle = openingsTitleRef.current;
+    if (openingsTitleEle) {
+      if (!openingsTitleEle.classList.value.includes(' reveal')) {
+        const scrollOffsetTop = openingsTitleEle.getBoundingClientRect().top;
+        if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+          openingsTitleEle.classList.add('reveal');
+        }
+      }
+    }
+
+    openingJobRefs.forEach((ref, i) => {
+      const scrollRevealEle = ref.current;
+      if (scrollRevealEle) {
+        if (!scrollRevealEle.classList.value.includes(' animate')) {
+          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
+          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+            setTimeout(() => scrollRevealEle.classList.add('reveal'), i * 250);
+            scrollRevealEle.classList.add('animate');
+          }
+        }
+      }
+    });
+
+    const applyEle = applyRef.current;
+    if (applyEle) {
+      if (!applyEle.classList.value.includes(' animate')) {
+        const scrollOffsetTop = applyEle.getBoundingClientRect().top;
+        if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+          setBeginApplyAnimate(true);
+
+          setTimeout(
+            () => applyContentRefs[0].current.classList.add('reveal'),
+            1000
+          );
+          setTimeout(
+            () => applyContentRefs[1].current.classList.add('reveal'),
+            1250
+          );
+          setTimeout(
+            () => applyContentRefs[2].current.classList.add('reveal'),
+            1500
+          );
+
+          applyEle.classList.add('animate');
+        }
+      }
+    }
   };
 
   const handlePositionNameClicked = (posIndex) => {
@@ -188,7 +249,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
     <main>
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
-      <div className="fixed top-[500px] left-12 flex flex-col z-10">
+      <div className="hidden fixed top-[500px] left-12 md:flex flex-col z-10">
         <div className="uppercase">
           <a href="#about">About</a>
         </div>
@@ -247,10 +308,10 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       </section>
 
       <section id="studio" className="bg-dark_red py-48">
-        <div className="flex justify-end w-full max-w-main mx-auto px-5 sm:px-12">
-          <div className="flex justify-end">
+        <div className="flex flex-col justify-end w-full max-w-main mx-auto px-5 sm:px-12 lg:flex-row">
+          <div className="flex mb-4 lg:justify-end lg:mb-0">
             <p
-              className="animate-reveal w-[200px] text-[65px] leading-[65px] tracking-[0.65px] mr-10"
+              className="animate-reveal text-4xl leading-none tracking-[0.36px] lg:w-[200px] lg:text-[65px] lg:leading-[65px] lg:tracking-[0.65px] lg:mr-10"
               ref={ourTeamRefs[0]}
             >
               Our Team
@@ -319,7 +380,10 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
           className="flex justify-end w-full max-w-main mx-auto px-5 sm:px-12"
         >
           <div className="w-full max-w-[860px] flex flex-col">
-            <p className="text-[65px] text-black leading-[65px] tracking-[0.65px]">
+            <p
+              className="animate-reveal text-[65px] text-black leading-[65px] tracking-[0.65px]"
+              ref={openingsTitleRef}
+            >
               Studio Openings
             </p>
 
@@ -327,7 +391,11 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
               {openingPositionsData.map((pos, i) => {
                 const isOpened = openedPositions.includes(i);
                 return (
-                  <div className="flex flex-col" key={i}>
+                  <div
+                    className="animate-reveal flex flex-col"
+                    key={i}
+                    ref={openingJobRefs[i]}
+                  >
                     <div
                       className="flex items-center cursor-pointer"
                       onClick={() => handlePositionNameClicked(i)}
@@ -359,16 +427,30 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
               })}
             </div>
 
-            <div className="w-full flex flex-col bg-white p-9 rounded">
-              <div className="text-black text-2xl leading-[30px] underline">
+            <div
+              className={`w-full flex flex-col bg-white p-9 rounded transition-all duration-1000 delay-300 origin-left scale-x-0 ${
+                beginApplyAnimate ? 'scale-x-100' : ''
+              }`}
+              ref={applyRef}
+            >
+              <div
+                className="animate-reveal text-black text-2xl leading-[30px] underline"
+                ref={applyContentRefs[0]}
+              >
                 <a href="/">How to apply</a>
               </div>
-              <p className="text-black text-2xl leading-[30px]">
+              <p
+                className="animate-reveal text-black text-2xl leading-[30px]"
+                ref={applyContentRefs[1]}
+              >
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text.
               </p>
-              <div className="text-black text-sm underline uppercase mt-16">
+              <div
+                className="animate-reveal text-black text-sm underline uppercase mt-16"
+                ref={applyContentRefs[2]}
+              >
                 <a href="/">Apply here</a>
               </div>
             </div>
