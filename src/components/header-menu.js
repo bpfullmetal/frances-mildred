@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
-import LogoMonogramGif from '../assets/images/logo-monogram.gif';
 import LetterA from '../assets/js/icons/letter-a';
 import LetterC from '../assets/js/icons/letter-c';
 import LetterD from '../assets/js/icons/letter-d';
@@ -89,48 +88,48 @@ const HeaderMenu = ({ currentURI }) => {
                   </div>
                   <div className="w-full flex flex-col logo px-5 py-8 mt-auto space-y-6">
                     <div className="flex justify-between">
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterF fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterR fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterA fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterN fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterC fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterE fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterS fill="black" />
                       </div>
                     </div>
                     <div className="flex justify-between">
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterM fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterI fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterL fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterD fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterR fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterE fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterD fill="black" />
                       </div>
                     </div>

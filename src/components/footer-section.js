@@ -48,8 +48,13 @@ const FooterSection = ({ menuItems }) => {
                       <p>New York, NY, 10012</p>
                     </div>
                     <div className="flex flex-col">
-                      <a href="tel:+1 212 981 4599">+1 212 981 4599</a>
-                      <a href="mailto:info@francesmildred.com">
+                      <a className="w-fit" href="tel:+1 212 981 4599">
+                        +1 212 981 4599
+                      </a>
+                      <a
+                        className="w-fit"
+                        href="mailto:info@francesmildred.com"
+                      >
                         info@francesmildred.com
                       </a>
                     </div>
@@ -70,48 +75,48 @@ const FooterSection = ({ menuItems }) => {
 
               <div className="logo flex flex-col mt-24 space-y-6 sm:space-y-24 sm:mt-64">
                 <div className="flex justify-between">
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterF />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterR />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterA />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterN />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterC />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterE />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterS />
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterM />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterI />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterL />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterD />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterR />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterE />
                   </div>
-                  <div className="h-8 sm:h-16 md:h-24 lg:h-28">
+                  <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterD />
                   </div>
                 </div>
