@@ -26,6 +26,36 @@ const ProjectBlockDetail = () => {
 };
 
 const WorkPageContent = ({ content, menuItems, title, uri }) => {
+  const [isPageEntered, setIsPageEntered] = React.useState(false);
+
+  const workProjectRefs = Array(5)
+    .fill()
+    .map((_) => {
+      return React.useRef();
+    });
+
+  React.useEffect(() => {
+    setTimeout(() => setIsPageEntered(true), 500);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleScroll = () => {
+    workProjectRefs.forEach((ref, i) => {
+      const scrollRevealEle = ref.current;
+      if (scrollRevealEle) {
+        if (!scrollRevealEle.classList.value.includes(' reveal')) {
+          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
+          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+            scrollRevealEle.classList.add('reveal');
+          }
+        }
+      }
+    });
+  };
+
   const workProjectsData = [
     {
       image: ProjectImage2,
@@ -53,8 +83,15 @@ const WorkPageContent = ({ content, menuItems, title, uri }) => {
     <main className="work">
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
-      <section className="w-full h-screen mb-40 sm:mb-16">
-        <a className="flex w-full h-work_project" href="/">
+      <section
+        className={`w-full h-screen mb-40 sm:mb-16 opacity-0 ${
+          isPageEntered ? 'fade-in' : ''
+        }`}
+      >
+        <a
+          className="flex w-full h-work_project"
+          href="/work/park-slope-townhouse"
+        >
           <img
             className="w-full h-full object-cover rounded-none"
             src={ProjectImage1}
@@ -67,10 +104,11 @@ const WorkPageContent = ({ content, menuItems, title, uri }) => {
       <section className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
         {workProjectsData.map((project, i) => (
           <div
-            className={`work-project-block max-w-[80%] h-work_project py-4 mb-40 ${
+            className={`work-project-block animate-reveal max-w-[80%] h-work_project py-4 mb-40 ${
               i % 2 ? 'ml-auto' : ''
             } sm:mb-32`}
             key={i}
+            ref={workProjectRefs[i]}
           >
             <a className="w-fit h-full" href="/">
               <img

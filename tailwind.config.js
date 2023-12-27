@@ -23,7 +23,7 @@ module.exports = {
       },
       height: {
         'home_banner': 'calc(100vh - 48px)',
-        'work_project': 'calc(100vh - 100px)'
+        'work_project': 'calc(100vh - 108px)'
       },
       maxHeight: {
         'work_project': 'calc(100vh - 100px)'
