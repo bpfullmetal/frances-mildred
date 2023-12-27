@@ -25,11 +25,28 @@ const FooterSection = ({ menuItems }) => {
               }
             }
           }
+          wp {
+            settings {
+              fmSettings {
+                contactInfo {
+                  address {
+                    addressLine1
+                    addressLine2
+                  }
+                  contactDetails {
+                    email
+                    phone
+                  }
+                }
+              }
+            }
+          }
         }
       `}
       render={data => {
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
-        console.log('menuItems: ', menuItems);
+        const contactInfo = data?.wp?.settings?.fmSettings?.contactInfo
+        console.log('CONTACT INFO', contactInfo);
         return (
 
           <footer className="relative bg-dark_green pt-12 pb-8 sm:pt-7 sm:pb-14">
@@ -43,18 +60,47 @@ const FooterSection = ({ menuItems }) => {
                       </li>
                     ))}
                   </ul>
-                  <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-14 sm:space-y-0">
-                    <div className="flex flex-col">
-                      <p>94 Prince St.3rd Floor</p>
-                      <p>New York, NY, 10012</p>
-                    </div>
-                    <div className="flex flex-col">
-                      <a href="tel:+1 212 981 4599">+1 212 981 4599</a>
-                      <a href="mailto:info@francesmildred.com">
-                        info@francesmildred.com
-                      </a>
-                    </div>
-                  </div>
+
+                  {
+                    (contactInfo?.address?.addressLine1 || contactInfo?.address?.addressLine2 || contactInfo?.contactDetails?.email || contactInfo?.contactDetails?.phone) && (
+                      <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-14 sm:space-y-0">
+                        {
+                          (contactInfo?.address?.addressLine1 || contactInfo?.address?.addressLine2) && (
+                            <div className="flex flex-col">
+                              {
+                                contactInfo?.address?.addressLine1 && (
+                                  <p>{contactInfo.address.addressLine1}</p>
+                                )
+                              }
+                              {
+                                contactInfo?.address?.addressLine2 && (
+                                  <p>{contactInfo.address.addressLine2}</p>
+                                )
+                              }
+                            </div>
+                          )
+                        }
+                        {
+                          (contactInfo?.contactDetails?.email || contactInfo?.contactDetails?.phone) && (
+                            <div className="flex flex-col">
+                              {
+                                contactInfo?.contactDetails?.phone && (
+                                  <a href={`tel:${contactInfo.contactDetails.phone}`}>{contactInfo.contactDetails.phone}</a>
+                                )
+                              }
+                              {
+                                contactInfo?.contactDetails?.email && (
+                                  <a href={`mailto:${contactInfo.contactDetails.email}`}>
+                                    {contactInfo.contactDetails.email}
+                                  </a>
+                                )
+                              }
+                            </div>
+                          )
+                        }
+                      </div>
+                    )
+                  }
                 </div>
                 <div className="flex flex-1 flex-col items-start md:items-end">
                   <div className="flex flex-col w-full max-w-[480px]">
