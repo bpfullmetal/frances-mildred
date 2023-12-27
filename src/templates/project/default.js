@@ -11,11 +11,11 @@ import Helper from '../../helper';
 import { graphql } from 'gatsby';
 
 const ProjectSingle = ({ data }) => {
-    console.log(data)
+    // console.log(data)
     const { wpProject, nextProject } = data;
-    const { title, uri, projectsSingle } = wpProject
+    const { title, uri, projectsSingle } = wpProject;
 
-    console.log('NEXT', nextProject)
+    console.log(projectsSingle.projectDetails.attributes);
 
     const imageBlocksData = [
         {
@@ -137,76 +137,72 @@ const ProjectSingle = ({ data }) => {
 
             <section className="work-project flex flex-col bg-[#300808]">
                 <div className="w-full max-w-main mx-auto px-5 sm:px-12">
-                    {
-                        projectsSingle.projectDetails && (
-
-                            <div className="flex flex-col mt-8">
+                    {projectsSingle.projectDetails && (
+                        <div className="flex flex-col mt-8">
+                            <div
+                                className="flex items-center cursor-pointer"
+                                onClick={() => setRevealProjectInfo((old) => !old)}
+                            >
                                 <div
-                                    className="flex items-center cursor-pointer"
-                                    onClick={() => setRevealProjectInfo((old) => !old)}
+                                    className={`relative flex items-center justify-center w-6 h-6 mr-6 transition-all ease-out duration-300 ${revealProjectInfo ? 'rotate-[135deg]' : 'rotate-0'
+                                        }`}
                                 >
-                                    <div
-                                        className={`relative flex items-center justify-center w-6 h-6 mr-6 transition-all ease-out duration-300 ${revealProjectInfo ? 'rotate-[135deg]' : 'rotate-0'
-                                            }`}
-                                    >
-                                        <div className="absolute w-4 h-0.5 bg-taupe"></div>
-                                        <div className="absolute w-0.5 h-4 bg-taupe"></div>
-                                    </div>
-                                    <p className="text-taupe text-2xl leading-[44px] sm:text-[26px]">
-                                        {projectsSingle.projectDetails.label || 'Project Information'}
-                                    </p>
+                                    <div className="absolute w-4 h-0.5 bg-taupe"></div>
+                                    <div className="absolute w-0.5 h-4 bg-taupe"></div>
                                 </div>
-                                <div
-                                    className={`w-[800px] h-0 ${revealProjectInfo ? 'h-full pt-2' : 'pt-0'
-                                        } flex flex-col ml-12 overflow-hidden transition-all`}
-                                >
-                                    {
-                                        projectsSingle.projectDetails.content && (
-                                            <div dangerouslySetInnerHTML={{ __html: projectsSingle.projectDetails.content }} />
-                                        )
-                                    }
-                                    {
-                                        projectsSingle.projectDetails.attributes && (
-                                            <>
-                                                {
-                                                    projectsSingle.projectDetails.attributes.map(attribute => (
-                                                        <div className="flex flex-col pt-9">
-                                                            {
-                                                                attribute.label && (
-                                                                    <p className="text-taupe text-xs">{attribute.label}</p>
-                                                                )
-                                                            }
-                                                            {
-                                                                attribute.attributeListings && (
-                                                                    <p className="text-taupe text-2xl leading-[44px] sm:text-[26px]">
-                                                                        {
-                                                                            attribute.attributeListings.map((attItem, a) => {
-                                                                                return <>
-                                                                                    {
-                                                                                        attItem.link
-                                                                                            ? <a target="_blank" href={attItem.link}>{attItem.title}</a>
-                                                                                            : <>{attItem.title}</>
-                                                                                    }
-                                                                                    {
-                                                                                        a !== attribute.attributeListings.length - 1 && <span>, </span>
-                                                                                    }
-                                                                                </>
-                                                                            })
-                                                                        }
-                                                                    </p>
-                                                                )
-                                                            }
-
-                                                        </div>
-                                                    ))
-                                                }
-                                            </>
-                                        )
-                                    }
-                                </div>
+                                <p className="text-taupe text-2xl leading-[44px] sm:text-[26px]">
+                                    {projectsSingle.projectDetails.label || 'Project Information'}
+                                </p>
                             </div>
-                        )
-                    }
+                            <div
+                                className={`w-[800px] h-0 ${revealProjectInfo ? 'h-full pt-2' : 'pt-0'
+                                    } flex flex-col ml-12 overflow-hidden transition-all`}
+                            >
+                                {projectsSingle.projectDetails.content && (
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: projectsSingle.projectDetails.content,
+                                        }}
+                                    />
+                                )}
+                                {projectsSingle.projectDetails.attributes && (
+                                    <>
+                                        {projectsSingle.projectDetails.attributes.map(
+                                            (attribute) => (
+                                                <div className="flex flex-col pt-9">
+                                                    {attribute.label && (
+                                                        <p className="text-taupe text-xs">
+                                                            {attribute.label}
+                                                        </p>
+                                                    )}
+                                                    {attribute.attributeListings && (
+                                                        <p className="text-taupe text-2xl leading-[44px] sm:text-[26px]">
+                                                            {attribute.attributeListings.map((attItem, a) => {
+                                                                return (
+                                                                    <>
+                                                                        {attItem.link ? (
+                                                                            <a target="_blank" href={attItem.link}>
+                                                                                {attItem.title}
+                                                                            </a>
+                                                                        ) : (
+                                                                            <>{attItem.title}</>
+                                                                        )}
+                                                                        {a !==
+                                                                            attribute.attributeListings.length -
+                                                                            1 && <span>, </span>}
+                                                                    </>
+                                                                );
+                                                            })}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                     <div className="flex flex-col">
                         {imageBlocksData.map((block, i) => (
@@ -233,6 +229,7 @@ const ProjectSingle = ({ data }) => {
                     </div>
                 </div>
             </section>
+
             {
                 nextProject && (
                     <section className="sticky top-0 next-project mb-[50vh]">
@@ -255,6 +252,7 @@ const ProjectSingle = ({ data }) => {
                     </section>
                 )
             }
+
 
             <section
                 className="next-project-after"

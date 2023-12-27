@@ -1,5 +1,5 @@
 import * as React from 'react';
-import LogoMonogramGif from '../assets/images/logo-monogram.gif';
+import { graphql, StaticQuery } from 'gatsby';
 import LetterA from '../assets/js/icons/letter-a';
 import LetterC from '../assets/js/icons/letter-c';
 import LetterD from '../assets/js/icons/letter-d';
@@ -11,14 +11,13 @@ import LetterM from '../assets/js/icons/letter-m';
 import LetterN from '../assets/js/icons/letter-n';
 import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
-import { graphql, StaticQuery } from 'gatsby';
 
 const HeaderMenu = ({ currentURI }) => {
   const [isOpened, setIsOpened] = React.useState(false);
 
   return (
     <StaticQuery
-      query = {graphql`
+      query={graphql`
         query {
           wpMenu(locations: { eq: GATSBY_HEADER_MENU }) {
             menuItems {
@@ -30,12 +29,12 @@ const HeaderMenu = ({ currentURI }) => {
           }
         }
       `}
-      render ={ data => {
+      render={(data) => {
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
-        console.log('menuItems: ', menuItems);
+        // console.log('menuItems: ', menuItems);
 
         if (menuItems.length < 1) {
-          return <></>
+          return <></>;
         }
 
         // Rest of your component logic...
@@ -46,9 +45,10 @@ const HeaderMenu = ({ currentURI }) => {
               {menuItems.map((item, i) => (
                 <li key={i} className="text-black text-sm py-3">
                   <a href={item.label === 'Home' ? '/' : item.url}>
-                    <span>{item.label}</span>
-                    {item.label === 'Home' && (
-                      <img src={LogoMonogramGif} alt="logo monogram" />
+                    {item.label === 'Home' ? (
+                      <div className="home-logo"></div>
+                    ) : (
+                      <span>{item.label}</span>
                     )}
                   </a>
                 </li>
@@ -62,8 +62,9 @@ const HeaderMenu = ({ currentURI }) => {
                 Menu
               </div>
               <div
-                className={`${isOpened ? 'translate-0' : '-translate-x-full'
-                  } fixed top-0 w-screen h-screen `}
+                className={`${
+                  isOpened ? 'translate-0' : '-translate-x-full'
+                } fixed top-0 w-screen h-screen `}
               >
                 <div className="h-full flex flex-col items-center bg-white">
                   <div
@@ -87,48 +88,48 @@ const HeaderMenu = ({ currentURI }) => {
                   </div>
                   <div className="w-full flex flex-col logo px-5 py-8 mt-auto space-y-6">
                     <div className="flex justify-between">
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterF fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterR fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterA fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterN fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterC fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterE fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterS fill="black" />
                       </div>
                     </div>
                     <div className="flex justify-between">
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterM fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterI fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterL fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterD fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterR fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterE fill="black" />
                       </div>
-                      <div className="h-[30px]">
+                      <div className="flex justify-center w-8 h-[30px]">
                         <LetterD fill="black" />
                       </div>
                     </div>

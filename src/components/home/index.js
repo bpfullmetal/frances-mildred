@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Slider from 'react-slick';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import HomeImage1 from '../../assets/images/home-img-1.jpeg';
 import HomeImage2 from '../../assets/images/home-img-2.png';
 import ProjectImage1 from '../../assets/images/project-img-1.jpeg';
@@ -11,6 +11,9 @@ import BookConsultation from '../book-consultation';
 import FooterSection from '../footer-section';
 import HeaderMenu from '../header-menu';
 import HomeBannerSection from './banner';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const HomePageContent = ({ content, menuItems, title, uri }) => {
   const [scrollRevealRefs] = React.useState(
@@ -66,15 +69,6 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
     }
   };
 
-  const sliderSettings = {
-    className: 'slider variable-width',
-    dots: false,
-    infinite: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    variableWidth: true,
-  };
-
   const latestProjects = [
     {
       id: 1,
@@ -104,7 +98,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
       <section className="relative flex items-center">
-        <div className="">
+        <div>
           <img
             className="min-h-screen rounded-none object-cover"
             src={HomeImage1}
@@ -129,7 +123,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
       <section className="flex flex-col max-w-main mx-auto pt-14 px-5 space-y-32 sm:px-12 lg:flex-row lg:space-y-0">
         <div className="lg:pl-8">
           <p
-            className="scroll-reveal text-dark_green text-xl leading-[44px] sm:text-2xl"
+            className="scroll-reveal text-dark_green text-xl leading-[44px] sm:text-[22px]"
             ref={scrollRevealRefs[0]}
           >
             The Studio
@@ -151,7 +145,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
       </section>
 
       <section className="flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 xl:ml-our_latest_work">
-        <div className="flex justify-between text-dark_green text-xl leading-tight mb-5 sm:justify-start sm:text-2xl">
+        <div className="flex justify-between text-dark_green text-xl leading-tight mb-5 sm:justify-start sm:text-[22px]">
           <p>Our latest work</p>
           <p className="animate-underline ml-6 mr-5">
             <a href="/">View all work</a>
@@ -161,27 +155,33 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
           className="project-carousel -ml-2.5 sm:ml-0"
           ref={latestWorkCarouselRef}
         >
-          <Slider {...sliderSettings}>
+          <Swiper slidesPerView={'auto'} spaceBetween={4}>
             {latestProjects.map((project, i) => (
-              <div className="flex flex-col px-2.5 sm:px-0.5" key={project.id}>
-                <div className="bg-[#f8f8f8]">
-                  <img
-                    src={project.image}
-                    alt="project 1"
-                    ref={latestWorkRefs[i]}
-                  />
+              <SwiperSlide key={project.id}>
+                <div className="flex flex-col px-2 sm:px-0.5">
+                  <div className="swiper-slide-image bg-[#f8f8f8] rounded">
+                    <a href="/">
+                      <img
+                        src={project.image}
+                        alt="project 1"
+                        ref={latestWorkRefs[i]}
+                      />
+                    </a>
+                  </div>
+                  <div className="flex flex-col flex-wrap items-start text-dark_green sm:flex-row sm:items-center">
+                    <p className="text-xl leading-[20px] tracking-[0.4px] mt-4 mr-3 sm:text-2xl sm:tracking-[0.48px] sm:mr-7">
+                      Bond St Townhouse
+                    </p>
+                    <p className="text-base leading-[16px] tracking-[0.32px] uppercase animate-underline mt-4 sm:text-[21px] sm:leading-[20px] sm:tracking-[0.42px]">
+                      <a className="whitespace-nowrap" href="/">
+                        View project
+                      </a>
+                    </p>
+                  </div>
                 </div>
-                <div className="flex flex-col items-start space-y-3 text-dark_green mt-4 sm:flex-row sm:items-center sm:space-x-7 sm:space-y-0">
-                  <p className="text-xl tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px]">
-                    Bond St Townhouse
-                  </p>
-                  <p className="text-base tracking-[0.32px] uppercase animate-underline sm:text-[21px] sm:tracking-[0.42px]">
-                    <a href="/">View project</a>
-                  </p>
-                </div>
-              </div>
+              </SwiperSlide>
             ))}
-          </Slider>
+          </Swiper>
         </div>
       </section>
 

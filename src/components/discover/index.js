@@ -9,6 +9,77 @@ import FooterSection from '../footer-section';
 import HeaderMenu from '../header-menu';
 
 const DiscoverPageContent = ({ content, menuItems, title, uri }) => {
+  const [openModal, setOpenModal] = React.useState(false);
+  const [animationEntrances, setAnimationEntrances] = React.useState({
+    background: false,
+    title1: false,
+    title2: false,
+  });
+  const [projectRefs] = React.useState(
+    Array(6)
+      .fill()
+      .map((_) => {
+        return React.useRef();
+      })
+  );
+
+  React.useEffect(() => {
+    setTimeout(
+      () =>
+        setAnimationEntrances({
+          background: true,
+          title1: false,
+          title2: false,
+        }),
+      500
+    );
+    setTimeout(
+      () =>
+        setAnimationEntrances({
+          background: true,
+          title1: true,
+          title2: false,
+        }),
+      1500
+    );
+    setTimeout(
+      () =>
+        setAnimationEntrances({
+          background: true,
+          title1: true,
+          title2: true,
+        }),
+      2000
+    );
+
+    setTimeout(() => handleScroll(), 2500);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleScroll = () => {
+    let projectOrder = 0;
+
+    projectRefs.forEach((ref) => {
+      const projectEle = ref.current;
+      if (projectEle) {
+        if (!projectEle.classList.value.includes('animate')) {
+          const scrollOffsetTop = projectEle.getBoundingClientRect().top;
+          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+            projectEle.classList.add('animate');
+            setTimeout(
+              () => projectEle.classList.add('fade-in'),
+              projectOrder * 500
+            );
+            projectOrder++;
+          }
+        }
+      }
+    });
+  };
+
   const allProjectsData = [
     {
       name: 'Bond St Townhouse',
@@ -37,25 +108,44 @@ const DiscoverPageContent = ({ content, menuItems, title, uri }) => {
   ];
 
   return (
-    <main>
+    <main className="discover">
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
-      <section className="bg-dark_blue py-32 sm:py-48">
+      <section
+        className={`bg-dark_blue py-32 sm:py-32 ${
+          animationEntrances.background ? 'fade-in' : ''
+        }`}
+      >
         <div className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
-          <p className="text-3xl leading-[44px] mb-16 sm:text-4xl sm:mb-52">
-            Design for &nbsp;<span className="underline">Life</span> +
-          </p>
+          <div className="title flex items-center text-3xl leading-[44px] mb-16 sm:text-4xl sm:mb-32">
+            <p className={animationEntrances.title1 ? 'fade-in-top' : ''}>
+              Design for &nbsp;
+            </p>
+            <p className={animationEntrances.title2 ? 'fade-in-top' : ''}>
+              <span
+                className="underline cursor-pointer"
+                onClick={() => setOpenModal(true)}
+              >
+                Life
+              </span>{' '}
+              +
+            </p>
+          </div>
 
           <div className="projects-grid">
             {allProjectsData.map((project, i) => (
-              <div className="flex flex-col space-y-4" key={i}>
-                <div className="">
+              <div
+                className="projects-grid__item flex flex-col"
+                key={i}
+                ref={projectRefs[i]}
+              >
+                <a className="mb-4" href="/">
                   <img src={project.image} alt={project.name} />
-                </div>
-                <p className="text-xl leading-none tracking-[0.48px] sm:text-2xl">
+                </a>
+                <p className="text-xl leading-none tracking-[0.48px] mb-3 sm:text-[22px]">
                   {project.name}
                 </p>
-                <div className="w-fit text-base leading-none tracking-[0.32px] uppercase animate-underline sm:text-[21px] sm:tracking-[0.42px]">
+                <div className="w-fit text-base !leading-none tracking-[0.32px] uppercase animate-underline sm:text-lg sm:tracking-[0.42px]">
                   <a href="/">View Project</a>
                 </div>
               </div>
