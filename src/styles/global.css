@@ -240,6 +240,10 @@ footer .logo svg {
   .projects-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .discover .projects-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 767px) {
@@ -260,6 +264,11 @@ footer .logo svg {
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 148px;
+  }
+
+  .discover .projects-grid {
+    grid-template-columns: 1fr;
+    row-gap: 120px;
   }
 }
 

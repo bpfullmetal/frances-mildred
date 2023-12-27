@@ -36,6 +36,7 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
     },
   ];
 
+  const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [revealProjectInfo, setRevealProjectInfo] = React.useState(false);
   const [imageRefs] = React.useState(
     Array(imageBlocksData.length)
@@ -48,6 +49,8 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
   const imageMaskRef = React.useRef();
 
   React.useEffect(() => {
+    setTimeout(() => setIsPageEntered(true), 500);
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,7 +119,9 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
     <main>
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
-      <section className="h-screen">
+      <section
+        className={`h-screen opacity-0 ${isPageEntered ? 'fade-in' : ''}`}
+      >
         <div className="w-full h-full">
           <img
             className="w-full h-full object-cover rounded-none"
