@@ -144,7 +144,11 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
         </div>
       </section>
 
-      <section className={`flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 ${latestProjects.length < 4 ? 'xl:ml-our_latest_work' : ''}`}>
+      <section
+        className={`flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 ${
+          latestProjects.length < 4 ? 'xl:ml-our_latest_work' : ''
+        }`}
+      >
         <div className="flex justify-between text-dark_green text-xl leading-tight mb-5 sm:justify-start sm:text-[22px]">
           <p>Our latest work</p>
           <p className="animate-underline ml-6 mr-5">
