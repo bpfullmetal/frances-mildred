@@ -39,14 +39,14 @@ header .home-logo {
   background-image: url(../assets/images/icon.png);
   background-repeat: no-repeat;
   background-size: contain;
-  width: 48px;
-  height: 48px;
+  width: 30px;
+  height: 30px;
 }
 
 header li:hover .home-logo {
   background-image: url(../assets/images/logo-monogram.gif);
-  width: 68px;
-  height: 88px;
+  width: 70px;
+  height: 90px;
 }
 
 header li:not(:first-child)::before,
