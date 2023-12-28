@@ -17,9 +17,9 @@ const HomeBannerSection = () => {
   const [prevScrollY, setPrevScrollY] = React.useState(0);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      setStartAnimate(true);
-    }, 1000);
+    // setTimeout(() => {
+    //   setStartAnimate(true);
+    // }, 1000);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -73,7 +73,7 @@ const HomeBannerSection = () => {
         </div>
         <div
           className={`transition-[height] ease-in-out duration-1000 ${
-            startAnimate ? 'h-1/2' : 'h-0'
+            startAnimate ? 'h-1/2' : 'h-10'
           }`}
         ></div>
         <div className="flex justify-between w-[400px]">

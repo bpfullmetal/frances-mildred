@@ -107,7 +107,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
         </div>
         <div className="absolute w-full h-full">
           <div className="sticky top-[600px] max-w-main mx-auto px-5 pb-40 mt-[600px] sm:px-12">
-            <p className="max-w-[630px] text-white text-3xl leading-[37px] mb-4 sm:4xl sm:leading-[44px] lg:pl-8">
+            <p className="max-w-[630px] text-white text-3xl leading-[37px] mb-4 sm:text-4xl sm:leading-[44px] lg:pl-8">
               This is an area for a short paragraph about the latest project.
             </p>
             <a
@@ -120,18 +120,18 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
         </div>
       </section>
 
-      <section className="flex flex-col max-w-main mx-auto pt-14 px-5 space-y-32 sm:px-12 lg:flex-row lg:space-y-0">
+      <section className="flex flex-col max-w-main mx-auto pt-14 px-5 space-y-32 sm:px-12 md:flex-row md:space-y-0">
         <div className="lg:pl-8">
           <p
-            className="scroll-reveal text-dark_green text-xl leading-[44px] sm:text-[22px]"
+            className="scroll-reveal text-dark_green text-xl leading-[44px] whitespace-nowrap sm:text-[22px] sm:mr-16"
             ref={scrollRevealRefs[0]}
           >
             The Studio
           </p>
         </div>
-        <div className="lg:max-w-[680px] ml-auto xl:max-w-[900px]">
+        <div className="max-w-[680px] ml-auto lg:max-w-[900px]">
           <p
-            className="scroll-reveal text-dark_green text-3xl leading-[37px] mb-6 sm:text-4xl sm:leading-[44px] sm:mb-8"
+            className="scroll-reveal text-dark_green text-xl mb-6 sm:text-2xl sm:mb-8"
             ref={scrollRevealRefs[1]}
           >
             This is an area for a short paragraph about Frances Mildred. This
@@ -144,7 +144,7 @@ const HomePageContent = ({ content, menuItems, title, uri }) => {
         </div>
       </section>
 
-      <section className="flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 xl:ml-our_latest_work">
+      <section className={`flex flex-col mt-36 mb-20 overflow-x-hidden pl-5 sm:mt-44 sm:pl-12 lg:pl-20 ${latestProjects.length < 4 ? 'xl:ml-our_latest_work' : ''}`}>
         <div className="flex justify-between text-dark_green text-xl leading-tight mb-5 sm:justify-start sm:text-[22px]">
           <p>Our latest work</p>
           <p className="animate-underline ml-6 mr-5">
