@@ -33,7 +33,7 @@ const BookConsultation = () => {
   };
 
   return (
-    <section className="relative py-36 bg-dark_red">
+    <section className="relative py-36 bg-dark_red z-10">
       <div className="flex flex-col items-center justify-center max-w-main mx-auto px-5 sm:px-12">
         <p
           className="scroll-reveal max-w-[330px] text-taupe text-base leading-[21px] tracking-[0.48px] text-center sm:max-w-[620px] sm:text-[21px] sm:leading-[24px] sm:tracking-[0.63px]"
