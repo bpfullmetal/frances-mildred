@@ -10,8 +10,9 @@ import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
 
 const AboutPageContent = ({ content, menuItems, title, uri }) => {
-  const [openedPositions, setOpenedPositions] = React.useState([]);
   const [isPageEntered, setIsPageEntered] = React.useState(false);
+  const [isNavMenuSticky, setIsNavMenuSticky] = React.useState(false);
+  const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
   const [byTheNumberIndex, setByTheNumberIndex] = React.useState(-1);
   const [nIntervalId, setNIntervalId] = React.useState(null);
   const [intervalCount, setIntervalCount] = React.useState(0);
@@ -19,7 +20,14 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
     Array(4).fill(false)
   );
   const [beginApplyAnimate, setBeginApplyAnimate] = React.useState(false);
+  const [openedPositions, setOpenedPositions] = React.useState([]);
 
+  const navMenuRef = React.useRef();
+  const navSectionRefs = Array(3)
+    .fill()
+    .map((_) => {
+      return React.useRef();
+    });
   const byTheNumberRef = React.useRef();
   const ourTeamRefs = Array(3)
     .fill()
@@ -43,6 +51,24 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
     .map((_) => {
       return React.useRef();
     });
+
+  const navMenuItems = [
+    {
+      id: 'about',
+      name: 'About',
+      link: '#about',
+    },
+    {
+      id: 'studio',
+      name: 'Studio',
+      link: '#studio',
+    },
+    {
+      id: 'jobs',
+      name: 'Jobs',
+      link: '#jobs',
+    },
+  ];
 
   const byTheNumberItems = [
     {
@@ -129,6 +155,29 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
   }, [byTheNumberIndex, byTheNumberItems, intervalCount, nIntervalId]);
 
   const handleScroll = () => {
+    const navMenuEle = navMenuRef.current;
+    if (navMenuEle) {
+      if (window.scrollY > window.innerHeight * 0.8 - 100) {
+        if (navMenuEle.classList.value.includes(' absolute')) {
+          setIsNavMenuSticky(true);
+        }
+      } else {
+        if (navMenuEle.classList.value.includes(' fixed')) {
+          setIsNavMenuSticky(false);
+        }
+      }
+    }
+
+    navSectionRefs.forEach((ref, i) => {
+      const navSectionEle = ref.current;
+      if (navSectionEle) {
+        const scrollOffsetTop = navSectionEle.getBoundingClientRect().top;
+        if (scrollOffsetTop - window.innerHeight * 0.5 < 0) {
+          setCurrentNavMenuItem(navMenuItems[i].id);
+        }
+      }
+    });
+
     const byTheNumberEle = byTheNumberRef.current;
     if (byTheNumberEle) {
       if (!byTheNumberEle.classList.value.includes('animate')) {
@@ -246,22 +295,30 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
   };
 
   return (
-    <main>
+    <main className="relative">
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
 
-      <div className="hidden fixed top-[500px] left-12 md:flex flex-col z-10">
-        <div className="uppercase">
-          <a href="#about">About</a>
-        </div>
-        <div className="uppercase">
-          <a href="#studio">Studio</a>
-        </div>
-        <div className="uppercase">
-          <a href="#jobs">Jobs</a>
-        </div>
+      <div
+        className={`hidden ${
+          isNavMenuSticky ? 'fixed top-[100px]' : 'absolute top-[80vh]'
+        } left-10 md:flex flex-col z-10`}
+        ref={navMenuRef}
+      >
+        {navMenuItems.map((item) => (
+          <div className="uppercase" key={item.id}>
+            <a className="flex items-center" href={item.link}>
+              <div
+                className={`w-1.5 h-1.5 rounded ${
+                  currentNavMenuItem === item.id ? 'bg-white' : ''
+                } mr-2`}
+              ></div>
+              {item.name}
+            </a>
+          </div>
+        ))}
       </div>
 
-      <section id="about" className="relative flex">
+      <section id="about" className="relative flex" ref={navSectionRefs[0]}>
         <video
           autoPlay
           loop
@@ -273,9 +330,9 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
 
         <div className="relative w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="relative max-w-[860px] flex flex-col ml-auto">
-            <div className="h-screen">
+            <div className="flex items-end h-screen">
               <p
-                className={`animate-reveal text-4xl leading-[45px] pt-[400px] ${
+                className={`animate-reveal text-4xl leading-[45px] pb-[20vh] ${
                   isPageEntered ? 'reveal' : ''
                 }`}
               >
@@ -284,14 +341,16 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
                 simply dummy text of the printing and typesetting industry.
               </p>
             </div>
-            <div className="h-[60vh]" ref={byTheNumberRef}>
-              <p className="text-sm pt-[50px] pb-5">By the number</p>
+            <div className="h-[80vh]" ref={byTheNumberRef}>
+              <p className="text-sm pt-[20vh] pb-5">By the number</p>
               {byTheNumberItems.map((item, i) => (
                 <p className="text-4xl leading-[40px]" key={i}>
                   {i > byTheNumberIndex
                     ? ''
                     : i === byTheNumberIndex
-                    ? intervalCount
+                    ? intervalCount < 1
+                      ? ''
+                      : intervalCount
                     : item.value}{' '}
                   <span
                     className={`${
@@ -307,7 +366,11 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
         </div>
       </section>
 
-      <section id="studio" className="bg-dark_red py-48">
+      <section
+        id="studio"
+        className="bg-dark_red py-48"
+        ref={navSectionRefs[1]}
+      >
         <div className="flex flex-col justify-end w-full max-w-main mx-auto px-5 sm:px-12 lg:flex-row">
           <div className="flex mb-4 lg:justify-end lg:mb-0">
             <p
@@ -374,7 +437,11 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
         </div>
       </section>
 
-      <section id="jobs" className="bg-light_gray py-24">
+      <section
+        id="jobs"
+        className="bg-light_gray py-24"
+        ref={navSectionRefs[2]}
+      >
         <div
           id="jobs"
           className="flex justify-end w-full max-w-main mx-auto px-5 sm:px-12"
