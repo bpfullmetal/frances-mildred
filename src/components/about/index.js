@@ -130,7 +130,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       if (intervalCount < 1) {
         const intervalId = setInterval(
           () => setIntervalCount((old) => old + 1),
-          1500 / byTheNumberItems[byTheNumberIndex].value
+          1500 / byTheNumberItems[byTheNumberIndex].value / 10
         );
         setNIntervalId(intervalId);
       }
@@ -143,7 +143,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       byTheNumberIndex > -1 &&
       byTheNumberIndex < byTheNumberItems.length
     ) {
-      if (intervalCount >= byTheNumberItems[byTheNumberIndex].value) {
+      if (intervalCount >= byTheNumberItems[byTheNumberIndex].value * 10) {
         clearInterval(nIntervalId);
         setTimeout(() => {
           setNIntervalId(null);
@@ -172,7 +172,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       const navSectionEle = ref.current;
       if (navSectionEle) {
         const scrollOffsetTop = navSectionEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - window.innerHeight * 0.5 < 0) {
+        if (scrollOffsetTop - 44 < 0) {
           setCurrentNavMenuItem(navMenuItems[i].id);
         }
       }
@@ -294,6 +294,38 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
     }
   };
 
+  const dispCountingNumber = (item, i) => {
+    if (i > byTheNumberIndex) return '';
+
+    if (i === byTheNumberIndex) {
+      const stepCount = Math.floor(item.value / 3);
+      let countingNum = 0;
+
+      if (intervalCount <= item.value * 2) {
+        countingNum = Math.floor(
+          intervalCount / ((item.value * 2) / stepCount)
+        );
+      } else if (intervalCount <= item.value * 5) {
+        countingNum =
+          stepCount +
+          Math.floor(
+            (intervalCount - item.value * 2) / ((item.value * 3) / stepCount)
+          );
+      } else {
+        countingNum =
+          stepCount * 2 +
+          Math.floor(
+            (intervalCount - item.value * 5) /
+              ((item.value * 5) / (item.value - stepCount * 2))
+          );
+      }
+
+      return countingNum < 1 ? '' : countingNum;
+    }
+
+    return item.value;
+  };
+
   return (
     <main className="relative">
       <HeaderMenu menuItems={menuItems} currentURI={uri} />
@@ -306,10 +338,19 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
       >
         {navMenuItems.map((item) => (
           <div className="uppercase" key={item.id}>
-            <a className="flex items-center" href={item.link}>
+            <a
+              className={`flex items-center ${
+                currentNavMenuItem === 'jobs' ? 'text-black' : ''
+              }`}
+              href={item.link}
+            >
               <div
                 className={`w-1.5 h-1.5 rounded ${
-                  currentNavMenuItem === item.id ? 'bg-white' : ''
+                  currentNavMenuItem === item.id
+                    ? currentNavMenuItem === 'jobs'
+                      ? 'bg-black'
+                      : 'bg-white'
+                    : ''
                 } mr-2`}
               ></div>
               {item.name}
@@ -345,13 +386,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
               <p className="text-sm pt-[20vh] pb-5">By the number</p>
               {byTheNumberItems.map((item, i) => (
                 <p className="text-4xl leading-[40px]" key={i}>
-                  {i > byTheNumberIndex
-                    ? ''
-                    : i === byTheNumberIndex
-                    ? intervalCount < 1
-                      ? ''
-                      : intervalCount
-                    : item.value}{' '}
+                  {dispCountingNumber(item, i)}{' '}
                   <span
                     className={`${
                       i < byTheNumberIndex ? 'fade-in' : 'opacity-0'
