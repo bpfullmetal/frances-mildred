@@ -1,14 +1,11 @@
 import * as React from 'react';
+import { graphql } from 'gatsby';
 import ProjectDetailImage1 from '../../assets/images/project-detail-1.png';
 import ProjectDetailImage2 from '../../assets/images/project-detail-2.png';
 import ProjectDetailImage3 from '../../assets/images/project-detail-3.png';
 import ProjectDetailImage4 from '../../assets/images/project-detail-4.png';
 import ProjectDetailImage5 from '../../assets/images/project-detail-5.png';
-import BookConsultation from '../../components/book-consultation';
-import FooterSection from '../../components/footer-section';
-import HeaderMenu from '../../components/header-menu';
-import Helper from '../../helper';
-import { graphql } from 'gatsby';
+import PageLayout from '../../components/page-layout';
 
 const ProjectSingle = ({ data }) => {
   // console.log(data)
@@ -121,9 +118,9 @@ const ProjectSingle = ({ data }) => {
   };
 
   return (
-    <main>
-      <HeaderMenu currentURI={uri} />
+    <PageLayout>
       {title}
+
       <section className="h-screen">
         <div className="w-full h-full">
           <img
@@ -258,10 +255,7 @@ const ProjectSingle = ({ data }) => {
         className="next-project-after"
         ref={nextProjectAfterEleRef}
       ></section>
-
-      <BookConsultation />
-      <FooterSection />
-    </main>
+    </PageLayout>
   );
 };
 

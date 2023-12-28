@@ -5,10 +5,9 @@ import ProjectImage3 from '../../assets/images/project-img-1.jpeg';
 import ProjectImage4 from '../../assets/images/project-img-6.jpeg';
 import ProjectImage5 from '../../assets/images/project-img-2.jpeg';
 import ProjectImage6 from '../../assets/images/project-img-3.jpeg';
-import FooterSection from '../footer-section';
-import HeaderMenu from '../header-menu';
+import PageLayout from '../page-layout';
 
-const DiscoverPageContent = ({ content, menuItems, title, uri }) => {
+const DiscoverPageContent = () => {
   const [openModal, setOpenModal] = React.useState(false);
   const [animationEntrances, setAnimationEntrances] = React.useState({
     background: false,
@@ -108,9 +107,7 @@ const DiscoverPageContent = ({ content, menuItems, title, uri }) => {
   ];
 
   return (
-    <main className="discover">
-      <HeaderMenu menuItems={menuItems} currentURI={uri} />
-
+    <PageLayout className="discover" hiddenBookSection>
       <section
         className={`bg-dark_blue py-32 sm:py-32 ${
           animationEntrances.background ? 'fade-in' : ''
@@ -153,9 +150,7 @@ const DiscoverPageContent = ({ content, menuItems, title, uri }) => {
           </div>
         </div>
       </section>
-
-      <FooterSection menuItems={menuItems.filter((item) => item.url !== '/')} />
-    </main>
+    </PageLayout>
   );
 };
 

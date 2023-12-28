@@ -3,13 +3,11 @@ import AboutBannerVideo from '../../assets/images/about-banner.mp4';
 import TeamImage1 from '../../assets/images/home-img-2.png';
 import TeamImage2 from '../../assets/images/team-img-2.png';
 import TeamImage3 from '../../assets/images/team-img-3.png';
-import BookConsultation from '../book-consultation';
-import FooterSection from '../footer-section';
-import HeaderMenu from '../header-menu';
+import PageLayout from '../page-layout';
 import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
 
-const AboutPageContent = ({ content, menuItems, title, uri }) => {
+const AboutPageContent = () => {
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [isNavMenuSticky, setIsNavMenuSticky] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
@@ -327,9 +325,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
   };
 
   return (
-    <main className="relative">
-      <HeaderMenu menuItems={menuItems} currentURI={uri} />
-
+    <PageLayout className="relative">
       <div
         className={`hidden ${
           isNavMenuSticky ? 'fixed top-[100px]' : 'absolute top-[80vh]'
@@ -559,10 +555,7 @@ const AboutPageContent = ({ content, menuItems, title, uri }) => {
           </div>
         </div>
       </section>
-
-      <BookConsultation />
-      <FooterSection menuItems={menuItems.filter((item) => item.url !== '/')} />
-    </main>
+    </PageLayout>
   );
 };
 

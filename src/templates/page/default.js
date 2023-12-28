@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 import AboutPageContent from '../../components/about';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
   console.log(wpPage);
 
-  return (
-    <AboutPageContent content={''} menuItems={[]} title={''} uri={''} />
-    // <></>
-  );
+  return <AboutPageContent content={''} title={''} />;
 };
 
 export default PageDefault;

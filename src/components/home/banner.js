@@ -17,9 +17,9 @@ const HomeBannerSection = () => {
   const [prevScrollY, setPrevScrollY] = React.useState(0);
 
   React.useEffect(() => {
-    // setTimeout(() => {
-    //   setStartAnimate(true);
-    // }, 1000);
+    setTimeout(() => {
+      setStartAnimate(true);
+    }, 1000);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);

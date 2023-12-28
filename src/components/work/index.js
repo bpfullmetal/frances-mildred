@@ -5,9 +5,7 @@ import ProjectImage3 from '../../assets/images/project-img-2.jpeg';
 import ProjectImage4 from '../../assets/images/project-img-5.jpeg';
 import ProjectImage5 from '../../assets/images/project-img-7.png';
 import ProjectImage6 from '../../assets/images/project-img-3.jpeg';
-import BookConsultation from '../book-consultation';
-import FooterSection from '../footer-section';
-import HeaderMenu from '../header-menu';
+import PageLayout from '../page-layout';
 
 const ProjectBlockDetail = () => {
   return (
@@ -25,7 +23,7 @@ const ProjectBlockDetail = () => {
   );
 };
 
-const WorkPageContent = ({ content, menuItems, title, uri }) => {
+const WorkPageContent = () => {
   const [isPageEntered, setIsPageEntered] = React.useState(false);
 
   const workProjectRefs = Array(5)
@@ -80,9 +78,7 @@ const WorkPageContent = ({ content, menuItems, title, uri }) => {
   ];
 
   return (
-    <main className="work">
-      <HeaderMenu menuItems={menuItems} currentURI={uri} />
-
+    <PageLayout className="work">
       <section
         className={`w-full h-screen mb-40 sm:mb-16 opacity-0 ${
           isPageEntered ? 'fade-in' : ''
@@ -121,10 +117,7 @@ const WorkPageContent = ({ content, menuItems, title, uri }) => {
           </div>
         ))}
       </section>
-
-      <BookConsultation />
-      <FooterSection menuItems={menuItems.filter((item) => item.url !== '/')} />
-    </main>
+    </PageLayout>
   );
 };
 

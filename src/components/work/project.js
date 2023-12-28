@@ -4,11 +4,9 @@ import ProjectDetailImage2 from '../../assets/images/project-detail-2.png';
 import ProjectDetailImage3 from '../../assets/images/project-detail-3.png';
 import ProjectDetailImage4 from '../../assets/images/project-detail-4.png';
 import ProjectDetailImage5 from '../../assets/images/project-detail-5.png';
-import BookConsultation from '../book-consultation';
-import FooterSection from '../footer-section';
-import HeaderMenu from '../header-menu';
+import PageLayout from '../page-layout';
 
-const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
+const WorkProjectPageContent = () => {
   const imageBlocksData = [
     {
       text: 'Lorem Ipsum is simply dummy text of the interior and architect industry.',
@@ -116,9 +114,7 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
   };
 
   return (
-    <main>
-      <HeaderMenu menuItems={menuItems} currentURI={uri} />
-
+    <PageLayout>
       <section
         className={`h-screen opacity-0 ${isPageEntered ? 'fade-in' : ''}`}
       >
@@ -230,10 +226,7 @@ const WorkProjectPageContent = ({ content, menuItems, title, uri }) => {
         className="next-project-after"
         ref={nextProjectAfterEleRef}
       ></section>
-
-      <BookConsultation />
-      <FooterSection menuItems={menuItems.filter((item) => item.url !== '/')} />
-    </main>
+    </PageLayout>
   );
 };
 

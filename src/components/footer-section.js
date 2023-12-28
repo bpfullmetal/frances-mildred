@@ -1,4 +1,5 @@
 import React from 'react';
+import { graphql, StaticQuery } from 'gatsby';
 import LetterA from '../assets/js/icons/letter-a';
 import LetterC from '../assets/js/icons/letter-c';
 import LetterD from '../assets/js/icons/letter-d';
@@ -10,9 +11,8 @@ import LetterM from '../assets/js/icons/letter-m';
 import LetterN from '../assets/js/icons/letter-n';
 import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
-import { graphql, StaticQuery } from 'gatsby';
 
-const FooterSection = ({ menuItems }) => {
+const FooterSection = () => {
   return (
     <StaticQuery
       query={graphql`

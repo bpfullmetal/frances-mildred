@@ -1,27 +1,16 @@
 import * as React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import HomePageContent from '../components/home';
-import Helper from '../helper';
 
-const HomePage = (props) => {
+const HomePage = () => {
   const data = useStaticQuery(graphql`
     {
       wpPage(uri: { eq: "/" }) {
         title
         content
       }
-
-      allWpMenuItem {
-        nodes {
-          order
-          label
-          url
-        }
-      }
     }
   `);
-
-  const menuItems = Helper.sortMenuItemsByOrder(data.allWpMenuItem.nodes);
 
   const title = data.wpPage?.title || '';
   const content = data.wpPage?.content || '';
@@ -29,14 +18,7 @@ const HomePage = (props) => {
   console.log('title: ', title);
   console.log('content: ', content);
 
-  return (
-    <HomePageContent
-      content={content}
-      menuItems={menuItems}
-      title={title}
-      uri={props.uri}
-    />
-  );
+  return <HomePageContent content={content} title={title} />;
 };
 
 export default HomePage;
