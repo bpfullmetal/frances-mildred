@@ -6,6 +6,7 @@ import ProjectImage4 from '../../assets/images/project-img-6.jpeg';
 import ProjectImage5 from '../../assets/images/project-img-2.jpeg';
 import ProjectImage6 from '../../assets/images/project-img-3.jpeg';
 import PageLayout from '../page-layout';
+import CategoryModal from './category-modal';
 
 const DiscoverPageContent = () => {
   const [openModal, setOpenModal] = React.useState(false);
@@ -150,6 +151,8 @@ const DiscoverPageContent = () => {
           </div>
         </div>
       </section>
+
+      {openModal && <CategoryModal onClose={() => setOpenModal(false)} />}
     </PageLayout>
   );
 };
