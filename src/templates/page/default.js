@@ -1,12 +1,36 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
-import AboutPageContent from '../../components/about';
+import BlockLogoBanner from '../../components/blocks/banner';
+import BlockFeaturedProject from '../../components/blocks/featured-project';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
   console.log(wpPage);
-
-  return <AboutPageContent content={''} title={''} />;
+  if ( !wpPage ) return <>No page data found</>
+  return (
+    <div>
+      {
+        wpPage.editorBlocks && (
+          <div>
+            {
+              wpPage.editorBlocks.map( block => {
+                switch (block.__typename) {
+                  case 'WpAcfLogoBanner':
+                    return <BlockLogoBanner data={block.blockLogoBanner} />
+                  case 'WpAcfFeaturedProject':
+                    return <BlockFeaturedProject data={block.blockFeaturedProjects} />
+                  default:
+                    return <div dangerouslySetInnerHTML={{
+                      __html: block.renderedHtml,
+                    }}></div>
+                }
+              })
+            }
+          </div>
+        )
+      }
+    </div>
+  )
 };
 
 export default PageDefault;
@@ -33,9 +57,9 @@ export const pageQuery = graphql`
                 localFile {
                   childImageSharp {
                     gatsbyImageData(
-                      layout: CONSTRAINED
+                      layout: FULL_WIDTH
                       width: 800 # Adjust the width as needed
-                      placeholder: BLURRED
+                      placeholder: DOMINANT_COLOR
                     )
                   }
                 }
@@ -53,6 +77,49 @@ export const pageQuery = graphql`
             backgroundVideo {
               node {
                 mediaItemUrl
+              }
+            }
+          }
+        }
+        ... on WpAcfFeaturedProject {
+          anchor
+          apiVersion
+          blockFeaturedProjects {
+            projects {
+              backgroundImage {
+                node {
+                  altText
+                  localFile {
+                    childImageSharp {
+                      gatsbyImageData(layout: FULL_WIDTH, placeholder: DOMINANT_COLOR)
+                    }
+                  }
+                }
+              }
+              description
+              link {
+                target
+                title
+                url
+              }
+              project {
+                nodes {
+                  ... on WpProject {
+                    id
+                    featuredImage {
+                      node {
+                        altText
+                        localFile {
+                          childImageSharp {
+                            gatsbyImageData(layout: FULL_WIDTH, placeholder: DOMINANT_COLOR)
+                          }
+                        }
+                      }
+                    }
+                    title # TODO Switch to EXCERPT
+                    link
+                  }
+                }
               }
             }
           }

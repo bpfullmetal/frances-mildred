@@ -12,7 +12,7 @@ const AboutPage = ({ data }) => {
   console.log('title: ', title);
   console.log('content: ', content);
 
-  return <AboutPageContent content={content} title={title} />;
+  return <AboutPageContent content={wpPage} title={title} />;
 };
 
 export default AboutPage;
@@ -29,6 +29,73 @@ export const pageQuery = graphql`
           isPostsPage
         }
       }
+      template {
+        ... on WpTemplate_About {
+          templateName
+          pageAbout {
+            intro {
+              introText
+              byTheNumber {
+                heading
+                metrics {
+                  count
+                  metric
+                }
+              }
+              backgroundVideo {
+                node {
+                  mediaItemUrl
+                  publicUrl
+                }
+              }
+              backgroundImage {
+                node {
+                  localFile {
+                    childImageSharp {
+                      gatsbyImageData(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+                    }
+                  }
+                }
+              }
+              menuName
+            }
+            ourTeam {
+              description
+              featuredImage {
+                node {
+                  localFile {
+                    childImageSharp {
+                      gatsbyImageData(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+                    }
+                  }
+                }
+              }
+              featuredTeamMembers {
+                bio
+                bioMore
+                role
+                image {
+                  node {
+                    altText
+                    localFile {
+                      childImageSharp {
+                        gatsbyImageData(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+                      }
+                    }
+                  }
+                }
+                name
+              }
+              teamMembers {
+                bio
+                bioMore
+                role
+                name
+              }
+            }
+          }
+        }
+      }
       id
       slug
       status
@@ -40,3 +107,13 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+// localFile {
+//   childImageSharp {
+//     gatsbyImageData(
+//       layout: CONSTRAINED
+//       width: 800
+//       placeholder: BLURRED
+//     )
+//   }
+// }

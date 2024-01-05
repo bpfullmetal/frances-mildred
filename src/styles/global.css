@@ -277,11 +277,39 @@ footer .logo svg {
   transform: translateY(50px);
 }
 
+.animate-reveal-down:not(.reveal) {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.animate-reveal-down {
+  transition: all .6s ease-out;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.animate-reveal-down.animate-hidden {
+  transition: all .3s ease-out;
+  max-height: 0;
+  overflow: hidden;
+}
+
 /**
  * ----------------------------------------
  * animation reveal
  * ----------------------------------------
  */
+
+.reveal-down {
+  -webkit-animation: reveal-down 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: reveal-down 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.reveal-down.animate-hidden {
+  max-height: 9999px;
+  transition: all 1.2s ease-in-out;
+}
+
 .reveal {
   -webkit-animation: reveal 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   animation: reveal 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -301,6 +329,27 @@ footer .logo svg {
   0% {
     opacity: 0;
     transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@-webkit-keyframes reveal-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+@keyframes reveal-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
   }
   100% {
     opacity: 1;

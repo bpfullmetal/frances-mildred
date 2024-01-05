@@ -8,7 +8,7 @@ import ProjectImage3 from '../../assets/images/project-img-3.jpeg';
 import ProjectImage4 from '../../assets/images/project-img-4.jpeg';
 import ProjectImage5 from '../../assets/images/project-img-5.jpeg';
 import PageLayout from '../page-layout';
-import HomeBannerSection from './banner';
+import HomeBannerSection from '../blocks/banner';
 
 import 'swiper/css';
 import 'swiper/css/pagination';

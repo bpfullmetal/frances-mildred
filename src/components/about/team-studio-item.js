@@ -5,6 +5,7 @@ const TeamStudioItem = ({ data, animate }) => {
   const [nameRevealed, setNameRevealed] = React.useState(false);
   const [roleRevealed, setRoleRevealed] = React.useState(false);
   const [bioRevealed, setBioRevealed] = React.useState(false);
+  const [readMoreDisplayed, setReadMoreDisplayed] = React.useState(false);
 
   React.useEffect(() => {
     if (animate) {
@@ -36,15 +37,27 @@ const TeamStudioItem = ({ data, animate }) => {
       >
         {data.role}
       </p>
-      <p className={`animate-reveal ${bioRevealed ? 'reveal' : ''}`}>
-        {data.bio}{' '}
-        <a
-          className="text-sm_extra leading-[20px] tracking-[0.45px] underline uppercase"
-          href="/"
-        >
-          READ MORE
-        </a>
-      </p>
+      {
+        data.bio && <div className={`animate-reveal ${bioRevealed ? 'reveal' : ''}`}>
+          <p>
+            {data.bio}
+          </p>
+          {
+            data.bioMore && <>
+              <p className={`mt-4 animate-reveal-down animate-hidden ${readMoreDisplayed ? 'reveal-down' : ''}`}>
+                {data.bioMore}
+              </p>
+              <button
+                className="mt-4 text-sm_extra leading-[20px] tracking-[0.45px] underline uppercase"
+                onClick={() => setReadMoreDisplayed(!readMoreDisplayed)}
+              >
+                {`Read ${readMoreDisplayed ? 'less' : 'more'}`}
+              </button>
+            </>
+          }
+        </div>
+      }
+      
     </div>
   );
 };

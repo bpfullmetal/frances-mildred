@@ -1,13 +1,13 @@
 import * as React from 'react';
 import AboutBannerVideo from '../../assets/images/about-banner.mp4';
 import TeamImage1 from '../../assets/images/home-img-2.png';
-import TeamImage2 from '../../assets/images/team-img-2.png';
-import TeamImage3 from '../../assets/images/team-img-3.png';
 import PageLayout from '../page-layout';
 import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
 
-const AboutPageContent = () => {
+const AboutPageContent = (pageData) => {
+  const { intro, ourTeam } = pageData.content.template.pageAbout
+  
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [isNavMenuSticky, setIsNavMenuSticky] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
@@ -32,7 +32,7 @@ const AboutPageContent = () => {
     .map((_) => {
       return React.useRef();
     });
-  const teamMemberRefs = Array(4)
+  const teamMemberRefs = Array(ourTeam.teamMembers.length)
     .fill()
     .map((_) => {
       return React.useRef();
@@ -119,6 +119,64 @@ const AboutPageContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  React.useEffect(() => {    
+
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px', // No margin
+      threshold: 0.3, // Trigger when 50% of the target is in the viewport
+    };
+
+    teamMemberRefs.forEach( (ref, i) => {
+      const observer = new IntersectionObserver(handleIntersection, options);
+      if ( ref.current ) {
+        observer.observe(ref.current);
+      }
+      return () => {
+        observer.unobserve(ref.current);
+      };
+    })
+  }, []);
+
+  const handleIntersection = (entries) => {
+    const [entry] = entries;
+    // console.log(entry)
+    if ( !entry.isIntersecting ) return
+    const revealEl = entry.target
+    switch (entry.target.getAttribute('data-animate-ref')) {
+      case 'team-member':
+        const teamMemberIndex = parseInt(entry.target.getAttribute('data-index'))
+        if ( !revealEl.classList.value.includes('animate') ) {
+          
+          if (window.innerWidth < 768) {
+            setTeamMembersAnimate((old) =>
+              Array.from(old).map((v, j) => (teamMemberIndex === j ? true : v))
+            );
+          } else {
+            if (teamMemberIndex % 2) {
+              console.log('hello??', revealEl)
+              setTimeout(
+                () =>
+                  setTeamMembersAnimate((old) =>
+                    Array.from(old).map((v, j) => (teamMemberIndex === j ? true : v))
+                  ),
+                500
+              );
+            } else {
+              setTeamMembersAnimate((old) =>
+                Array.from(old).map((v, j) => (teamMemberIndex === j ? true : v))
+              );
+            }
+          }
+          revealEl.classList.add('animate');
+        }
+      break;
+      default:
+        // entry.target.classList.add('reveal');
+      break;
+    }
+  };
+
   React.useEffect(() => {
     if (
       !nIntervalId &&
@@ -204,36 +262,36 @@ const AboutPageContent = () => {
       }
     });
 
-    teamMemberRefs.forEach((ref, i) => {
-      const scrollRevealEle = ref.current;
-      if (scrollRevealEle) {
-        if (!scrollRevealEle.classList.value.includes('animate')) {
-          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
-          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-            if (window.innerWidth < 768) {
-              setTeamMembersAnimate((old) =>
-                Array.from(old).map((v, j) => (i === j ? true : v))
-              );
-            } else {
-              if (i % 2) {
-                setTimeout(
-                  () =>
-                    setTeamMembersAnimate((old) =>
-                      Array.from(old).map((v, j) => (i === j ? true : v))
-                    ),
-                  500
-                );
-              } else {
-                setTeamMembersAnimate((old) =>
-                  Array.from(old).map((v, j) => (i === j ? true : v))
-                );
-              }
-            }
-            scrollRevealEle.classList.add('animate');
-          }
-        }
-      }
-    });
+    // teamMemberRefs.forEach((ref, i) => {
+    //   const scrollRevealEle = ref.current;
+    //   if (scrollRevealEle) {
+    //     if (!scrollRevealEle.classList.value.includes('animate')) {
+    //       const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
+    //       if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
+    //         if (window.innerWidth < 768) {
+    //           setTeamMembersAnimate((old) =>
+    //             Array.from(old).map((v, j) => (i === j ? true : v))
+    //           );
+    //         } else {
+    //           if (i % 2) {
+    //             setTimeout(
+    //               () =>
+    //                 setTeamMembersAnimate((old) =>
+    //                   Array.from(old).map((v, j) => (i === j ? true : v))
+    //                 ),
+    //               500
+    //             );
+    //           } else {
+    //             setTeamMembersAnimate((old) =>
+    //               Array.from(old).map((v, j) => (i === j ? true : v))
+    //             );
+    //           }
+    //         }
+    //         scrollRevealEle.classList.add('animate');
+    //       }
+    //     }
+    //   }
+    // });
 
     const openingsTitleEle = openingsTitleRef.current;
     if (openingsTitleEle) {
@@ -296,32 +354,32 @@ const AboutPageContent = () => {
     if (i > byTheNumberIndex) return '';
 
     if (i === byTheNumberIndex) {
-      const stepCount = Math.floor(item.value / 3);
+      const stepCount = Math.floor(item.count / 3);
       let countingNum = 0;
 
-      if (intervalCount <= item.value * 2) {
+      if (intervalCount <= item.count * 2) {
         countingNum = Math.floor(
-          intervalCount / ((item.value * 2) / stepCount)
+          intervalCount / ((item.count * 2) / stepCount)
         );
-      } else if (intervalCount <= item.value * 5) {
+      } else if (intervalCount <= item.count * 5) {
         countingNum =
           stepCount +
           Math.floor(
-            (intervalCount - item.value * 2) / ((item.value * 3) / stepCount)
+            (intervalCount - item.count * 2) / ((item.count * 3) / stepCount)
           );
       } else {
         countingNum =
           stepCount * 2 +
           Math.floor(
-            (intervalCount - item.value * 5) /
-              ((item.value * 5) / (item.value - stepCount * 2))
+            (intervalCount - item.count * 5) /
+              ((item.count * 5) / (item.count - stepCount * 2))
           );
       }
 
       return countingNum < 1 ? '' : countingNum;
     }
 
-    return item.value;
+    return item.count;
   };
 
   return (
@@ -367,32 +425,40 @@ const AboutPageContent = () => {
 
         <div className="relative w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="relative max-w-[860px] flex flex-col ml-auto">
-            <div className="flex items-end h-screen">
-              <p
-                className={`animate-reveal text-4xl leading-[45px] pb-[20vh] ${
-                  isPageEntered ? 'reveal' : ''
-                }`}
-              >
-                This is an area for a short paragraph about Frances Mildred.
-                This should be between 50-75 words no longer. Lorem Ipsum is
-                simply dummy text of the printing and typesetting industry.
-              </p>
-            </div>
-            <div className="h-[80vh]" ref={byTheNumberRef}>
-              <p className="text-sm pt-[20vh] pb-5">By the number</p>
-              {byTheNumberItems.map((item, i) => (
-                <p className="text-4xl leading-[40px]" key={i}>
-                  {dispCountingNumber(item, i)}{' '}
-                  <span
-                    className={`${
-                      i < byTheNumberIndex ? 'fade-in' : 'opacity-0'
+            {
+              intro.introText && (
+                <div className="flex items-end h-screen">
+                  <p
+                    className={`animate-reveal text-4xl leading-[45px] pb-[20vh] ${
+                      isPageEntered ? 'reveal' : ''
                     }`}
                   >
-                    {item.name}
-                  </span>
-                </p>
-              ))}
-            </div>
+                    { intro.introText }
+                  </p>
+                </div>
+              )
+            }
+            {
+              intro.byTheNumber.metrics?.length && (
+                <div className="h-[80vh]" ref={byTheNumberRef}>
+                  {
+                    intro.byTheNumber.heading && <p className="text-sm pt-[20vh] pb-5">{intro.byTheNumber.heading}</p>
+                  }
+                  {intro.byTheNumber.metrics.map((item, i) => (
+                    <p className="text-4xl leading-[40px]" key={i}>
+                      {dispCountingNumber(item, i)}{' '}
+                      <span
+                        className={`${
+                          i < byTheNumberIndex ? 'fade-in' : 'opacity-0'
+                        }`}
+                      >
+                        {item.metric}
+                      </span>
+                    </p>
+                  ))}
+                </div>
+              )
+            }
           </div>
         </div>
       </section>
@@ -424,46 +490,31 @@ const AboutPageContent = () => {
               </p>
             </div>
 
-            <div className="flex flex-col mt-48">
-              <TeamStudioFeatured
-                data={{
-                  image: TeamImage2,
-                  alt: 'our team 2',
-                  name: 'Lauren MacCuaig',
-                  role: 'Director',
-                  bio: 'Lauren has always had a love for materials, textures, colors, and space. Before creating Frances Mildred, she worked at MADE for a number of years, and at Terrain, a New York based landscape',
-                }}
-              />
-            </div>
+            {
+              ourTeam.featuredTeamMembers && ourTeam.featuredTeamMembers.map( (teamMember, i)=> (
+                <div key={`featured-team-member-${i}`} className={`flex flex-col mt-48${ i % 2 !== 0 ? ' ml-auto' : ''}`}>
+                  <TeamStudioFeatured
+                    data={{...teamMember}}
+                  />
+                </div>
+              ))
+            }
 
-            <div className="flex flex-col mt-24 ml-auto">
-              <TeamStudioFeatured
-                data={{
-                  image: TeamImage3,
-                  alt: 'our team 3',
-                  name: 'Brian Papa',
-                  role: 'Director',
-                  bio: 'Brian cares most deeply for how things are put together, and the beauty that arises from a careful assembly of materials. Prior to launching Frances Mildred with Lauren.',
-                }}
-              />
-            </div>
-
-            <div className="flex flex-wrap mt-48">
-              {Array(4)
-                .fill(1)
-                .map((_, i) => (
-                  <div key={i} ref={teamMemberRefs[i]}>
-                    <TeamStudioItem
-                      data={{
-                        name: 'Jacqui Robbins',
-                        role: 'Designer',
-                        bio: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s`,
-                      }}
-                      animate={teamMembersAnimate[i]}
-                    />
-                  </div>
-                ))}
-            </div>
+            {
+              ourTeam.teamMembers.length && (
+                <div className="flex flex-wrap mt-48">
+                  {ourTeam.teamMembers
+                    .map((teamMember, i) => (
+                      <div data-animate-ref="team-member" data-index={i} key={i} ref={teamMemberRefs[i]}>
+                        <TeamStudioItem
+                          data={teamMember}
+                          animate={teamMembersAnimate[i]}
+                        />
+                      </div>
+                    ))}
+                </div>
+              )
+            }
           </div>
         </div>
       </section>
