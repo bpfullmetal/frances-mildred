@@ -291,15 +291,7 @@ export const pageQuery = graphql`
       link
       featuredImage {
         node {
-          localFile {
-            childImageSharp {
-              gatsbyImageData(
-                layout: CONSTRAINED
-                width: 800
-                placeholder: BLURRED
-              )
-            }
-          }
+          gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
         }
       }
     }

@@ -8,7 +8,7 @@ const TeamStudioFeatured = ({ data }) => {
   const [readMoreRevealed, setReadMoreRevealed] = React.useState(false);
   const [readMoreDisplayed, setReadMoreDisplayed] = React.useState(false);
 
-  const teamMemberImage = data.image ? getImage(data.image.node.localFile) : null;
+  const teamMemberImage = data.image ? getImage(data.image.node.gatsbyImage) : null;
 
   const [scrollRevealRefs] = React.useState(
     Array(3)

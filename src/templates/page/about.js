@@ -50,11 +50,7 @@ export const pageQuery = graphql`
               }
               backgroundImage {
                 node {
-                  localFile {
-                    childImageSharp {
-                      gatsbyImageData(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
-                    }
-                  }
+                  gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
                 }
               }
               menuName
@@ -63,11 +59,7 @@ export const pageQuery = graphql`
               description
               featuredImage {
                 node {
-                  localFile {
-                    childImageSharp {
-                      gatsbyImageData(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
-                    }
-                  }
+                  gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
                 }
               }
               featuredTeamMembers {
@@ -77,11 +69,7 @@ export const pageQuery = graphql`
                 image {
                   node {
                     altText
-                    localFile {
-                      childImageSharp {
-                        gatsbyImageData(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
-                      }
-                    }
+                    gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
                   }
                 }
                 name

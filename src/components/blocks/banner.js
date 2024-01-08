@@ -42,7 +42,7 @@ const BlockLogoBanner = ({data}) => {
   };
 
   if ( !data.backgroundImage && !data.backgroundVideo ) return <></>
-
+  console.log(data.backgroundImage)
   return (
     <section
       className="relative h-home_banner home-banner"
@@ -53,7 +53,7 @@ const BlockLogoBanner = ({data}) => {
         ? <video autoPlay muted loop className="absolute w-full h-full object-cover">
             <source src={data.backgroundVideo.node.sourceUrl} type="video/mp4"></source>
           </video>
-        : <GatsbyImage className="w-full h-full object-cover absolute" image={getImage(data.backgroundImage.node.localFile)} alt={data.backgroundImage.node.altText} />
+        : <GatsbyImage className="w-full h-full object-cover absolute" image={getImage(data.backgroundImage.node.gatsbyImage)} alt={data.backgroundImage.node.altText} />
       }
       <div className="relative h-full flex flex-col items-center justify-center uppercase">
         <div className="flex justify-between w-[400px]">

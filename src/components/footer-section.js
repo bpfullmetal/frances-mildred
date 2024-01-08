@@ -1,5 +1,6 @@
 import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
+import MailchimpSubscribe from 'react-mailchimp-subscribe'
 import LetterA from '../assets/js/icons/letter-a';
 import LetterC from '../assets/js/icons/letter-c';
 import LetterD from '../assets/js/icons/letter-d';
@@ -13,6 +14,9 @@ import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
 
 const FooterSection = () => {
+
+  const url = "https://fullmetalworkshop.us17.list-manage.com/subscribe/post?u=8b032d8566f5bc3f3417f02c3&amp;id=ef28567184&amp;f_id=007957e0f0";
+
   return (
     <StaticQuery
       query={graphql`

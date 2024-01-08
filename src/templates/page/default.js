@@ -2,6 +2,7 @@ import * as React from 'react';
 import { graphql } from 'gatsby';
 import BlockLogoBanner from '../../components/blocks/banner';
 import BlockFeaturedProject from '../../components/blocks/featured-project';
+import FooterSection from '../../components/footer-section';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
@@ -29,6 +30,7 @@ const PageDefault = ({ data }) => {
           </div>
         )
       }
+      <FooterSection/>
     </div>
   )
 };
@@ -54,15 +56,7 @@ export const pageQuery = graphql`
           blockLogoBanner {
             backgroundImage {
               node {
-                localFile {
-                  childImageSharp {
-                    gatsbyImageData(
-                      layout: FULL_WIDTH
-                      width: 800 # Adjust the width as needed
-                      placeholder: DOMINANT_COLOR
-                    )
-                  }
-                }
+                gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: DOMINANT_COLOR)
                 sourceUrl
                 altText
                 mediaDetails {
@@ -89,11 +83,7 @@ export const pageQuery = graphql`
               backgroundImage {
                 node {
                   altText
-                  localFile {
-                    childImageSharp {
-                      gatsbyImageData(layout: FULL_WIDTH, placeholder: DOMINANT_COLOR)
-                    }
-                  }
+                  gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: DOMINANT_COLOR)
                 }
               }
               description
@@ -109,11 +99,7 @@ export const pageQuery = graphql`
                     featuredImage {
                       node {
                         altText
-                        localFile {
-                          childImageSharp {
-                            gatsbyImageData(layout: FULL_WIDTH, placeholder: DOMINANT_COLOR)
-                          }
-                        }
+                        gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: DOMINANT_COLOR)
                       }
                     }
                     title # TODO Switch to EXCERPT

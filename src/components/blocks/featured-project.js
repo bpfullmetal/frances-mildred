@@ -42,7 +42,7 @@ const BlockFeaturedProject = ({data}) => {
         <section className="relative flex items-center">
             {
                 projectImage && (
-                    <GatsbyImage className="min-h-screen w-full rounded-none object-cover" image={getImage(projectImage.localFile)} alt={projectImage.altText} />
+                    <GatsbyImage className="min-h-screen w-full rounded-none object-cover" image={getImage(projectImage.gatsbyImage)} alt={projectImage.altText} />
                 )
             }
             {
