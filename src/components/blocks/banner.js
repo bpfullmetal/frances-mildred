@@ -42,7 +42,7 @@ const BlockLogoBanner = ({data}) => {
   };
 
   if ( !data.backgroundImage && !data.backgroundVideo ) return <></>
-  console.log(data.backgroundImage)
+  
   return (
     <section
       className="relative h-home_banner home-banner"

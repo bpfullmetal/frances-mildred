@@ -6,22 +6,58 @@ import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
 
 const AboutPageContent = (pageData) => {
-  const { intro, ourTeam } = pageData.content.template.pageAbout
+  const { intro, ourTeam, studioOpenings } = pageData.content.template.pageAbout
   
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [isNavMenuSticky, setIsNavMenuSticky] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
   const [byTheNumberIndex, setByTheNumberIndex] = React.useState(-1);
   const [nIntervalId, setNIntervalId] = React.useState(null);
+  const [jobListings, setJobListings] = React.useState([]);
   const [intervalCount, setIntervalCount] = React.useState(0);
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
     Array(4).fill(false)
   );
   const [beginApplyAnimate, setBeginApplyAnimate] = React.useState(false);
   const [openedPositions, setOpenedPositions] = React.useState([]);
+  
+  const stringToSlug = str => {
+    return str
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+/g, '-') // Replace non-alphanumeric characters with dashes
+      .replace(/^-+|-+$/g, ''); // Remove leading and trailing dashes
+  }
+  
+  let navMenuItems = [];
+  let sectionsArray = [];
 
+  if ( intro.menuName ) {
+    sectionsArray.push( intro.menuName )
+    navMenuItems.push({
+      id: stringToSlug(intro.menuName),
+      name: intro.menuName,
+      link: `#${stringToSlug(intro.menuName)}`
+    })
+  }
+  if ( ourTeam.menuName ) {
+    sectionsArray.push( ourTeam.menuName )
+    navMenuItems.push({
+      id: stringToSlug(ourTeam.menuName),
+      name: ourTeam.menuName,
+      link: `#${stringToSlug(ourTeam.menuName)}`
+    })
+  }
+  if ( studioOpenings.menuName ) {
+    sectionsArray.push( studioOpenings.menuName )
+    navMenuItems.push({
+      id: stringToSlug(studioOpenings.menuName),
+      name: studioOpenings.menuName,
+      link: `#${stringToSlug(studioOpenings.menuName)}`
+    })
+  }
+  
   const navMenuRef = React.useRef();
-  const navSectionRefs = Array(3)
+  const navSectionRefs = Array(sectionsArray.length)
     .fill()
     .map((_) => {
       return React.useRef();
@@ -50,68 +86,14 @@ const AboutPageContent = (pageData) => {
       return React.useRef();
     });
 
-  const navMenuItems = [
-    {
-      id: 'about',
-      name: 'About',
-      link: '#about',
-    },
-    {
-      id: 'studio',
-      name: 'Studio',
-      link: '#studio',
-    },
-    {
-      id: 'jobs',
-      name: 'Jobs',
-      link: '#jobs',
-    },
-  ];
-
-  const byTheNumberItems = [
-    {
-      value: 28,
-      name: 'Projects complete',
-    },
-    {
-      value: 11,
-      name: 'Humans',
-    },
-    {
-      value: 3,
-      name: 'Dogs',
-    },
-    {
-      value: 13,
-      name: 'Plants',
-    },
-  ];
-
-  const openingPositionsData = [
-    {
-      name: 'Senior Architect',
-      desc: [
-        `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text`,
-        `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      ],
-    },
-    {
-      name: 'Account Manager',
-      desc: [
-        `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text`,
-        `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      ],
-    },
-    {
-      name: 'Junior Architect',
-      desc: [
-        `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text`,
-        `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      ],
-    },
-  ];
-
   React.useEffect(() => {
+
+    const activeJobs = studioOpenings.jobListings.filter( job => job.active )
+    setJobListings(activeJobs)
+    if ( activeJobs.length ) {
+      setOpenedPositions([0])
+    }
+    
     setTimeout(() => setIsPageEntered(true), 500);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -136,14 +118,27 @@ const AboutPageContent = (pageData) => {
         observer.unobserve(ref.current);
       };
     })
-  }, []);
+    
+    navSectionRefs.forEach((ref, i) => {
+      const observer = new IntersectionObserver(handleIntersection, options);
+      if ( ref.current ) {
+        observer.observe(ref.current);
+      }
+      return () => {
+        observer.unobserve(ref.current);
+      };
+    });
+
+  }, [navSectionRefs, teamMemberRefs]);
 
   const handleIntersection = (entries) => {
     const [entry] = entries;
-    // console.log(entry)
-    if ( !entry.isIntersecting ) return
+    // if ( entry.target.getAttribute('data-animate-ref') === 'section' && entry.target.id === 'jobs' ) {
+    //   console.log('entry', entry)
+    // }
+    if ( !entry.isIntersecting && !entry.isVisible ) return
     const revealEl = entry.target
-    switch (entry.target.getAttribute('data-animate-ref')) {
+    switch ( entry.target.getAttribute('data-animate-ref') ) {
       case 'team-member':
         const teamMemberIndex = parseInt(entry.target.getAttribute('data-index'))
         if ( !revealEl.classList.value.includes('animate') ) {
@@ -154,7 +149,6 @@ const AboutPageContent = (pageData) => {
             );
           } else {
             if (teamMemberIndex % 2) {
-              console.log('hello??', revealEl)
               setTimeout(
                 () =>
                   setTeamMembersAnimate((old) =>
@@ -171,6 +165,18 @@ const AboutPageContent = (pageData) => {
           revealEl.classList.add('animate');
         }
       break;
+      case 'section':
+        const scrollOffsetTop = revealEl.getBoundingClientRect().top;
+        const sectionIndex = parseInt(revealEl.getAttribute('data-section-index'))
+        setCurrentNavMenuItem(navMenuItems[sectionIndex].id);
+        // const navSectionEle = ref.current;
+        // if (navSectionEle) {
+        //   const scrollOffsetTop = navSectionEle.getBoundingClientRect().top;
+        //   console.log(scrollOffsetTop)
+        //   if (scrollOffsetTop - 200 < 0) {
+        //     setCurrentNavMenuItem(navMenuItems[i].id);
+        //   }
+        // }
       default:
         // entry.target.classList.add('reveal');
       break;
@@ -181,25 +187,25 @@ const AboutPageContent = (pageData) => {
     if (
       !nIntervalId &&
       byTheNumberIndex > -1 &&
-      byTheNumberIndex < byTheNumberItems.length
+      byTheNumberIndex < intro.byTheNumber.metrics.length
     ) {
       if (intervalCount < 1) {
         const intervalId = setInterval(
           () => setIntervalCount((old) => old + 1),
-          1500 / byTheNumberItems[byTheNumberIndex].value / 10
+          1500 / intro.byTheNumber.metrics[byTheNumberIndex].count / 10
         );
         setNIntervalId(intervalId);
       }
     }
-  }, [byTheNumberIndex, byTheNumberItems, intervalCount, nIntervalId]);
+  }, [byTheNumberIndex, intro.byTheNumber.metrics, intervalCount, nIntervalId]);
 
   React.useEffect(() => {
     if (
       nIntervalId &&
       byTheNumberIndex > -1 &&
-      byTheNumberIndex < byTheNumberItems.length
+      byTheNumberIndex < intro.byTheNumber.metrics.length
     ) {
-      if (intervalCount >= byTheNumberItems[byTheNumberIndex].value * 10) {
+      if (intervalCount >= intro.byTheNumber.metrics[byTheNumberIndex].count * 10) {
         clearInterval(nIntervalId);
         setTimeout(() => {
           setNIntervalId(null);
@@ -208,7 +214,7 @@ const AboutPageContent = (pageData) => {
         }, 500);
       }
     }
-  }, [byTheNumberIndex, byTheNumberItems, intervalCount, nIntervalId]);
+  }, [byTheNumberIndex, intro.byTheNumber.metrics, intervalCount, nIntervalId]);
 
   const handleScroll = () => {
     const navMenuEle = navMenuRef.current;
@@ -224,15 +230,16 @@ const AboutPageContent = (pageData) => {
       }
     }
 
-    navSectionRefs.forEach((ref, i) => {
-      const navSectionEle = ref.current;
-      if (navSectionEle) {
-        const scrollOffsetTop = navSectionEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - 44 < 0) {
-          setCurrentNavMenuItem(navMenuItems[i].id);
-        }
-      }
-    });
+    // navSectionRefs.forEach((ref, i) => {
+    //   const navSectionEle = ref.current;
+    //   if (navSectionEle) {
+    //     const scrollOffsetTop = navSectionEle.getBoundingClientRect().top;
+        
+    //     if (scrollOffsetTop - 200 < 0) {
+    //       setCurrentNavMenuItem(navMenuItems[i].id);
+    //     }
+    //   }
+    // });
 
     const byTheNumberEle = byTheNumberRef.current;
     if (byTheNumberEle) {
@@ -385,9 +392,7 @@ const AboutPageContent = (pageData) => {
   return (
     <PageLayout className="relative">
       <div
-        className={`hidden ${
-          isNavMenuSticky ? 'fixed top-[100px]' : 'absolute top-[80vh]'
-        } left-10 md:flex flex-col z-10`}
+        className={`hidden fixed top-2/4 left-10 md:flex flex-col z-10`}
         ref={navMenuRef}
       >
         {navMenuItems.map((item) => (
@@ -413,7 +418,7 @@ const AboutPageContent = (pageData) => {
         ))}
       </div>
 
-      <section id="about" className="relative flex" ref={navSectionRefs[0]}>
+      <section id={stringToSlug(intro.menuName)} data-section-index="0" data-animate-ref="section" className="relative flex" ref={navSectionRefs[0]} data-background="dark">
         <video
           autoPlay
           loop
@@ -424,12 +429,12 @@ const AboutPageContent = (pageData) => {
         </video>
 
         <div className="relative w-full max-w-main mx-auto px-5 sm:px-12">
-          <div className="relative max-w-[860px] flex flex-col ml-auto">
+          <div className="relative max-w-[860px] flex flex-col items-between ml-auto">
             {
               intro.introText && (
-                <div className="flex items-end h-screen">
+                <div className="flex items-center">
                   <p
-                    className={`animate-reveal text-4xl leading-[45px] pb-[20vh] ${
+                    className={`animate-reveal text-3xl leading-[40px] pt-24 ${
                       isPageEntered ? 'reveal' : ''
                     }`}
                   >
@@ -445,7 +450,7 @@ const AboutPageContent = (pageData) => {
                     intro.byTheNumber.heading && <p className="text-sm pt-[20vh] pb-5">{intro.byTheNumber.heading}</p>
                   }
                   {intro.byTheNumber.metrics.map((item, i) => (
-                    <p className="text-4xl leading-[40px]" key={i}>
+                    <p className="text-2xl leading-[30px]" key={i}>
                       {dispCountingNumber(item, i)}{' '}
                       <span
                         className={`${
@@ -464,9 +469,12 @@ const AboutPageContent = (pageData) => {
       </section>
 
       <section
-        id="studio"
+        id={stringToSlug(ourTeam.menuName)}
         className="bg-dark_red py-48"
         ref={navSectionRefs[1]}
+        data-section-index="1"
+        data-animate-ref="section"
+        data-background="dark"
       >
         <div className="flex flex-col justify-end w-full max-w-main mx-auto px-5 sm:px-12 lg:flex-row">
           <div className="flex mb-4 lg:justify-end lg:mb-0">
@@ -520,88 +528,108 @@ const AboutPageContent = (pageData) => {
       </section>
 
       <section
-        id="jobs"
+        id={stringToSlug(studioOpenings.menuName)}
         className="bg-light_gray py-24"
         ref={navSectionRefs[2]}
+        data-section-index="2"
+        data-animate-ref="section"
+        data-background="light"
       >
         <div
           id="jobs"
           className="flex justify-end w-full max-w-main mx-auto px-5 sm:px-12"
         >
           <div className="w-full max-w-[860px] flex flex-col">
-            <p
+            <h2
               className="animate-reveal text-[65px] text-black leading-[65px] tracking-[0.65px]"
               ref={openingsTitleRef}
             >
               Studio Openings
-            </p>
-
+            </h2>
+            
             <div className="flex flex-col my-16 space-y-5">
-              {openingPositionsData.map((pos, i) => {
-                const isOpened = openedPositions.includes(i);
-                return (
-                  <div
-                    className="animate-reveal flex flex-col"
-                    key={i}
-                    ref={openingJobRefs[i]}
-                  >
-                    <div
-                      className="flex items-center cursor-pointer"
-                      onClick={() => handlePositionNameClicked(i)}
-                    >
-                      <div className="relative flex items-center justify-center w-[30px] h-[30px] border border-black rounded-full mr-2.5">
-                        <div className="absolute w-3 h-0.5 bg-black"></div>
-                        {!isOpened && (
-                          <div className="absolute w-0.5 h-3 bg-black"></div>
-                        )}
-                      </div>
-                      <p className="text-black text-lg">{pos.name}</p>
-                    </div>
-                    <div
-                      className={`h-0 ${
-                        isOpened ? 'h-full mt-4' : 'mt-0'
-                      } flex flex-col ml-10 space-y-5 overflow-hidden transition-all`}
-                    >
-                      {pos.desc.map((para, j) => (
-                        <p
-                          className="text-black text-lg leading-[24px] tracking-[0.18px]"
-                          key={j}
+              {
+                jobListings.length 
+                ? jobListings.map((pos, i) => {
+                    const isOpened = openedPositions.includes(i);
+                    return (
+                      <div
+                        className="animate-reveal flex flex-col"
+                        key={i}
+                        ref={openingJobRefs[i]}
+                      >
+                        <div
+                          className="flex items-center cursor-pointer"
+                          onClick={() => handlePositionNameClicked(i)}
                         >
-                          {para}
-                        </p>
-                      ))}
-                    </div>
+                          <div className="relative flex items-center justify-center w-[30px] h-[30px] border border-black rounded-full mr-2.5">
+                            <div className="absolute w-3 h-0.5 bg-black"></div>
+                            {!isOpened && (
+                              <div className="absolute w-0.5 h-3 bg-black"></div>
+                            )}
+                          </div>
+                          <p className="text-black text-lg">{pos.title}</p>
+                        </div>
+                        <div
+                          className={`h-0 ${
+                            isOpened ? 'h-full mt-4' : 'mt-0'
+                          } flex flex-col ml-10 space-y-5 overflow-hidden transition-all text-black`}
+                        >
+                          <div dangerouslySetInnerHTML={{
+                            __html: pos.description,
+                          }}/>
+                          {
+                            (isOpened && pos.howToApply) && (
+                              <div
+                                className={`w-full flex flex-col bg-white p-9 rounded transition-all duration-1000 delay-300 origin-left scale-x-0 ${
+                                  beginApplyAnimate ? 'scale-x-100' : ''
+                                }`}
+                                ref={applyRef}
+                              >
+                                <div
+                                  className="animate-reveal text-black text-2xl leading-[30px] underline"
+                                  ref={applyContentRefs[0]}
+                                >
+                                  <a href="/">How to apply</a>
+                                </div>
+                                <p
+                                  className="animate-reveal text-black text-2xl leading-[30px]"
+                                  ref={applyContentRefs[1]}
+                                >
+                                  {pos.howToApply}
+                                </p>
+                                <div
+                                  className="animate-reveal text-black text-sm underline uppercase mt-16"
+                                  ref={applyContentRefs[2]}
+                                >
+                                  <a href="/">Apply here</a>
+                                </div>
+                              </div>
+                            )
+                          }
+                          {/* {
+                            pos.description.map((para, j) => (
+                              <p
+                                className="text-black text-lg leading-[24px] tracking-[0.18px]"
+                                key={j}
+                              >
+                                {para}
+                              </p>
+                            ))
+                          } */}
+                        </div>
+                      </div>
+                    );
+                  })
+                : <div className="text-black">
+                    {
+                      studioOpenings.jobsNoListings?.heading && <h3 className="text-2xl">{studioOpenings.jobsNoListings.heading}</h3>
+                    }
+                    {
+                      studioOpenings.jobsNoListings?.textContent && <div>{studioOpenings.jobsNoListings.textContent}</div>
+                    }
                   </div>
-                );
-              })}
-            </div>
-
-            <div
-              className={`w-full flex flex-col bg-white p-9 rounded transition-all duration-1000 delay-300 origin-left scale-x-0 ${
-                beginApplyAnimate ? 'scale-x-100' : ''
-              }`}
-              ref={applyRef}
-            >
-              <div
-                className="animate-reveal text-black text-2xl leading-[30px] underline"
-                ref={applyContentRefs[0]}
-              >
-                <a href="/">How to apply</a>
-              </div>
-              <p
-                className="animate-reveal text-black text-2xl leading-[30px]"
-                ref={applyContentRefs[1]}
-              >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text.
-              </p>
-              <div
-                className="animate-reveal text-black text-sm underline uppercase mt-16"
-                ref={applyContentRefs[2]}
-              >
-                <a href="/">Apply here</a>
-              </div>
+              }
             </div>
           </div>
         </div>

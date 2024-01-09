@@ -2,7 +2,10 @@ import * as React from 'react';
 import { graphql } from 'gatsby';
 import BlockLogoBanner from '../../components/blocks/banner';
 import BlockFeaturedProject from '../../components/blocks/featured-project';
+import BlockFeaturedContent from '../../components/blocks/featured-content';
+import BlockProjectsCarousel from '../../components/blocks/projects-carousel';
 import FooterSection from '../../components/footer-section';
+import HeaderMenu from '../../components/header-menu';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
@@ -20,6 +23,12 @@ const PageDefault = ({ data }) => {
                     return <BlockLogoBanner data={block.blockLogoBanner} />
                   case 'WpAcfFeaturedProject':
                     return <BlockFeaturedProject data={block.blockFeaturedProjects} />
+                  case 'WpAcfFeaturedContent':
+                    return <BlockFeaturedContent data={block.blockFeaturedContent} />
+                  case 'WpAcfProjectsCarousel':
+                    return <BlockProjectsCarousel data={block.blockProjectsCarousel} />
+                  case 'WpAcfHeaderNav':
+                    return <HeaderMenu currentURI={wpPage.uri} />
                   default:
                     return <div dangerouslySetInnerHTML={{
                       __html: block.renderedHtml,
@@ -44,6 +53,7 @@ export const pageQuery = graphql`
     wpPage(id: { eq: $id }) {
       id
       title
+      uri
       editorBlocks {
         renderedHtml
         __typename
@@ -74,6 +84,10 @@ export const pageQuery = graphql`
               }
             }
           }
+        }
+        ... on WpAcfHeaderNav {
+          anchor
+          apiVersion
         }
         ... on WpAcfFeaturedProject {
           anchor
@@ -108,6 +122,63 @@ export const pageQuery = graphql`
                 }
               }
             }
+          }
+        }
+        ... on WpAcfFeaturedContent {
+          anchor
+          apiVersion
+          blockFeaturedContent {
+            content {
+              contentType
+              imageBlock {
+                image {
+                  node {
+                    altText
+                    gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: BLURRED)
+                  }
+                }
+                link {
+                  target
+                  title
+                  url
+                }
+              }
+              text
+            }
+            title
+          }
+        }
+        ... on WpAcfProjectsCarousel {
+          anchor
+          apiVersion
+          blockProjectsCarousel {
+            manualSelection
+            projects {
+              image {
+                node {
+                  altText
+                  gatsbyImage(layout: FULL_WIDTH, aspectRatio: 0.775, width: 600, fit: COVER, cropFocus: CENTER, placeholder: BLURRED)
+                }
+              }
+              project {
+                nodes {
+                  ... on WpProject {
+                    id
+                    featuredImage {
+                      node {
+                        gatsbyImage(layout: FULL_WIDTH, aspectRatio: 0.775, width: 600, fit: COVER, cropFocus: CENTER, placeholder: BLURRED)
+                        altText
+                      }
+                    }
+                    link
+                    title
+                  }
+                }
+              }
+              title
+            }
+            projectsMax
+            title
           }
         }
       }

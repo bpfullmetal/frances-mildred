@@ -56,6 +56,7 @@ export const pageQuery = graphql`
               menuName
             }
             ourTeam {
+              menuName
               description
               featuredImage {
                 node {
@@ -79,6 +80,20 @@ export const pageQuery = graphql`
                 bioMore
                 role
                 name
+              }
+            }
+            studioOpenings {
+              menuName
+              jobsNoListings {
+                heading
+                textContent
+              }
+              jobListings {
+                active
+                applicationLink
+                description
+                howToApply
+                title
               }
             }
           }

@@ -30,6 +30,7 @@ const HeaderMenu = ({ currentURI }) => {
         }
       `}
       render={(data) => {
+        
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
         // console.log('menuItems: ', menuItems);
 
