@@ -143,47 +143,56 @@ const WorkPageContent = () => {
 
   return (
     <PageLayout className="work">
-      {/* <section
-        className={`w-full h-screen mb-40 sm:mb-16 opacity-0 ${
-          isPageEntered ? 'fade-in' : ''
-        }`}
-      >
-        <a
-          className="flex w-full h-work_project"
-          href="/work/park-slope-townhouse"
-        >
-          <img
-            className="w-full h-full object-cover rounded-none"
-            src={ProjectImage1}
-            alt="work project 1"
-          />
-        </a>
-        <ProjectBlockDetail />
-      </section> */}
+      {
+        projects.length && (
+          <section
+            data-ref-type="project"
+            data-title={projects[0].node.title}
+            ref={workProjectRefs[0]}
+            className={`w-full h-screen mb-40 sm:mb-16 opacity-0 ${
+              isPageEntered ? 'fade-in' : ''
+            }`}
+          >
+            {
+              projects[0].node.featuredImage && (
+                <a
+                  className="flex w-full h-work_project"
+                  href={projects[0].node.link}
+                >
+                  <GatsbyImage className="w-full h-full object-cover rounded-none" href={projects[0].node.link} image={getImage(projects[0].node.featuredImage.node.gatsbyImage)} alt={projects[0].node.featuredImage.node.altText || projects[0].node.title} />
+                </a>
+              )
+            }
+            <ProjectBlockDetail project={projects[0].node} />
+          </section>
+        )
+      }
 
       <section className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
-        {projects.map((project, i) => {
-          return (
-            <div
-              className={`work-project-block animate-reveal max-w-[80%] h-work_project py-4 mb-40 ${
-                i % 2 ? 'ml-auto' : ''
-              } sm:mb-32`}
-              key={i}
-              data-ref-type="project"
-              data-title={project.node.title}
-              ref={workProjectRefs[i]}
-            >
-              {
-                project.node.featuredImage && (
-                  <a className="w-fit h-full" href="/">
-                    <GatsbyImage className="w-fit h-full" href="/" image={getImage(project.node.featuredImage.node.gatsbyImage)} alt={project.node.featuredImage.node.altText || project.node.title} />
-                  </a>
-                )
-              }
-              <ProjectBlockDetail project={project.node}/>
-            </div>
-          )
-        }
+        {
+          projects.map( (project, i) => {
+            if ( i === 0 ) return <></>
+            return (
+              <div
+                className={`work-project-block animate-reveal max-w-[80%] h-work_project py-4 mb-40 ${
+                  i % 2 ? 'ml-auto' : ''
+                } sm:mb-32`}
+                key={i}
+                data-ref-type="project"
+                data-title={project.node.title}
+                ref={workProjectRefs[i]}
+              >
+                {
+                  project.node.featuredImage && (
+                    <a className="w-fit h-full" href="/">
+                      <GatsbyImage className="w-fit h-full" href="/" image={getImage(project.node.featuredImage.node.gatsbyImage)} alt={project.node.featuredImage.node.altText || project.node.title} />
+                    </a>
+                  )
+                }
+                <ProjectBlockDetail project={project.node}/>
+              </div>
+            )
+          }
         )}
         <div id="infinite-scroll-trigger" data-ref-type="more-projects" style={{ height: '10px' }} />
       </section>
