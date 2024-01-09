@@ -17,6 +17,11 @@ const PageDefault = ({ data }) => {
         wpPage.editorBlocks && (
           <div>
             {
+              wpPage.editorBlocks.filter( block => block.__typename === 'WpAcfHeaderNav' ).length === 0 && (
+                <HeaderMenu currentURI={wpPage.uri} />
+              )
+            }
+            {
               wpPage.editorBlocks.map( block => {
                 switch (block.__typename) {
                   case 'WpAcfLogoBanner':
