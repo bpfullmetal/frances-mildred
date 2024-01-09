@@ -35,7 +35,7 @@ const WorkPageContent = () => {
   const { allWpProject } = useStaticQuery(
     graphql`
       {
-        allWpProject(sort: {date: ASC}) {
+        allWpProject(sort: {date: DESC}) {
           edges {
             node {
               id
@@ -57,18 +57,21 @@ const WorkPageContent = () => {
 
   React.useEffect(() => {
     // Concatenate new posts to the existing list
+    console.log('setting all projects')
     setAllProjects((prevProjects) => [...prevProjects, ...allWpProject.edges]);
   }, [allWpProject.edges]);
 
   const handleIntersection = (entries) => {
     entries.forEach((entry) => {
-      console.log(entry)
       if (entry.isIntersecting) {
         if ( entry.target.getAttribute('data-ref-type') === 'project' ) {
           entry.target.classList.add('reveal');
         }
         if ( entry.target.getAttribute('data-ref-type') === 'more-projects' ) {
+          console.log(entry)
           // Load more posts when user reaches the bottom
+          console.log(postsPerPage * (currentPage + 1), allProjects.length)
+          if ( postsPerPage * currentPage > allProjects.length ) return 
           setCurrentPage((prevPage) => prevPage + 1);
         }
       }
@@ -79,6 +82,7 @@ const WorkPageContent = () => {
 
   React.useEffect(() => {
     const target = document.querySelector('#infinite-scroll-trigger');
+    
     if (target) {
       observer.observe(target);
     }
@@ -88,6 +92,7 @@ const WorkPageContent = () => {
     };
   }, [observer]);
 
+  console.log('CURRENT', currentPage, postsPerPage)
   const projects = allProjects.slice(0, currentPage * postsPerPage);
 
   React.useEffect(() => {
@@ -118,6 +123,23 @@ const WorkPageContent = () => {
 
   }, [allProjects]);
 
+  React.useEffect( () => {
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px', // No margin
+      threshold: 0.5, // Trigger when 50% of the target is in the viewport
+    };
+    workProjectRefs.forEach((ref, i) => {
+      const observer = new IntersectionObserver(handleIntersection, options);
+      if (ref.current) {
+          observer.observe(ref.current);
+      }
+      return () => {
+          observer.unobserve(ref.current);
+      };
+  })
+  }, [projects])
+
 
   return (
     <PageLayout className="work">
@@ -141,7 +163,6 @@ const WorkPageContent = () => {
 
       <section className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
         {projects.map((project, i) => {
-          console.log('project index', i)
           return (
             <div
               className={`work-project-block animate-reveal max-w-[80%] h-work_project py-4 mb-40 ${
