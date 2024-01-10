@@ -12,8 +12,6 @@ const ProjectSingle = ({ data }) => {
   const { wpProject, nextProject } = data;
   const { title, uri, projectsSingle } = wpProject;
 
-  console.log(projectsSingle.projectDetails.attributes);
-
   const imageBlocksData = [
     {
       text: 'Lorem Ipsum is simply dummy text of the interior and architect industry.',
@@ -119,8 +117,6 @@ const ProjectSingle = ({ data }) => {
 
   return (
     <PageLayout>
-      {title}
-
       <section className="h-screen">
         <div className="w-full h-full">
           <img

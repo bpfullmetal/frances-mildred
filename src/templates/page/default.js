@@ -9,7 +9,7 @@ import HeaderMenu from '../../components/header-menu';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
-  console.log(wpPage);
+  
   if (!wpPage) return <>No page data found</>;
   return (
     <div>
@@ -18,27 +18,28 @@ const PageDefault = ({ data }) => {
           {wpPage.editorBlocks.filter(
             (block) => block.__typename === 'WpAcfHeaderNav'
           ).length === 0 && <HeaderMenu currentURI={wpPage.uri} />}
-          {wpPage.editorBlocks.map((block) => {
+          {wpPage.editorBlocks.map((block, i) => {
             switch (block.__typename) {
               case 'WpAcfLogoBanner':
-                return <BlockLogoBanner data={block.blockLogoBanner} />;
+                return <BlockLogoBanner key={`${block.__typename}-${i}`} data={block.blockLogoBanner} />;
               case 'WpAcfFeaturedProject':
                 return (
-                  <BlockFeaturedProject data={block.blockFeaturedProjects} />
+                  <BlockFeaturedProject key={`${block.__typename}-${i}`} data={block.blockFeaturedProjects} />
                 );
               case 'WpAcfFeaturedContent':
                 return (
-                  <BlockFeaturedContent data={block.blockFeaturedContent} />
+                  <BlockFeaturedContent key={`${block.__typename}-${i}`} data={block.blockFeaturedContent} />
                 );
               case 'WpAcfProjectsCarousel':
                 return (
-                  <BlockProjectsCarousel data={block.blockProjectsCarousel} />
+                  <BlockProjectsCarousel key={`${block.__typename}-${i}`} data={block.blockProjectsCarousel} />
                 );
               case 'WpAcfHeaderNav':
-                return <HeaderMenu currentURI={wpPage.uri} />;
+                return <HeaderMenu key={`${block.__typename}-${i}`} currentURI={wpPage.uri} />;
               default:
                 return (
-                  <div
+                  <div 
+                    key={`${block.__typename}-${i}`} 
                     dangerouslySetInnerHTML={{
                       __html: block.renderedHtml,
                     }}
@@ -48,7 +49,9 @@ const PageDefault = ({ data }) => {
           })}
         </div>
       )}
-      <FooterSection />
+      {
+        wpPage.editorBlocks.find( block => block.__typename === 'WpAcfContact') === undefined && <FooterSection />
+      }
     </div>
   );
 };

@@ -185,7 +185,7 @@ const WorkPageContent = () => {
               ref={workProjectRefs[i]}
             >
               {project.node.featuredImage && (
-                <a className="w-fit h-full" href="/">
+                <a className="w-fit h-full" href={project.node.link}>
                   <GatsbyImage
                     className="w-fit h-full"
                     href="/"
