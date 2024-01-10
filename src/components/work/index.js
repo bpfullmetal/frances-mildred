@@ -151,7 +151,7 @@ const WorkPageContent = () => {
           data-ref-type="project"
           data-title={projects[0].node.title}
           ref={workProjectRefs[0]}
-          className={`w-full h-screen mb-40 sm:mb-16 opacity-0 ${
+          className={`w-full max-w-main h-screen mx-auto mb-40 px-5 sm:mb-16 sm:px-12 opacity-0 ${
             isPageEntered ? 'fade-in' : ''
           }`}
         >
