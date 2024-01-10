@@ -1,3 +1,5 @@
+const path = require(`path`)
+
 // /**
 //  * Implement Gatsby's Node APIs in this file.
 //  *
@@ -57,3 +59,34 @@
 //         })
 //     })
 // }
+
+exports.createPages = async ({ graphql, actions }) => {
+    const { createPage } = actions;
+  
+    // Fetch category data from GraphQL
+    const result = await graphql(`
+        query categoriesQuery {
+            allWpCategory(filter: {slug: {nin: "uncategorized"}}) {
+                edges {
+                    node {
+                        name
+                        slug
+                    }
+                }
+            }
+        }
+    `);
+    console.log('CATS RESULTS', result)
+  
+    // Iterate over categories and create pages
+    result.data.allWpCategory.edges.forEach((category) => {
+      createPage({
+        path: `/design/${category.node.slug}`,
+        component: path.resolve('./src/templates/page/design.js'),
+        context: {
+          // Pass data to the template, if needed
+          categorySlug: category.node.slug,
+        },
+      });
+    });
+  };

@@ -1,10 +1,4 @@
 import * as React from 'react';
-import ProjectImage1 from '../../assets/images/project-img-4.jpeg';
-import ProjectImage2 from '../../assets/images/project-img-1.jpeg';
-import ProjectImage3 from '../../assets/images/project-img-2.jpeg';
-import ProjectImage4 from '../../assets/images/project-img-5.jpeg';
-import ProjectImage5 from '../../assets/images/project-img-7.png';
-import ProjectImage6 from '../../assets/images/project-img-3.jpeg';
 import PageLayout from '../page-layout';
 import { useStaticQuery, graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';

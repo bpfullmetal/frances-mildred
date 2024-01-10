@@ -1,13 +1,14 @@
 import * as React from 'react';
+import { Link, navigate } from 'gatsby';
 
-const CategoryModal = ({ onClose }) => {
+const CategoryModal = ({ categories, selectedCat, handleSelectCat, onClose }) => {
+  console.log('cats', categories, selectedCat)
   const [isEntered, setIsEntered] = React.useState(false);
+  
 
   React.useEffect(() => {
     setIsEntered(true);
   }, []);
-
-  const categoryData = ['work', 'play', 'entertainment', 'cooking', 'relaxing'];
 
   return (
     <div
@@ -22,14 +23,11 @@ const CategoryModal = ({ onClose }) => {
             isEntered ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          {categoryData.map((category) => (
-            <a
-              className="title flex items-center w-fit text-3xl leading-[44px] capitalize my-2 sm:text-4xl"
-              href="/"
-              key={category}
-            >
-              {category}
-            </a>
+          {
+          categories.filter( cat => cat.node.slug !== selectedCat.slug ).map((category) => (
+            <Link key={category.node.slug} className="title flex items-center w-fit text-3xl leading-[44px] capitalize my-2 sm:text-4xl" to={`/design/${category.node.slug}`}>
+              {category.node.name}
+            </Link>
           ))}
         </div>
       </div>
