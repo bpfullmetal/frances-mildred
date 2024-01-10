@@ -10,7 +10,6 @@ const AboutPageContent = (pageData) => {
     pageData.content.template.pageAbout;
 
   const [isPageEntered, setIsPageEntered] = React.useState(false);
-  const [isNavMenuSticky, setIsNavMenuSticky] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
   const [byTheNumberIndex, setByTheNumberIndex] = React.useState(-1);
   const [nIntervalId, setNIntervalId] = React.useState(null);
@@ -58,7 +57,7 @@ const AboutPageContent = (pageData) => {
   }
 
   const navMenuRef = React.useRef();
-  const navSectionRefs = Array(sectionsArray.length)
+  const navSectionRefs = Array(3)
     .fill()
     .map((_) => {
       return React.useRef();
@@ -102,31 +101,52 @@ const AboutPageContent = (pageData) => {
   }, []);
 
   React.useEffect(() => {
+    const byTheNumberEle = byTheNumberRef.current;
+    if (byTheNumberEle) {
+      if (!byTheNumberEle.classList.value.includes('animate')) {
+        setTimeout(() => {
+          byTheNumberEle.classList.add('animate');
+          setByTheNumberIndex(0);
+        }, 1000);
+      }
+    }
+  }, [byTheNumberRef]);
+
+  React.useEffect(() => {
     const options = {
       root: null, // Use the viewport as the root
       rootMargin: '0px', // No margin
       threshold: 0.3, // Trigger when 50% of the target is in the viewport
     };
 
-    teamMemberRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    });
+    const observer = new IntersectionObserver(handleIntersection, options);
 
-    navSectionRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    });
+    if (teamMemberRefs.filter((ref) => !ref.hasObserver).length > 0) {
+      teamMemberRefs.forEach((ref, i) => {
+        const observer = new IntersectionObserver(handleIntersection, options);
+        if (ref.current) {
+          observer.observe(ref.current);
+          ref.hasObserver = true;
+        }
+        return () => {
+          observer.unobserve(ref.current);
+          ref.hasObserver = false;
+        };
+      });
+    }
+
+    if (navSectionRefs.filter((ref) => !ref.hasObserver).length > 0) {
+      navSectionRefs.forEach((ref, i) => {
+        if (ref.current && !ref.hasObserver) {
+          observer.observe(ref.current);
+          ref.hasObserver = true;
+        }
+        return () => {
+          observer.unobserve(ref.current);
+          ref.hasObserver = false;
+        };
+      });
+    }
   }, [navSectionRefs, teamMemberRefs]);
 
   const handleIntersection = (entries) => {
@@ -167,6 +187,7 @@ const AboutPageContent = (pageData) => {
           }
           revealEl.classList.add('animate');
         }
+        setCurrentNavMenuItem(navMenuItems[1].id);
         break;
       case 'section':
         const scrollOffsetTop = revealEl.getBoundingClientRect().top;
@@ -174,16 +195,6 @@ const AboutPageContent = (pageData) => {
           revealEl.getAttribute('data-section-index')
         );
         setCurrentNavMenuItem(navMenuItems[sectionIndex].id);
-      // const navSectionEle = ref.current;
-      // if (navSectionEle) {
-      //   const scrollOffsetTop = navSectionEle.getBoundingClientRect().top;
-      //   console.log(scrollOffsetTop)
-      //   if (scrollOffsetTop - 200 < 0) {
-      //     setCurrentNavMenuItem(navMenuItems[i].id);
-      //   }
-      // }
-      default:
-        // entry.target.classList.add('reveal');
         break;
     }
   };
@@ -194,10 +205,19 @@ const AboutPageContent = (pageData) => {
       byTheNumberIndex > -1 &&
       byTheNumberIndex < intro.byTheNumber.metrics.length
     ) {
+      let animateDuration = 1500;
+      if (intro.byTheNumber.metrics[byTheNumberIndex].count < 10) {
+        animateDuration = 500;
+      } else if (intro.byTheNumber.metrics[byTheNumberIndex].count < 20) {
+        animateDuration = 1000;
+      }
+
       if (intervalCount < 1) {
         const intervalId = setInterval(
           () => setIntervalCount((old) => old + 1),
-          1500 / intro.byTheNumber.metrics[byTheNumberIndex].count / 10
+          animateDuration /
+            intro.byTheNumber.metrics[byTheNumberIndex].count /
+            10
         );
         setNIntervalId(intervalId);
       }
@@ -225,41 +245,6 @@ const AboutPageContent = (pageData) => {
   }, [byTheNumberIndex, intro.byTheNumber.metrics, intervalCount, nIntervalId]);
 
   const handleScroll = () => {
-    const navMenuEle = navMenuRef.current;
-    if (navMenuEle) {
-      if (window.scrollY > window.innerHeight * 0.8 - 100) {
-        if (navMenuEle.classList.value.includes(' absolute')) {
-          setIsNavMenuSticky(true);
-        }
-      } else {
-        if (navMenuEle.classList.value.includes(' fixed')) {
-          setIsNavMenuSticky(false);
-        }
-      }
-    }
-
-    // navSectionRefs.forEach((ref, i) => {
-    //   const navSectionEle = ref.current;
-    //   if (navSectionEle) {
-    //     const scrollOffsetTop = navSectionEle.getBoundingClientRect().top;
-
-    //     if (scrollOffsetTop - 200 < 0) {
-    //       setCurrentNavMenuItem(navMenuItems[i].id);
-    //     }
-    //   }
-    // });
-
-    const byTheNumberEle = byTheNumberRef.current;
-    if (byTheNumberEle) {
-      if (!byTheNumberEle.classList.value.includes('animate')) {
-        const scrollOffsetTop = byTheNumberEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - window.innerHeight * 0.6 < 0) {
-          byTheNumberEle.classList.add('animate');
-          setByTheNumberIndex(0);
-        }
-      }
-    }
-
     ourTeamRefs.forEach((ref, i) => {
       const scrollRevealEle = ref.current;
       if (scrollRevealEle) {
@@ -276,37 +261,6 @@ const AboutPageContent = (pageData) => {
         }
       }
     });
-
-    // teamMemberRefs.forEach((ref, i) => {
-    //   const scrollRevealEle = ref.current;
-    //   if (scrollRevealEle) {
-    //     if (!scrollRevealEle.classList.value.includes('animate')) {
-    //       const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
-    //       if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-    //         if (window.innerWidth < 768) {
-    //           setTeamMembersAnimate((old) =>
-    //             Array.from(old).map((v, j) => (i === j ? true : v))
-    //           );
-    //         } else {
-    //           if (i % 2) {
-    //             setTimeout(
-    //               () =>
-    //                 setTeamMembersAnimate((old) =>
-    //                   Array.from(old).map((v, j) => (i === j ? true : v))
-    //                 ),
-    //               500
-    //             );
-    //           } else {
-    //             setTeamMembersAnimate((old) =>
-    //               Array.from(old).map((v, j) => (i === j ? true : v))
-    //             );
-    //           }
-    //         }
-    //         scrollRevealEle.classList.add('animate');
-    //       }
-    //     }
-    //   }
-    // });
 
     const openingsTitleEle = openingsTitleRef.current;
     if (openingsTitleEle) {
@@ -399,10 +353,7 @@ const AboutPageContent = (pageData) => {
 
   return (
     <PageLayout className="relative">
-      <div
-        className={`hidden fixed top-2/4 left-10 md:flex flex-col z-10`}
-        ref={navMenuRef}
-      >
+      <div className={`hidden fixed top-2/4 left-10 md:flex flex-col z-10`}>
         {navMenuItems.map((item) => (
           <div className="uppercase" key={item.id}>
             <a
@@ -484,13 +435,15 @@ const AboutPageContent = (pageData) => {
       <section
         id={stringToSlug(ourTeam.menuName)}
         className="bg-dark_red py-48"
-        ref={navSectionRefs[1]}
-        data-section-index="1"
-        data-animate-ref="section"
-        data-background="dark"
       >
         <div className="flex flex-col justify-end w-full max-w-main mx-auto px-5 sm:px-12 lg:flex-row">
-          <div className="flex mb-4 lg:justify-end lg:mb-0">
+          <div
+            className="flex h-fit mb-4 lg:justify-end lg:mb-0"
+            ref={navSectionRefs[1]}
+            data-section-index="1"
+            data-animate-ref="section"
+            data-background="dark"
+          >
             <p
               className="animate-reveal text-4xl leading-none tracking-[0.36px] lg:w-[200px] lg:text-[65px] lg:leading-[65px] lg:tracking-[0.65px] lg:mr-10"
               ref={ourTeamRefs[0]}
@@ -498,6 +451,7 @@ const AboutPageContent = (pageData) => {
               Our Team
             </p>
           </div>
+
           <div className="max-w-[860px] flex flex-col">
             <div className="flex flex-col">
               <div className="animate-reveal" ref={ourTeamRefs[1]}>
@@ -523,13 +477,13 @@ const AboutPageContent = (pageData) => {
                 </div>
               ))}
 
-            {ourTeam.teamMembers.length && (
+            {ourTeam.teamMembers && (
               <div className="flex flex-wrap mt-48">
                 {ourTeam.teamMembers.map((teamMember, i) => (
                   <div
                     data-animate-ref="team-member"
                     data-index={i}
-                    key={i}
+                    key={`team-members-${i}`}
                     ref={teamMemberRefs[i]}
                   >
                     <TeamStudioItem
@@ -552,10 +506,7 @@ const AboutPageContent = (pageData) => {
         data-animate-ref="section"
         data-background="light"
       >
-        <div
-          id="jobs"
-          className="flex justify-end w-full max-w-main mx-auto px-5 sm:px-12"
-        >
+        <div className="flex justify-end w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="w-full max-w-[860px] flex flex-col">
             <h2
               className="animate-reveal text-[65px] text-black leading-[65px] tracking-[0.65px]"
@@ -623,16 +574,6 @@ const AboutPageContent = (pageData) => {
                             </div>
                           </div>
                         )}
-                        {/* {
-                            pos.description.map((para, j) => (
-                              <p
-                                className="text-black text-lg leading-[24px] tracking-[0.18px]"
-                                key={j}
-                              >
-                                {para}
-                              </p>
-                            ))
-                          } */}
                       </div>
                     </div>
                   );
