@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import WorkPageContent from '../../components/work';
 
-const WorkParentPage = ({data}) => {
-    const { wpPage } = data;
+const WorkParentPage = ({ data }) => {
+  const { wpPage } = data;
 
   const title = wpPage?.title || '';
   const content = wpPage?.content || '';

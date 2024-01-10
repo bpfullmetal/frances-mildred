@@ -37,14 +37,16 @@ const TeamStudioItem = ({ data, animate }) => {
       >
         {data.role}
       </p>
-      {
-        data.bio && <div className={`animate-reveal ${bioRevealed ? 'reveal' : ''}`}>
-          <p>
-            {data.bio}
-          </p>
-          {
-            data.bioMore && <>
-              <p className={`mt-4 animate-reveal-down animate-hidden ${readMoreDisplayed ? 'reveal-down' : ''}`}>
+      {data.bio && (
+        <div className={`animate-reveal ${bioRevealed ? 'reveal' : ''}`}>
+          <p>{data.bio}</p>
+          {data.bioMore && (
+            <>
+              <p
+                className={`mt-4 animate-reveal-down animate-hidden ${
+                  readMoreDisplayed ? 'reveal-down' : ''
+                }`}
+              >
                 {data.bioMore}
               </p>
               <button
@@ -54,10 +56,9 @@ const TeamStudioItem = ({ data, animate }) => {
                 {`Read ${readMoreDisplayed ? 'less' : 'more'}`}
               </button>
             </>
-          }
+          )}
         </div>
-      }
-      
+      )}
     </div>
   );
 };

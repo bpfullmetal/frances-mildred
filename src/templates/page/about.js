@@ -50,7 +50,11 @@ export const pageQuery = graphql`
               }
               backgroundImage {
                 node {
-                  gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+                  gatsbyImage(
+                    layout: CONSTRAINED
+                    width: 800
+                    placeholder: BLURRED
+                  )
                 }
               }
               menuName
@@ -60,7 +64,11 @@ export const pageQuery = graphql`
               description
               featuredImage {
                 node {
-                  gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+                  gatsbyImage(
+                    layout: CONSTRAINED
+                    width: 800
+                    placeholder: BLURRED
+                  )
                 }
               }
               featuredTeamMembers {
@@ -70,7 +78,11 @@ export const pageQuery = graphql`
                 image {
                   node {
                     altText
-                    gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+                    gatsbyImage(
+                      layout: CONSTRAINED
+                      width: 800
+                      placeholder: BLURRED
+                    )
                   }
                 }
                 name

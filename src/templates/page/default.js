@@ -10,43 +10,47 @@ import HeaderMenu from '../../components/header-menu';
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
   console.log(wpPage);
-  if ( !wpPage ) return <>No page data found</>
+  if (!wpPage) return <>No page data found</>;
   return (
     <div>
-      {
-        wpPage.editorBlocks && (
-          <div>
-            {
-              wpPage.editorBlocks.filter( block => block.__typename === 'WpAcfHeaderNav' ).length === 0 && (
-                <HeaderMenu currentURI={wpPage.uri} />
-              )
-            }
-            {
-              wpPage.editorBlocks.map( block => {
-                switch (block.__typename) {
-                  case 'WpAcfLogoBanner':
-                    return <BlockLogoBanner data={block.blockLogoBanner} />
-                  case 'WpAcfFeaturedProject':
-                    return <BlockFeaturedProject data={block.blockFeaturedProjects} />
-                  case 'WpAcfFeaturedContent':
-                    return <BlockFeaturedContent data={block.blockFeaturedContent} />
-                  case 'WpAcfProjectsCarousel':
-                    return <BlockProjectsCarousel data={block.blockProjectsCarousel} />
-                  case 'WpAcfHeaderNav':
-                    return <HeaderMenu currentURI={wpPage.uri} />
-                  default:
-                    return <div dangerouslySetInnerHTML={{
+      {wpPage.editorBlocks && (
+        <div>
+          {wpPage.editorBlocks.filter(
+            (block) => block.__typename === 'WpAcfHeaderNav'
+          ).length === 0 && <HeaderMenu currentURI={wpPage.uri} />}
+          {wpPage.editorBlocks.map((block) => {
+            switch (block.__typename) {
+              case 'WpAcfLogoBanner':
+                return <BlockLogoBanner data={block.blockLogoBanner} />;
+              case 'WpAcfFeaturedProject':
+                return (
+                  <BlockFeaturedProject data={block.blockFeaturedProjects} />
+                );
+              case 'WpAcfFeaturedContent':
+                return (
+                  <BlockFeaturedContent data={block.blockFeaturedContent} />
+                );
+              case 'WpAcfProjectsCarousel':
+                return (
+                  <BlockProjectsCarousel data={block.blockProjectsCarousel} />
+                );
+              case 'WpAcfHeaderNav':
+                return <HeaderMenu currentURI={wpPage.uri} />;
+              default:
+                return (
+                  <div
+                    dangerouslySetInnerHTML={{
                       __html: block.renderedHtml,
-                    }}></div>
-                }
-              })
+                    }}
+                  ></div>
+                );
             }
-          </div>
-        )
-      }
-      <FooterSection/>
+          })}
+        </div>
+      )}
+      <FooterSection />
     </div>
-  )
+  );
 };
 
 export default PageDefault;
@@ -71,7 +75,11 @@ export const pageQuery = graphql`
           blockLogoBanner {
             backgroundImage {
               node {
-                gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: DOMINANT_COLOR)
+                gatsbyImage(
+                  layout: FULL_WIDTH
+                  width: 800
+                  placeholder: DOMINANT_COLOR
+                )
                 sourceUrl
                 altText
                 mediaDetails {
@@ -102,7 +110,11 @@ export const pageQuery = graphql`
               backgroundImage {
                 node {
                   altText
-                  gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: DOMINANT_COLOR)
+                  gatsbyImage(
+                    layout: FULL_WIDTH
+                    width: 800
+                    placeholder: DOMINANT_COLOR
+                  )
                 }
               }
               description
@@ -118,7 +130,11 @@ export const pageQuery = graphql`
                     featuredImage {
                       node {
                         altText
-                        gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: DOMINANT_COLOR)
+                        gatsbyImage(
+                          layout: FULL_WIDTH
+                          width: 800
+                          placeholder: DOMINANT_COLOR
+                        )
                       }
                     }
                     title # TODO Switch to EXCERPT
@@ -139,7 +155,11 @@ export const pageQuery = graphql`
                 image {
                   node {
                     altText
-                    gatsbyImage(layout: FULL_WIDTH, width: 800, placeholder: BLURRED)
+                    gatsbyImage(
+                      layout: FULL_WIDTH
+                      width: 800
+                      placeholder: BLURRED
+                    )
                   }
                 }
                 link {
@@ -162,7 +182,14 @@ export const pageQuery = graphql`
               image {
                 node {
                   altText
-                  gatsbyImage(layout: FULL_WIDTH, aspectRatio: 0.775, width: 600, fit: COVER, cropFocus: CENTER, placeholder: BLURRED)
+                  gatsbyImage(
+                    layout: FULL_WIDTH
+                    aspectRatio: 0.775
+                    width: 600
+                    fit: COVER
+                    cropFocus: CENTER
+                    placeholder: BLURRED
+                  )
                 }
               }
               project {
@@ -171,7 +198,14 @@ export const pageQuery = graphql`
                     id
                     featuredImage {
                       node {
-                        gatsbyImage(layout: FULL_WIDTH, aspectRatio: 0.775, width: 600, fit: COVER, cropFocus: CENTER, placeholder: BLURRED)
+                        gatsbyImage(
+                          layout: FULL_WIDTH
+                          aspectRatio: 0.775
+                          width: 600
+                          fit: COVER
+                          cropFocus: CENTER
+                          placeholder: BLURRED
+                        )
                         altText
                       }
                     }
