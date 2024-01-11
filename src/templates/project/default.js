@@ -117,14 +117,16 @@ const ProjectSingle = ({ data }) => {
 
   return (
     <PageLayout>
-      <section className="h-screen">
-        <div className="w-full h-full">
+      <section className="h-home_banner">
+        <div className="relative w-full h-full flex items-center justify-center">
           <img
             className="w-full h-full object-cover rounded-none"
             src={ProjectDetailImage1}
             alt="project detail banner"
           />
-          <h1>{title}</h1>
+          <h1 className="absolute max-w-[480px] text-4xl font-medium !leading-none text-center md:max-w-[580px] md:text-5xl lg:max-w-[680px] lg:text-[58px]">
+            {title}
+          </h1>
         </div>
       </section>
 
