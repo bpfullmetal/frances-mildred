@@ -6,12 +6,12 @@ import ProjectDetailImage3 from '../../assets/images/project-detail-3.png';
 import ProjectDetailImage4 from '../../assets/images/project-detail-4.png';
 import ProjectDetailImage5 from '../../assets/images/project-detail-5.png';
 import PageLayout from '../../components/page-layout';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const ProjectSingle = ({ data }) => {
-  // console.log(data)
+  console.log('PROJECT DATA', data)
   const { wpProject, nextProject } = data;
   const { title, uri, projectsSingle } = wpProject;
-
   const imageBlocksData = [
     {
       text: 'Lorem Ipsum is simply dummy text of the interior and architect industry.',
@@ -226,11 +226,25 @@ const ProjectSingle = ({ data }) => {
         </div>
       </section>
 
-      {nextProject && (
+      {nextProject.nodes.length && (
         <section className="sticky top-0 next-project mb-[50vh]">
           <div className="flex items-center justify-center w-screen h-screen">
-            <a href={nextProject.link}>
-              <img src={ProjectDetailImage1} alt="next project" />
+            <a href={nextProject.nodes[0].link}>
+                {
+                    nextProject.nodes[0].featuredImage && (
+                        <GatsbyImage
+                          className="w-full h-full object-cover rounded-none"
+                          href={nextProject.nodes[0].link}
+                          image={getImage(
+                            nextProject.nodes[0].featuredImage.node.gatsbyImage
+                          )}
+                          alt={
+                            nextProject.nodes[0].featuredImage.node.altText ||
+                            nextProject.nodes[0].title
+                          }
+                        />
+                    )
+                }
               <svg width="0" height="0">
                 <clipPath id="next-project-image-mask">
                   <path
@@ -240,7 +254,7 @@ const ProjectSingle = ({ data }) => {
                 </clipPath>
               </svg>
               <p className="relative max-w-[600px] text-[58px] leading-[58px] text-center">
-                {nextProject.title}
+                {nextProject.nodes[0].title}
               </p>
             </a>
           </div>
@@ -263,10 +277,12 @@ export const Head = ({ data }) => {
 };
 
 export const pageQuery = graphql`
-  query ($id: String!, $nextId: String) {
+query ProjectWithNextAndPrevious ($id: String!, $currentDate: Date!) {
     wpProject(id: { eq: $id }) {
       uri
       title
+      date 
+      id
       projectsSingle {
         projectDetails {
           attributes {
@@ -280,16 +296,28 @@ export const pageQuery = graphql`
           label
         }
       }
-    }
-    nextProject: wpProject(id: { eq: $nextId }) {
-      id
-      title
-      link
-      featuredImage {
-        node {
-          gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+    },
+    nextProject: allWpProject(
+        sort: { fields: date, order: DESC }
+        filter: { date: { lt: $currentDate }, id: { ne: $id } }
+        limit: 1
+      ) {
+        nodes {
+          id
+          title
+          link
+          date
+          featuredImage {
+            node {
+              altText
+              gatsbyImage(
+                layout: FULL_WIDTH
+                width: 800
+                placeholder: DOMINANT_COLOR
+              )
+            }
+          }
         }
-      }
     }
   }
 `;

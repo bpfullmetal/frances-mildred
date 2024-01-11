@@ -76,7 +76,6 @@ exports.createPages = async ({ graphql, actions }) => {
             }
         }
     `);
-    console.log('CATS RESULTS', result)
   
     // Iterate over categories and create pages
     result.data.allWpCategory.edges.forEach((category) => {
@@ -89,4 +88,75 @@ exports.createPages = async ({ graphql, actions }) => {
         },
       });
     });
+
+    const projects = await graphql(`
+      query {
+        allWpProject {
+          nodes {
+            slug
+            id
+            date
+            # ... other fields
+          }
+        }
+      }
+    `);
+
+    // Handle errors...
+
+    // Create pages
+    projects.data.allWpProject.nodes.forEach(node => {
+      console.log('SLUG', node)
+      createPage({
+        path: `/project/${node.slug}`, // Adjust the path as needed
+        component: require.resolve('./src/templates/project/default.js'), // Adjust the template file
+        context: {
+          id: node.id,
+          currentDate: node.date, // Add the date to context
+        },
+      });
+    })
+
   };
+
+  // exports.onCreatePage = async ({ page, actions, graphql }) => {
+  //   console.log('graphql', graphql)
+  //   const { createPage, deletePage } = actions;
+  
+  //   // Check if the page is the one you're interested in modifying
+  //   if (page.path.includes('/work/')) {
+  //     // Query for the project data
+  //     const slug = path.basename(page.path);
+  //     const result = await graphql(`
+  //       query GetProjectData($slug: String!) {
+  //         wpProject(slug: { eq: $slug }) {
+  //           id
+  //           title
+  //           date
+  //           # Add other fields you need
+  //         }
+  //       }
+  //     `, { slug });
+  
+  //     if (result.errors) {
+  //       throw result.errors;
+  //     }
+  
+  //     const project = result.data.wpProject;
+  //     console.log('projet', project)
+  //     // Add the project data to the page context
+  //     deletePage(page);
+  //     createPage({
+  //       ...page,
+  //       context: {
+  //         ...page.context,
+  //         projectData: {
+  //           id: project.id,
+  //           title: project.title,
+  //           date: project.date,
+  //           // Add other fields as needed
+  //         },
+  //       },
+  //     });
+  //   }
+  // };
