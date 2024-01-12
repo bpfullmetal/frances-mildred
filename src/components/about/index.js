@@ -4,6 +4,7 @@ import TeamImage1 from '../../assets/images/home-img-2.png';
 import PageLayout from '../page-layout';
 import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
+import OpeningJobItem from './opening-job-item';
 
 const AboutPageContent = (pageData) => {
   const { intro, ourTeam, studioOpenings } =
@@ -18,8 +19,6 @@ const AboutPageContent = (pageData) => {
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
     Array(4).fill(false)
   );
-  const [beginApplyAnimate, setBeginApplyAnimate] = React.useState(false);
-  const [openedPositions, setOpenedPositions] = React.useState([]);
 
   const stringToSlug = (str) => {
     return str
@@ -73,24 +72,9 @@ const AboutPageContent = (pageData) => {
       return React.useRef();
     });
   const openingsTitleRef = React.useRef();
-  const openingJobRefs = Array(3)
-    .fill()
-    .map((_) => {
-      return React.useRef();
-    });
-  const applyRef = React.useRef();
-  const applyContentRefs = Array(3)
-    .fill()
-    .map((_) => {
-      return React.useRef();
-    });
 
   React.useEffect(() => {
-    const activeJobs = studioOpenings.jobListings.filter((job) => job.active);
-    setJobListings(activeJobs);
-    if (activeJobs.length) {
-      setOpenedPositions([0]);
-    }
+    setJobListings(studioOpenings.jobListings.filter((job) => job.active));
 
     setTimeout(() => setIsPageEntered(true), 500);
 
@@ -112,48 +96,39 @@ const AboutPageContent = (pageData) => {
   }, [byTheNumberRef]);
 
   React.useEffect(() => {
-    const options = {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px', // No margin
-      threshold: 0.3, // Trigger when 50% of the target is in the viewport
+    const setupIntersectionObserver = (arrayRefs) => {
+      const options = {
+        root: null, // Use the viewport as the root
+        rootMargin: '0px', // No margin
+        threshold: 0.3, // Trigger when 50% of the target is in the viewport
+      };
+
+      if (arrayRefs.filter((ref) => !ref.hasObserver).length > 0) {
+        arrayRefs.forEach((ref) => {
+          const observer = new IntersectionObserver(
+            handleIntersection,
+            options
+          );
+          if (ref.current) {
+            observer.observe(ref.current);
+            ref.hasObserver = true;
+          }
+          return () => {
+            observer.unobserve(ref.current);
+            ref.hasObserver = false;
+          };
+        });
+      }
     };
 
-    const observer = new IntersectionObserver(handleIntersection, options);
-
-    if (teamMemberRefs.filter((ref) => !ref.hasObserver).length > 0) {
-      teamMemberRefs.forEach((ref, i) => {
-        const observer = new IntersectionObserver(handleIntersection, options);
-        if (ref.current) {
-          observer.observe(ref.current);
-          ref.hasObserver = true;
-        }
-        return () => {
-          observer.unobserve(ref.current);
-          ref.hasObserver = false;
-        };
-      });
-    }
-
-    if (navSectionRefs.filter((ref) => !ref.hasObserver).length > 0) {
-      navSectionRefs.forEach((ref, i) => {
-        if (ref.current && !ref.hasObserver) {
-          observer.observe(ref.current);
-          ref.hasObserver = true;
-        }
-        return () => {
-          observer.unobserve(ref.current);
-          ref.hasObserver = false;
-        };
-      });
-    }
+    setupIntersectionObserver(navSectionRefs);
+    setupIntersectionObserver(teamMemberRefs);
   }, [navSectionRefs, teamMemberRefs]);
 
   const handleIntersection = (entries) => {
     const [entry] = entries;
-    // if ( entry.target.getAttribute('data-animate-ref') === 'section' && entry.target.id === 'jobs' ) {
-    //   console.log('entry', entry)
-    // }
     if (!entry.isIntersecting && !entry.isVisible) return;
+
     const revealEl = entry.target;
     switch (entry.target.getAttribute('data-animate-ref')) {
       case 'team-member':
@@ -189,7 +164,6 @@ const AboutPageContent = (pageData) => {
         setCurrentNavMenuItem(navMenuItems[1].id);
         break;
       case 'section':
-        const scrollOffsetTop = revealEl.getBoundingClientRect().top;
         const sectionIndex = parseInt(
           revealEl.getAttribute('data-section-index')
         );
@@ -204,19 +178,10 @@ const AboutPageContent = (pageData) => {
       byTheNumberIndex > -1 &&
       byTheNumberIndex < intro.byTheNumber.metrics.length
     ) {
-      let animateDuration = 1500;
-      if (intro.byTheNumber.metrics[byTheNumberIndex].count < 10) {
-        animateDuration = 500;
-      } else if (intro.byTheNumber.metrics[byTheNumberIndex].count < 20) {
-        animateDuration = 1000;
-      }
-
       if (intervalCount < 1) {
         const intervalId = setInterval(
           () => setIntervalCount((old) => old + 1),
-          animateDuration /
-            intro.byTheNumber.metrics[byTheNumberIndex].count /
-            10
+          1000 / intro.byTheNumber.metrics[byTheNumberIndex].count / 10
         );
         setNIntervalId(intervalId);
       }
@@ -269,52 +234,6 @@ const AboutPageContent = (pageData) => {
           openingsTitleEle.classList.add('reveal');
         }
       }
-    }
-
-    openingJobRefs.forEach((ref, i) => {
-      const scrollRevealEle = ref.current;
-      if (scrollRevealEle) {
-        if (!scrollRevealEle.classList.value.includes(' animate')) {
-          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
-          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-            setTimeout(() => scrollRevealEle.classList.add('reveal'), i * 250);
-            scrollRevealEle.classList.add('animate');
-          }
-        }
-      }
-    });
-
-    const applyEle = applyRef.current;
-    if (applyEle) {
-      if (!applyEle.classList.value.includes(' animate')) {
-        const scrollOffsetTop = applyEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-          setBeginApplyAnimate(true);
-
-          setTimeout(
-            () => applyContentRefs[0].current.classList.add('reveal'),
-            1000
-          );
-          setTimeout(
-            () => applyContentRefs[1].current.classList.add('reveal'),
-            1250
-          );
-          setTimeout(
-            () => applyContentRefs[2].current.classList.add('reveal'),
-            1500
-          );
-
-          applyEle.classList.add('animate');
-        }
-      }
-    }
-  };
-
-  const handlePositionNameClicked = (posIndex) => {
-    if (openedPositions.includes(posIndex)) {
-      setOpenedPositions(openedPositions.filter((pos) => pos !== posIndex));
-    } else {
-      setOpenedPositions([...openedPositions, posIndex]);
     }
   };
 
@@ -516,67 +435,11 @@ const AboutPageContent = (pageData) => {
 
             <div className="flex flex-col my-16 space-y-5">
               {jobListings.length ? (
-                jobListings.map((pos, i) => {
-                  const isOpened = openedPositions.includes(i);
-                  return (
-                    <div
-                      className="animate-reveal flex flex-col"
-                      key={i}
-                      ref={openingJobRefs[i]}
-                    >
-                      <div
-                        className="flex items-center cursor-pointer"
-                        onClick={() => handlePositionNameClicked(i)}
-                      >
-                        <div className="relative flex items-center justify-center w-[30px] h-[30px] border border-black rounded-full mr-2.5">
-                          <div className="absolute w-3 h-0.5 bg-black"></div>
-                          {!isOpened && (
-                            <div className="absolute w-0.5 h-3 bg-black"></div>
-                          )}
-                        </div>
-                        <p className="text-black text-lg">{pos.title}</p>
-                      </div>
-                      <div
-                        className={`h-0 ${
-                          isOpened ? 'h-full mt-4' : 'mt-0'
-                        } flex flex-col ml-10 space-y-5 overflow-hidden transition-all text-black`}
-                      >
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: pos.description,
-                          }}
-                        />
-                        {isOpened && pos.howToApply && (
-                          <div
-                            className={`w-full flex flex-col bg-white p-9 rounded transition-all duration-1000 delay-300 origin-left scale-x-0 ${
-                              beginApplyAnimate ? 'scale-x-100' : ''
-                            }`}
-                            ref={applyRef}
-                          >
-                            <div
-                              className="animate-reveal text-black text-2xl leading-[30px] underline"
-                              ref={applyContentRefs[0]}
-                            >
-                              <a href="/">How to apply</a>
-                            </div>
-                            <p
-                              className="animate-reveal text-black text-2xl leading-[30px]"
-                              ref={applyContentRefs[1]}
-                            >
-                              {pos.howToApply}
-                            </p>
-                            <div
-                              className="animate-reveal text-black text-sm underline uppercase mt-16"
-                              ref={applyContentRefs[2]}
-                            >
-                              <a href="/">Apply here</a>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })
+                jobListings.map((pos, i) => (
+                  <React.Fragment key={i}>
+                    <OpeningJobItem data={pos} order={i} opened={i === 0} />
+                  </React.Fragment>
+                ))
               ) : (
                 <div className="text-black">
                   {studioOpenings.jobsNoListings?.heading && (
