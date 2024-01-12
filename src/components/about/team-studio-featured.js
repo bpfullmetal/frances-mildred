@@ -38,32 +38,8 @@ const TeamStudioFeatured = ({ data }) => {
     });
   }, []);
 
-  const handleScroll = () => {
-    scrollRevealRefs.forEach((ref, i) => {
-      const scrollRevealEle = ref.current;
-      if (scrollRevealEle) {
-        if (!scrollRevealEle.classList.value.includes(' animate')) {
-          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
-          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-            if (i === 1) {
-              setNameRevealed(true);
-              setTimeout(() => setRoleRevealed(true), 300);
-            } else if (i === 2) {
-              setTimeout(() => setBioRevealed(true), 500);
-              setTimeout(() => setReadMoreRevealed(true), 800);
-            } else {
-              scrollRevealEle.classList.add('reveal');
-            }
-            scrollRevealEle.classList.add('animate');
-          }
-        }
-      }
-    });
-  };
-
   const handleIntersection = (entries) => {
     const [entry] = entries;
-    // console.log(entry)
     if (!entry.isIntersecting) return;
     switch (entry.target.getAttribute('data-animate-ref')) {
       case 'name':
@@ -76,9 +52,6 @@ const TeamStudioFeatured = ({ data }) => {
         break;
       case 'image':
         entry.target.classList.add('reveal');
-        break;
-      default:
-        // entry.target.classList.add('reveal');
         break;
     }
   };
@@ -139,8 +112,8 @@ const TeamStudioFeatured = ({ data }) => {
             {data.bioMore && (
               <>
                 <p
-                  className={`animate-reveal max-w-[420px] text-sm_extra leading-[20px] tracking-[0.45px] mb-5${
-                    readMoreDisplayed ? ' reveal' : ' hidden'
+                  className={`animate-reveal-down max-w-[420px] text-sm_extra leading-[20px] tracking-[0.45px] mb-5${
+                    readMoreDisplayed ? ' reveal-down' : ' hidden'
                   }`}
                 >
                   {data.bioMore}
