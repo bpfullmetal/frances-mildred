@@ -22,7 +22,7 @@ module.exports = {
         'text-sm_extra': '15px',
       },
       height: {
-        'home_banner': 'calc(100vh - 48px)',
+        'home_banner': 'calc(100vh - 44px)',
         'work_project': 'calc(100vh - 108px)'
       },
       maxHeight: {

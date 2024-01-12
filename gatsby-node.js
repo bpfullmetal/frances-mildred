@@ -80,7 +80,7 @@ exports.createPages = async ({ graphql, actions }) => {
     // Iterate over categories and create pages
     result.data.allWpCategory.edges.forEach((category) => {
       createPage({
-        path: `/design/${category.node.slug}`,
+        path: `/design?category=${category.node.slug}`,
         component: path.resolve('./src/templates/page/design.js'),
         context: {
           // Pass data to the template, if needed

@@ -1,11 +1,15 @@
 import * as React from 'react';
+import { graphql } from 'gatsby';
 import PageLayout from '../../components/page-layout';
 import CategoryModal from '../../components/discover/category-modal';
-import { graphql } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import DesignProjectsGrid from '../../components/discover/projects-grid';
 
-const DiscoverPageContent = ({ data }) => {
+const DiscoverPageContent = ({ data, location }) => {
+  const params = new URLSearchParams(location.search);
+  const categoryParam = params.get('category');
+
   const allProjectsData = data.allWpProject.edges || [];
+  const allCategoriesData = data.allWpCategory.edges || [];
 
   const [openModal, setOpenModal] = React.useState(false);
   const [selectedCat, setSelectedCat] = React.useState(
@@ -16,81 +20,39 @@ const DiscoverPageContent = ({ data }) => {
     background: false,
     title1: false,
     title2: false,
+    project: false,
   });
-  const [projectRefs] = React.useState(
-    Array(6)
-      .fill()
-      .map((_) => {
-        return React.useRef();
-      })
-  );
 
   React.useEffect(() => {
-    setTimeout(
-      () =>
-        setAnimationEntrances({
-          background: true,
-          title1: false,
-          title2: false,
-        }),
-      500
-    );
-    setTimeout(
-      () =>
-        setAnimationEntrances({
-          background: true,
-          title1: true,
-          title2: false,
-        }),
-      1500
-    );
-    setTimeout(
-      () =>
-        setAnimationEntrances({
-          background: true,
-          title1: true,
-          title2: true,
-        }),
-      2000
-    );
-
-    setTimeout(() => handleScroll(), 2500);
-    console.log('refreshing');
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [500, 1500, 2000, 2500].forEach((ms, i) => {
+      setTimeout(
+        () =>
+          setAnimationEntrances({
+            background: i >= 0,
+            title1: i >= 1,
+            title2: i >= 2,
+            project: i >= 3,
+          }),
+        ms
+      );
+    });
   }, []);
 
   React.useEffect(() => {
-    setFilteredProjects(
-      allProjectsData.filter((project) =>
-        project.node.categories.nodes.some(
-          (category) => category.slug === selectedCat.slug
-        )
+    const categoryNode = (
+      allCategoriesData.find((cat) => cat.node.slug === categoryParam) ||
+      allCategoriesData[0]
+    )?.node;
+    setSelectedCat(categoryNode);
+
+    const matchedProjects = allProjectsData.filter((project) =>
+      project.node.categories.nodes.find(
+        (category) => category.slug === categoryNode.slug
       )
     );
-  }, [selectedCat]);
 
-  const handleScroll = () => {
-    let projectOrder = 0;
-
-    projectRefs.forEach((ref) => {
-      const projectEle = ref.current;
-      if (projectEle) {
-        if (!projectEle.classList.value.includes('animate')) {
-          const scrollOffsetTop = projectEle.getBoundingClientRect().top;
-          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-            projectEle.classList.add('animate');
-            setTimeout(
-              () => projectEle.classList.add('fade-in'),
-              projectOrder * 500
-            );
-            projectOrder++;
-          }
-        }
-      }
-    });
-  };
+    setFilteredProjects(matchedProjects);
+  }, [allCategoriesData, categoryParam]);
 
   return (
     <PageLayout className="discover" hiddenBookSection>
@@ -109,49 +71,24 @@ const DiscoverPageContent = ({ data }) => {
                 className="underline cursor-pointer"
                 onClick={() => setOpenModal(true)}
               >
-                {selectedCat.name}
+                {selectedCat?.name}
               </span>{' '}
               +
             </p>
           </div>
 
-          <div className="projects-grid">
-            {filteredProjects.map((project, i) => (
-              <div
-                className="projects-grid__item flex flex-col"
-                key={i}
-                ref={projectRefs[i]}
-              >
-                {project.node.featuredImage && (
-                  <a className="mb-4" href={project.node.link}>
-                    <GatsbyImage
-                      image={getImage(
-                        project.node.featuredImage.node.gatsbyImage
-                      )}
-                      alt={
-                        project.node.featuredImage
-                          ? project.node.featuredImage.node.altText
-                          : project.node.title
-                      }
-                    />
-                  </a>
-                )}
-                <p className="text-xl leading-none tracking-[0.48px] mb-3 sm:text-[22px]">
-                  {project.node.title}
-                </p>
-                <div className="w-fit text-base !leading-none tracking-[0.32px] uppercase animate-underline sm:text-lg sm:tracking-[0.42px]">
-                  <a href={project.node.link}>View Project</a>
-                </div>
-              </div>
-            ))}
-          </div>
+          {animationEntrances.project && (
+            <DesignProjectsGrid
+              category={selectedCat?.slug}
+              projects={filteredProjects}
+            />
+          )}
         </div>
       </section>
 
       {openModal && (
         <CategoryModal
           selectedCat={selectedCat}
-          handleSelectCat={setSelectedCat}
           categories={data.allWpCategory.edges}
           onClose={() => setOpenModal(false)}
         />
