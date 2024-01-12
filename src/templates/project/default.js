@@ -230,34 +230,35 @@ const ProjectSingle = ({ data }) => {
 
       {nextProject.nodes.length && (
         <section className="sticky top-0 next-project mb-[50vh]">
-          <div className="flex items-center justify-center w-screen h-screen">
-            <a href={nextProject.nodes[0].link}>
-              {nextProject.nodes[0].featuredImage && (
-                <GatsbyImage
-                  className="w-full h-full object-cover rounded-none"
-                  href={nextProject.nodes[0].link}
-                  image={getImage(
-                    nextProject.nodes[0].featuredImage.node.gatsbyImage
-                  )}
-                  alt={
-                    nextProject.nodes[0].featuredImage.node.altText ||
-                    nextProject.nodes[0].title
-                  }
+          <a
+            href={nextProject.nodes[0].link}
+            className="flex items-center justify-center w-screen h-screen"
+          >
+            {nextProject.nodes[0].featuredImage && (
+              <GatsbyImage
+                className="static"
+                href={nextProject.nodes[0].link}
+                image={getImage(
+                  nextProject.nodes[0].featuredImage.node.gatsbyImage
+                )}
+                alt={
+                  nextProject.nodes[0].featuredImage.node.altText ||
+                  nextProject.nodes[0].title
+                }
+              />
+            )}
+            <svg width="0" height="0">
+              <clipPath id="next-project-image-mask">
+                <path
+                  ref={imageMaskRef}
+                  d="M 0.034 -0.034 L 660 -0.049 L 660 440 L 0 440 L 0 0 L 0.034 -0.034 Z"
                 />
-              )}
-              <svg width="0" height="0">
-                <clipPath id="next-project-image-mask">
-                  <path
-                    ref={imageMaskRef}
-                    d="M 0.034 -0.034 L 660 -0.049 L 660 440 L 0 440 L 0 0 L 0.034 -0.034 Z"
-                  />
-                </clipPath>
-              </svg>
-              <p className="relative max-w-[600px] text-[58px] leading-[58px] text-center">
-                {nextProject.nodes[0].title}
-              </p>
-            </a>
-          </div>
+              </clipPath>
+            </svg>
+            <p className="relative max-w-[600px] text-[58px] leading-[58px] text-center">
+              {nextProject.nodes[0].title}
+            </p>
+          </a>
         </section>
       )}
 
