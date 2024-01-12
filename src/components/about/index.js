@@ -7,9 +7,10 @@ import TeamStudioItem from './team-studio-item';
 import OpeningJobItem from './opening-job-item';
 
 const AboutPageContent = (pageData) => {
+  console.log('about page content')
   const { intro, ourTeam, studioOpenings } =
     pageData.content.template.pageAbout;
-
+  
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
   const [byTheNumberIndex, setByTheNumberIndex] = React.useState(-1);
@@ -268,7 +269,7 @@ const AboutPageContent = (pageData) => {
 
     return item.count;
   };
-
+  
   return (
     <PageLayout className="relative">
       <div className={`hidden fixed top-2/4 left-10 md:flex flex-col z-10`}>

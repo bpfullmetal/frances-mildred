@@ -14,8 +14,69 @@ import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
 
 const FooterSection = () => {
+
   const url =
     'https://fullmetalworkshop.us17.list-manage.com/subscribe/post?u=8b032d8566f5bc3f3417f02c3&amp;id=ef28567184&amp;f_id=007957e0f0';
+  
+
+  const MailchimpForm = ({ status, message, onValidated }) => {
+    const [email, setEmail] = React.useState('');
+
+    if ( message === '0 - An email address must contain a single @.' ) {
+      message = 'Incorrect email format'
+    }
+    React.useEffect(() => {
+      if ( status === "success" ) clearFields();
+    }, [status])
+  
+    const clearFields = () => {
+      setEmail('');
+    }
+  
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+
+      email.indexOf("@") === -1 && 
+      onValidated({ EMAIL: false})
+      
+      email &&
+      email.indexOf("@") > -1 &&
+      onValidated({
+          EMAIL: email,
+      });
+
+    }
+
+    return (
+      <form className="mc__form flex flex-1 flex-col items-start md:items-end" onSubmit={(e) => handleSubmit(e)}>
+        
+        <div className="flex flex-col w-full max-w-[480px]">
+          <div className="mc__title tracking-[0.48px] py-2 mb-3 sm:mb-24">
+            Stay Updated
+          </div>
+          {
+            status === 'success' 
+              ? <p>Thank you for signing up, we promise not to spam your inbox.</p>
+              : <div className="signup-email">
+                  <input className="" placeholder="Email Address" value={email} onChange={ val => setEmail(val.target.value) } />
+                  <input value="Sign up" type="submit" className="sign-up-btn"/>
+                </div>
+          }  
+          {
+            status === "sending" && (
+              <p className="mc__alert mc__alert--sending mt-2">subscribing...</p>
+            )
+          }
+          {
+            status === "error" && (
+              <p className="mc__alert mc__alert--error mt-2">{ message }</p>
+            )
+          }
+        </div>     
+      </form>
+    );
+  };
 
   return (
     <StaticQuery
@@ -99,17 +160,16 @@ const FooterSection = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-1 flex-col items-start md:items-end">
-                  <div className="flex flex-col w-full max-w-[480px]">
-                    <div className="tracking-[0.48px] py-2 mb-3 sm:mb-24">
-                      Stay Updated
-                    </div>
-                    <div className="signup-email">
-                      <input className="" placeholder="Email Address" />
-                      <div className="sign-up-btn">Sign up</div>
-                    </div>
-                  </div>
-                </div>
+                <MailchimpSubscribe
+                    url={url}
+                    render={({ subscribe, status, message }) => (
+                        <MailchimpForm
+                            status={status}
+                            message={message}
+                            onValidated={formData => subscribe(formData)}
+                        />
+                    )}
+                />
               </div>
 
               <div className="logo flex flex-col mt-24 space-y-6 sm:space-y-24 sm:mt-64">

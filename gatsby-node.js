@@ -106,7 +106,6 @@ exports.createPages = async ({ graphql, actions }) => {
 
     // Create pages
     projects.data.allWpProject.nodes.forEach(node => {
-      console.log('SLUG', node)
       createPage({
         path: `/project/${node.slug}`, // Adjust the path as needed
         component: require.resolve('./src/templates/project/default.js'), // Adjust the template file

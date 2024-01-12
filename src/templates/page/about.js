@@ -4,14 +4,10 @@ import AboutPageContent from '../../components/about';
 
 const AboutPage = ({ data }) => {
   const { wpPage } = data;
-  console.log('ABOUT TEMPLATE DATA', wpPage);
 
   const title = wpPage.title;
   const content = wpPage.content;
-
-  console.log('title: ', title);
-  console.log('content: ', content);
-
+  
   return <AboutPageContent content={wpPage} title={title} />;
 };
 

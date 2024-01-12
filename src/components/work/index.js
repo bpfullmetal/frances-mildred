@@ -65,9 +65,7 @@ const WorkPageContent = () => {
           entry.target.classList.add('reveal');
         }
         if (entry.target.getAttribute('data-ref-type') === 'more-projects') {
-          console.log(entry);
           // Load more posts when user reaches the bottom
-          console.log(postsPerPage * (currentPage + 1), allProjects.length);
           if (postsPerPage * currentPage > allProjects.length) return;
           setCurrentPage((prevPage) => prevPage + 1);
         }
