@@ -11,7 +11,9 @@ const BlockFeaturedProject = ({ data }) => {
     return projects[randomIndex];
   };
 
-  const randomProject = getRandomProject(data.projects);
+  const randomProject = React.useMemo(() => {
+    return getRandomProject(data.projects);
+  }, [data.projects]);
 
   const projectImage = randomProject.backgroundImage
     ? randomProject.backgroundImage.node
@@ -37,6 +39,33 @@ const BlockFeaturedProject = ({ data }) => {
       }
     : null;
 
+  const [projectAnimate, setProjectAnimate] = React.useState('top');
+
+  const projectRef = React.useRef();
+  const wrapperRef = React.useRef();
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleScroll = () => {
+    const projectEle = projectRef.current;
+    const wrapperEle = wrapperRef.current;
+    if (projectEle && wrapperEle) {
+      if (window.scrollY > projectEle.getBoundingClientRect().height + 200) {
+        setProjectAnimate('fixed');
+
+        if (window.scrollY > wrapperEle.getBoundingClientRect().height) {
+          setProjectAnimate('bottom');
+        }
+      } else {
+        setProjectAnimate('top');
+      }
+    }
+  };
+
   return (
     <section className="relative flex items-center">
       {projectImage && (
@@ -47,8 +76,19 @@ const BlockFeaturedProject = ({ data }) => {
         />
       )}
       {(projectDescription || projectLink) && (
-        <div className="absolute w-full h-full">
-          <div className="sticky top-[600px] max-w-main mx-auto px-5 pb-40 mt-[600px] sm:px-12">
+        <div className="absolute w-full h-full" ref={wrapperRef}>
+          <div
+            className={`${
+              projectAnimate === 'fixed' ? 'fixed bottom-[100px]' : 'absolute'
+            } ${
+              projectAnimate === 'top'
+                ? 'top-[100px]'
+                : projectAnimate === 'bottom'
+                ? 'bottom-[100px]'
+                : ''
+            } max-w-main mx-auto px-5 sm:px-12`}
+            ref={projectRef}
+          >
             {projectDescription && (
               <p className="max-w-[630px] text-white text-3xl leading-[37px] mb-4 sm:text-4xl sm:leading-[44px] lg:pl-8">
                 {projectDescription}
