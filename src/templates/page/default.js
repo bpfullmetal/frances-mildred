@@ -9,7 +9,7 @@ import HeaderMenu from '../../components/header-menu';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
-  
+
   if (!wpPage) return <>No page data found</>;
   return (
     <div>
@@ -21,25 +21,44 @@ const PageDefault = ({ data }) => {
           {wpPage.editorBlocks.map((block, i) => {
             switch (block.__typename) {
               case 'WpAcfLogoBanner':
-                return <BlockLogoBanner key={`${block.__typename}-${i}`} data={block.blockLogoBanner} />;
+                return (
+                  <BlockLogoBanner
+                    key={`${block.__typename}-${i}`}
+                    data={block.blockLogoBanner}
+                  />
+                );
               case 'WpAcfFeaturedProject':
                 return (
-                  <BlockFeaturedProject key={`${block.__typename}-${i}`} data={block.blockFeaturedProjects} />
+                  <BlockFeaturedProject
+                    key={`${block.__typename}-${i}`}
+                    data={block.blockFeaturedProjects}
+                  />
                 );
               case 'WpAcfFeaturedContent':
                 return (
-                  <BlockFeaturedContent key={`${block.__typename}-${i}`} data={block.blockFeaturedContent} />
+                  <BlockFeaturedContent
+                    key={`${block.__typename}-${i}`}
+                    data={block.blockFeaturedContent}
+                  />
                 );
               case 'WpAcfProjectsCarousel':
                 return (
-                  <BlockProjectsCarousel key={`${block.__typename}-${i}`} data={block.blockProjectsCarousel} />
+                  <BlockProjectsCarousel
+                    key={`${block.__typename}-${i}`}
+                    data={block.blockProjectsCarousel}
+                  />
                 );
               case 'WpAcfHeaderNav':
-                return <HeaderMenu key={`${block.__typename}-${i}`} currentURI={wpPage.uri} />;
+                return (
+                  <HeaderMenu
+                    key={`${block.__typename}-${i}`}
+                    currentURI={wpPage.uri}
+                  />
+                );
               default:
                 return (
-                  <div 
-                    key={`${block.__typename}-${i}`} 
+                  <div
+                    key={`${block.__typename}-${i}`}
                     dangerouslySetInnerHTML={{
                       __html: block.renderedHtml,
                     }}
@@ -49,9 +68,9 @@ const PageDefault = ({ data }) => {
           })}
         </div>
       )}
-      {
-        wpPage.editorBlocks.find( block => block.__typename === 'WpAcfContact') === undefined && <FooterSection />
-      }
+      {wpPage.editorBlocks.find(
+        (block) => block.__typename === 'WpAcfContact'
+      ) === undefined && <FooterSection />}
     </div>
   );
 };

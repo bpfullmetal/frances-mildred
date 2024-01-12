@@ -56,7 +56,6 @@ const AboutPageContent = (pageData) => {
     });
   }
 
-  const navMenuRef = React.useRef();
   const navSectionRefs = Array(3)
     .fill()
     .map((_) => {

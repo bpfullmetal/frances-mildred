@@ -4,13 +4,14 @@ import CategoryModal from '../../components/discover/category-modal';
 import { graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
-const DiscoverPageContent = ({data}) => {
-  
-  const allProjectsData = data.allWpProject.edges || []
+const DiscoverPageContent = ({ data }) => {
+  const allProjectsData = data.allWpProject.edges || [];
 
   const [openModal, setOpenModal] = React.useState(false);
-  const [selectedCat, setSelectedCat] = React.useState(data.allWpCategory.edges[0].node);
-  const [filteredProjects, setFilteredProjects] = React.useState([])
+  const [selectedCat, setSelectedCat] = React.useState(
+    data.allWpCategory.edges[0].node
+  );
+  const [filteredProjects, setFilteredProjects] = React.useState([]);
   const [animationEntrances, setAnimationEntrances] = React.useState({
     background: false,
     title1: false,
@@ -54,17 +55,21 @@ const DiscoverPageContent = ({data}) => {
     );
 
     setTimeout(() => handleScroll(), 2500);
-        console.log('refreshing')
+    console.log('refreshing');
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    setFilteredProjects(allProjectsData.filter(project =>
-      project.node.categories.nodes.some(category => category.slug === selectedCat.slug)
-    ))
-  }, [selectedCat])
+    setFilteredProjects(
+      allProjectsData.filter((project) =>
+        project.node.categories.nodes.some(
+          (category) => category.slug === selectedCat.slug
+        )
+      )
+    );
+  }, [selectedCat]);
 
   const handleScroll = () => {
     let projectOrder = 0;
@@ -104,7 +109,7 @@ const DiscoverPageContent = ({data}) => {
                 className="underline cursor-pointer"
                 onClick={() => setOpenModal(true)}
               >
-                { selectedCat.name }
+                {selectedCat.name}
               </span>{' '}
               +
             </p>
@@ -117,15 +122,20 @@ const DiscoverPageContent = ({data}) => {
                 key={i}
                 ref={projectRefs[i]}
               >
-                {
-                  project.node.featuredImage && (
-                    <a className="mb-4" href={project.node.link}>
-                      <GatsbyImage
-                        image={getImage(project.node.featuredImage.node.gatsbyImage)}
-                        alt={project.node.featuredImage ? project.node.featuredImage.node.altText : project.node.title }/>
-                      </a>
-                  )
-                }
+                {project.node.featuredImage && (
+                  <a className="mb-4" href={project.node.link}>
+                    <GatsbyImage
+                      image={getImage(
+                        project.node.featuredImage.node.gatsbyImage
+                      )}
+                      alt={
+                        project.node.featuredImage
+                          ? project.node.featuredImage.node.altText
+                          : project.node.title
+                      }
+                    />
+                  </a>
+                )}
                 <p className="text-xl leading-none tracking-[0.48px] mb-3 sm:text-[22px]">
                   {project.node.title}
                 </p>
@@ -138,7 +148,14 @@ const DiscoverPageContent = ({data}) => {
         </div>
       </section>
 
-      {openModal && <CategoryModal selectedCat={selectedCat} handleSelectCat={setSelectedCat} categories={data.allWpCategory.edges} onClose={() => setOpenModal(false)} />}
+      {openModal && (
+        <CategoryModal
+          selectedCat={selectedCat}
+          handleSelectCat={setSelectedCat}
+          categories={data.allWpCategory.edges}
+          onClose={() => setOpenModal(false)}
+        />
+      )}
     </PageLayout>
   );
 };
@@ -154,11 +171,7 @@ export const pageQuery = graphql`
           featuredImage {
             node {
               altText
-              gatsbyImage(
-                layout: CONSTRAINED
-                width: 800
-                placeholder: BLURRED
-              )
+              gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
             }
           }
           title
@@ -173,8 +186,8 @@ export const pageQuery = graphql`
       }
     }
     allWpCategory(
-      filter: {slug: {nin: "uncategorized"}, count: {gt: 0}}
-      sort: {count: ASC}
+      filter: { slug: { nin: "uncategorized" }, count: { gt: 0 } }
+      sort: { count: ASC }
     ) {
       edges {
         node {

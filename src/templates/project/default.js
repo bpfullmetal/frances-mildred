@@ -9,7 +9,7 @@ import PageLayout from '../../components/page-layout';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const ProjectSingle = ({ data }) => {
-  console.log('PROJECT DATA', data)
+  console.log('PROJECT DATA', data);
   const { wpProject, nextProject } = data;
   const { title, uri, projectsSingle } = wpProject;
   const imageBlocksData = [
@@ -232,21 +232,19 @@ const ProjectSingle = ({ data }) => {
         <section className="sticky top-0 next-project mb-[50vh]">
           <div className="flex items-center justify-center w-screen h-screen">
             <a href={nextProject.nodes[0].link}>
-                {
-                    nextProject.nodes[0].featuredImage && (
-                        <GatsbyImage
-                          className="w-full h-full object-cover rounded-none"
-                          href={nextProject.nodes[0].link}
-                          image={getImage(
-                            nextProject.nodes[0].featuredImage.node.gatsbyImage
-                          )}
-                          alt={
-                            nextProject.nodes[0].featuredImage.node.altText ||
-                            nextProject.nodes[0].title
-                          }
-                        />
-                    )
-                }
+              {nextProject.nodes[0].featuredImage && (
+                <GatsbyImage
+                  className="w-full h-full object-cover rounded-none"
+                  href={nextProject.nodes[0].link}
+                  image={getImage(
+                    nextProject.nodes[0].featuredImage.node.gatsbyImage
+                  )}
+                  alt={
+                    nextProject.nodes[0].featuredImage.node.altText ||
+                    nextProject.nodes[0].title
+                  }
+                />
+              )}
               <svg width="0" height="0">
                 <clipPath id="next-project-image-mask">
                   <path
@@ -279,11 +277,11 @@ export const Head = ({ data }) => {
 };
 
 export const pageQuery = graphql`
-query ProjectWithNextAndPrevious ($id: String!, $currentDate: Date!) {
+  query ProjectWithNextAndPrevious($id: String!, $currentDate: Date!) {
     wpProject(id: { eq: $id }) {
       uri
       title
-      date 
+      date
       id
       projectsSingle {
         projectDetails {
@@ -298,28 +296,28 @@ query ProjectWithNextAndPrevious ($id: String!, $currentDate: Date!) {
           label
         }
       }
-    },
+    }
     nextProject: allWpProject(
-        sort: { fields: date, order: DESC }
-        filter: { date: { lt: $currentDate }, id: { ne: $id } }
-        limit: 1
-      ) {
-        nodes {
-          id
-          title
-          link
-          date
-          featuredImage {
-            node {
-              altText
-              gatsbyImage(
-                layout: FULL_WIDTH
-                width: 800
-                placeholder: DOMINANT_COLOR
-              )
-            }
+      sort: { fields: date, order: DESC }
+      filter: { date: { lt: $currentDate }, id: { ne: $id } }
+      limit: 1
+    ) {
+      nodes {
+        id
+        title
+        link
+        date
+        featuredImage {
+          node {
+            altText
+            gatsbyImage(
+              layout: FULL_WIDTH
+              width: 800
+              placeholder: DOMINANT_COLOR
+            )
           }
         }
+      }
     }
   }
 `;
