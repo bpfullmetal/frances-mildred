@@ -171,7 +171,7 @@ const WorkPageContent = () => {
 
       <section className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
         {projects.map((project, i) => {
-          if (i === 0) return <></>;
+          if (i === 0) return <React.Fragment key={i}></React.Fragment>;
           return (
             <div
               className={`work-project-block animate-reveal max-w-[80%] h-work_project py-4 mb-40 ${

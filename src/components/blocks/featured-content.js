@@ -65,6 +65,7 @@ const BlockFeaturedContent = ({ data }) => {
                 return (
                   <div
                     className="scroll-reveal mb-6 sm:mb-8"
+                    key={i}
                     ref={scrollRevealRefs[i + 1]}
                   >
                     <GatsbyImage
@@ -82,6 +83,7 @@ const BlockFeaturedContent = ({ data }) => {
                 return (
                   <p
                     className="scroll-reveal text-dark_green text-lg mb-6 sm:text-xl sm:mb-8"
+                    key={i}
                     ref={scrollRevealRefs[i + 1]}
                   >
                     {content.text}
