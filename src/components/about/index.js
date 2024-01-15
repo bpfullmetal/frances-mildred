@@ -2,21 +2,19 @@ import * as React from 'react';
 import AboutBannerVideo from '../../assets/images/about-banner.mp4';
 import TeamImage1 from '../../assets/images/home-img-2.png';
 import PageLayout from '../page-layout';
+import ByTheNumberBlock from './by-the-number';
 import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
 import OpeningJobItem from './opening-job-item';
 
 const AboutPageContent = (pageData) => {
-  console.log('about page content')
+  console.log('about page content');
   const { intro, ourTeam, studioOpenings } =
     pageData.content.template.pageAbout;
-  
+
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
-  const [byTheNumberIndex, setByTheNumberIndex] = React.useState(-1);
-  const [nIntervalId, setNIntervalId] = React.useState(null);
   const [jobListings, setJobListings] = React.useState([]);
-  const [intervalCount, setIntervalCount] = React.useState(0);
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
     Array(4).fill(false)
   );
@@ -61,7 +59,6 @@ const AboutPageContent = (pageData) => {
     .map((_) => {
       return React.useRef();
     });
-  const byTheNumberRef = React.useRef();
   const ourTeamRefs = Array(3)
     .fill()
     .map((_) => {
@@ -83,18 +80,6 @@ const AboutPageContent = (pageData) => {
     return () => window.removeEventListener('scroll', handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  React.useEffect(() => {
-    const byTheNumberEle = byTheNumberRef.current;
-    if (byTheNumberEle) {
-      if (!byTheNumberEle.classList.value.includes('animate')) {
-        setTimeout(() => {
-          byTheNumberEle.classList.add('animate');
-          setByTheNumberIndex(0);
-        }, 1000);
-      }
-    }
-  }, [byTheNumberRef]);
 
   React.useEffect(() => {
     const setupIntersectionObserver = (arrayRefs) => {
@@ -173,42 +158,6 @@ const AboutPageContent = (pageData) => {
     }
   };
 
-  React.useEffect(() => {
-    if (
-      !nIntervalId &&
-      byTheNumberIndex > -1 &&
-      byTheNumberIndex < intro.byTheNumber.metrics.length
-    ) {
-      if (intervalCount < 1) {
-        const intervalId = setInterval(
-          () => setIntervalCount((old) => old + 1),
-          1000 / intro.byTheNumber.metrics[byTheNumberIndex].count / 10
-        );
-        setNIntervalId(intervalId);
-      }
-    }
-  }, [byTheNumberIndex, intro.byTheNumber.metrics, intervalCount, nIntervalId]);
-
-  React.useEffect(() => {
-    if (
-      nIntervalId &&
-      byTheNumberIndex > -1 &&
-      byTheNumberIndex < intro.byTheNumber.metrics.length
-    ) {
-      if (
-        intervalCount >=
-        intro.byTheNumber.metrics[byTheNumberIndex].count * 10
-      ) {
-        clearInterval(nIntervalId);
-        setTimeout(() => {
-          setNIntervalId(null);
-          setByTheNumberIndex((old) => old + 1);
-          setIntervalCount(0);
-        }, 500);
-      }
-    }
-  }, [byTheNumberIndex, intro.byTheNumber.metrics, intervalCount, nIntervalId]);
-
   const handleScroll = () => {
     ourTeamRefs.forEach((ref, i) => {
       const scrollRevealEle = ref.current;
@@ -238,38 +187,6 @@ const AboutPageContent = (pageData) => {
     }
   };
 
-  const dispCountingNumber = (item, i) => {
-    if (i > byTheNumberIndex) return '';
-
-    if (i === byTheNumberIndex) {
-      const stepCount = Math.floor(item.count / 3);
-      let countingNum = 0;
-
-      if (intervalCount <= item.count * 2) {
-        countingNum = Math.floor(
-          intervalCount / ((item.count * 2) / stepCount)
-        );
-      } else if (intervalCount <= item.count * 5) {
-        countingNum =
-          stepCount +
-          Math.floor(
-            (intervalCount - item.count * 2) / ((item.count * 3) / stepCount)
-          );
-      } else {
-        countingNum =
-          stepCount * 2 +
-          Math.floor(
-            (intervalCount - item.count * 5) /
-              ((item.count * 5) / (item.count - stepCount * 2))
-          );
-      }
-
-      return countingNum < 1 ? '' : countingNum;
-    }
-
-    return item.count;
-  };
-  
   return (
     <PageLayout className="relative">
       <div className={`hidden fixed top-2/4 left-10 md:flex flex-col z-10`}>
@@ -327,25 +244,7 @@ const AboutPageContent = (pageData) => {
               </div>
             )}
             {intro.byTheNumber.metrics?.length && (
-              <div className="h-[80vh]" ref={byTheNumberRef}>
-                {intro.byTheNumber.heading && (
-                  <p className="text-sm pt-[20vh] pb-5">
-                    {intro.byTheNumber.heading}
-                  </p>
-                )}
-                {intro.byTheNumber.metrics.map((item, i) => (
-                  <p className="text-2xl leading-[30px]" key={i}>
-                    {dispCountingNumber(item, i)}{' '}
-                    <span
-                      className={`${
-                        i < byTheNumberIndex ? 'fade-in' : 'opacity-0'
-                      }`}
-                    >
-                      {item.metric}
-                    </span>
-                  </p>
-                ))}
-              </div>
+              <ByTheNumberBlock data={intro.byTheNumber} />
             )}
           </div>
         </div>
