@@ -8,7 +8,6 @@ import TeamStudioItem from './team-studio-item';
 import OpeningJobItem from './opening-job-item';
 
 const AboutPageContent = (pageData) => {
-  console.log('about page content');
   const { intro, ourTeam, studioOpenings } =
     pageData.content.template.pageAbout;
 
@@ -75,41 +74,30 @@ const AboutPageContent = (pageData) => {
     setJobListings(studioOpenings.jobListings.filter((job) => job.active));
 
     setTimeout(() => setIsPageEntered(true), 500);
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    const setupIntersectionObserver = (arrayRefs) => {
-      const options = {
-        root: null, // Use the viewport as the root
-        rootMargin: '0px', // No margin
-        threshold: 0.3, // Trigger when 50% of the target is in the viewport
-      };
-
-      if (arrayRefs.filter((ref) => !ref.hasObserver).length > 0) {
-        arrayRefs.forEach((ref) => {
-          const observer = new IntersectionObserver(
-            handleIntersection,
-            options
-          );
-          if (ref.current) {
-            observer.observe(ref.current);
-            ref.hasObserver = true;
-          }
-          return () => {
-            observer.unobserve(ref.current);
-            ref.hasObserver = false;
-          };
-        });
-      }
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px', // No margin
+      threshold: 0.3, // Trigger when 50% of the target is in the viewport
     };
 
-    setupIntersectionObserver(navSectionRefs);
-    setupIntersectionObserver(teamMemberRefs);
-  }, [navSectionRefs, teamMemberRefs]);
+    const setupIntersectionObserver = (ref) => {
+      const observer = new IntersectionObserver(handleIntersection, options);
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+      return () => {
+        observer.unobserve(ref.current);
+      };
+    };
+
+    navSectionRefs.forEach((ref) => setupIntersectionObserver(ref));
+    ourTeamRefs.forEach((ref) => setupIntersectionObserver(ref));
+    teamMemberRefs.forEach((ref) => setupIntersectionObserver(ref));
+    setupIntersectionObserver(openingsTitleRef);
+  }, [navSectionRefs, openingsTitleRef, ourTeamRefs, teamMemberRefs]);
 
   const handleIntersection = (entries) => {
     const [entry] = entries;
@@ -155,35 +143,16 @@ const AboutPageContent = (pageData) => {
         );
         setCurrentNavMenuItem(navMenuItems[sectionIndex].id);
         break;
-    }
-  };
-
-  const handleScroll = () => {
-    ourTeamRefs.forEach((ref, i) => {
-      const scrollRevealEle = ref.current;
-      if (scrollRevealEle) {
-        if (!scrollRevealEle.classList.value.includes(' animate')) {
-          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
-          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-            if (i === 1) {
-              setTimeout(() => scrollRevealEle.classList.add('reveal'), 1000);
-            } else {
-              scrollRevealEle.classList.add('reveal');
-            }
-            scrollRevealEle.classList.add('animate');
-          }
+      case 'our-team':
+        const orderIndex = parseInt(revealEl.getAttribute('data-index'));
+        if (orderIndex === 2) {
+          setTimeout(() => revealEl.classList.add('reveal'), 1000);
+        } else {
+          revealEl.classList.add('reveal');
         }
-      }
-    });
-
-    const openingsTitleEle = openingsTitleRef.current;
-    if (openingsTitleEle) {
-      if (!openingsTitleEle.classList.value.includes(' reveal')) {
-        const scrollOffsetTop = openingsTitleEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-          openingsTitleEle.classList.add('reveal');
-        }
-      }
+        break;
+      default:
+        revealEl.classList.add('reveal');
     }
   };
 
@@ -265,6 +234,8 @@ const AboutPageContent = (pageData) => {
             <p
               className="animate-reveal text-4xl leading-none tracking-[0.36px] lg:w-[200px] lg:text-[65px] lg:leading-[65px] lg:tracking-[0.65px] lg:mr-10"
               ref={ourTeamRefs[0]}
+              data-animate-ref="our-team"
+              data-index="1"
             >
               Our Team
             </p>
@@ -272,12 +243,19 @@ const AboutPageContent = (pageData) => {
 
           <div className="max-w-[860px] flex flex-col">
             <div className="flex flex-col">
-              <div className="animate-reveal" ref={ourTeamRefs[1]}>
+              <div
+                className="animate-reveal"
+                ref={ourTeamRefs[1]}
+                data-animate-ref="our-team"
+                data-index="2"
+              >
                 <img src={TeamImage1} alt="our team 1" />
               </div>
               <p
                 className="animate-reveal max-w-[280px] text-sm_extra leading-[20px] mt-5"
                 ref={ourTeamRefs[2]}
+                data-animate-ref="our-team"
+                data-index="3"
               >
                 This is an area for a short introduction about our team members.
               </p>
