@@ -27,6 +27,15 @@ module.exports = {
           page: { 
             postsPerPage: 999
           }
+        },
+        createClientPages: ({ actions }) => {
+          const { createPage } = actions;
+
+          // Add a client-only route for the custom 404 page
+          createPage({
+            path: '/404',
+            component: require.resolve(`./src/templates/page/404/default.js`),
+          });
         }
       }
     },

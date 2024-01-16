@@ -184,7 +184,7 @@ const WorkProjectPageContent = () => {
                 className={`min-h-[90vh] flex flex-col items-start ${
                   block.text ? 'space-x-20' : ''
                 } ${block.pos ? pos2Class[block.pos] : ''} sm:items-center`}
-                key={i}
+                key={`work-project-image-${i}`}
               >
                 <div className="flex-1 text-taupe text-sm_extra leading-[24px]">
                   {block.text}

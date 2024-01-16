@@ -116,6 +116,11 @@ exports.createPages = async ({ graphql, actions }) => {
       });
     })
 
+    // createPage({
+    //   path: '/404',
+    //   component: require.resolve(`./src/templates/404/default.js`),
+    // });
+
   };
 
   // exports.onCreatePage = async ({ page, actions, graphql }) => {

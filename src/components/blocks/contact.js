@@ -20,14 +20,6 @@ const BlockContact = ({ data }) => {
 
     const contactData = useStaticQuery(graphql`
     {
-        wpMenu(locations: { eq: GATSBY_FOOTER_MENU }) {
-            menuItems {
-                nodes {
-                    label
-                    url
-                }
-            }
-          }
           wp {
             settings {
                 fmSettings {

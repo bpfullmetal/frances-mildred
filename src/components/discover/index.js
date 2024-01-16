@@ -134,7 +134,7 @@ const DiscoverPageContent = () => {
             {allProjectsData.map((project, i) => (
               <div
                 className="projects-grid__item flex flex-col"
-                key={i}
+                key={`grid-project-${i}`}
                 ref={projectRefs[i]}
               >
                 <a className="mb-4" href="/">

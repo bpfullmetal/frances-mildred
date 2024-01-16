@@ -1,46 +1,19 @@
 import * as React from 'react';
 import { Link } from 'gatsby';
-
-const pageStyles = {
-  color: '#232129',
-  padding: '96px',
-  fontFamily: '-apple-system, Roboto, sans-serif, serif',
-};
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-};
-
-const paragraphStyles = {
-  marginBottom: 48,
-};
-const codeStyles = {
-  color: '#8A6534',
-  padding: 4,
-  backgroundColor: '#FFF4DB',
-  fontSize: '1.25rem',
-  borderRadius: 4,
-};
+import PageLayout from '../components/page-layout';
 
 const NotFoundPage = () => {
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>Page not found</h1>
-      <p style={paragraphStyles}>
-        Sorry 😔, we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === 'development' ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
-    </main>
+    <PageLayout className="relative" hiddenBookSection={true}>
+        <main className="bg-dark_blue h-screen">
+          <section className="relative w-full max-w-main mx-auto px-5 sm:px-12 py-32 sm:py-32">
+            <h1 className="text-xl">Oops, this page doesn’t exist.</h1>
+            <p>
+              View some of our <Link className="underline" to="/work">case studies</Link> instead :)
+            </p>
+          </section>
+        </main>
+    </PageLayout>
   );
 };
 

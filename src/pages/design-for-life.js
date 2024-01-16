@@ -15,9 +15,6 @@ const DiscoverPage = () => {
   const title = data.wpPage?.title || '';
   const content = data.wpPage?.content || '';
 
-  console.log('title: ', title);
-  console.log('content: ', content);
-
   return <DiscoverPageContent content={content} title={title} />;
 };
 

@@ -159,7 +159,7 @@ const HomePageContent = () => {
           >
             <Swiper slidesPerView={'auto'} spaceBetween={4}>
               {latestProjects.map((project, i) => (
-                <SwiperSlide key={project.id}>
+                <SwiperSlide key={`project-slide-${project.id}`}>
                   <div className="flex flex-col px-2 sm:px-0.5">
                     <div className="swiper-slide-image bg-[#f8f8f8] rounded">
                       <a href="/">

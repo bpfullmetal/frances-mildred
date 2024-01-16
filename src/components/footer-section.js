@@ -13,11 +13,7 @@ import LetterN from '../assets/js/icons/letter-n';
 import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
 
-const FooterSection = () => {
-
-  const url =
-    'https://fullmetalworkshop.us17.list-manage.com/subscribe/post?u=8b032d8566f5bc3f3417f02c3&amp;id=ef28567184&amp;f_id=007957e0f0';
-  
+const FooterSection = () => {  
 
   const MailchimpForm = ({ status, message, onValidated }) => {
     const [email, setEmail] = React.useState('');
@@ -93,6 +89,7 @@ const FooterSection = () => {
           wp {
             settings {
               fmSettings {
+                mailchimpFormActionUrl
                 contactInfo {
                   address {
                     addressLine1
@@ -111,6 +108,8 @@ const FooterSection = () => {
       render={(data) => {
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
         const contactInfo = data?.wp?.settings?.fmSettings?.contactInfo;
+        const url = data?.wp?.settings?.fmSettings?.mailchimpFormActionUrl;
+        
         return (
           <footer className="relative bg-dark_green pt-12 pb-8 z-10 sm:pt-7 sm:pb-14">
             <div className="flex flex-col max-w-main mx-auto px-5 sm:px-12">
@@ -119,7 +118,7 @@ const FooterSection = () => {
                   <ul className="flex flex-col mb-12 sm:flex-row sm:mb-24 sm:space-x-6">
                     {menuItems.map((item, i) => (
                       <li key={i} className="w-fit py-2">
-                        <a href={item.url}>{item.label}</a>
+                        <a target={item.target} href={item.url}>{item.label}</a>
                       </li>
                     ))}
                   </ul>

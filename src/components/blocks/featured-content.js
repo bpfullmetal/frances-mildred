@@ -64,6 +64,7 @@ const BlockFeaturedContent = ({ data }) => {
                 console.log(content.imageBlock);
                 return (
                   <div
+                    key={`featured-content-${i}`}
                     className="scroll-reveal mb-6 sm:mb-8"
                     ref={scrollRevealRefs[i + 1]}
                   >
@@ -81,6 +82,7 @@ const BlockFeaturedContent = ({ data }) => {
               case 'text':
                 return (
                   <p
+                    key={`featured-content-${i}`}
                     className="scroll-reveal text-dark_green text-lg mb-6 sm:text-xl sm:mb-8"
                     ref={scrollRevealRefs[i + 1]}
                   >

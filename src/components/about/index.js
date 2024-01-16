@@ -5,9 +5,10 @@ import PageLayout from '../page-layout';
 import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
 import OpeningJobItem from './opening-job-item';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const AboutPageContent = (pageData) => {
-  console.log('about page content')
+  
   const { intro, ourTeam, studioOpenings } =
     pageData.content.template.pageAbout;
   
@@ -124,6 +125,7 @@ const AboutPageContent = (pageData) => {
 
     setupIntersectionObserver(navSectionRefs);
     setupIntersectionObserver(teamMemberRefs);
+    console.log('nav refs')
   }, [navSectionRefs, teamMemberRefs]);
 
   const handleIntersection = (entries) => {
@@ -372,25 +374,45 @@ const AboutPageContent = (pageData) => {
           </div>
 
           <div className="max-w-[860px] flex flex-col">
-            <div className="flex flex-col">
-              <div className="animate-reveal" ref={ourTeamRefs[1]}>
-                <img src={TeamImage1} alt="our team 1" />
-              </div>
-              <p
-                className="animate-reveal max-w-[280px] text-sm_extra leading-[20px] mt-5"
-                ref={ourTeamRefs[2]}
-              >
-                This is an area for a short introduction about our team members.
-              </p>
-            </div>
+            {
+              (ourTeam.featuredImage || ourTeam.description) && (
+                <div className="flex flex-col mb-48">
+                  {
+                    ourTeam.featuredImage && (
+                      <div className="animate-reveal" ref={ourTeamRefs[1]}>
+                        <GatsbyImage
+                          image={getImage(
+                            ourTeam.featuredImage.node.gatsbyImage
+                          )}
+                          alt={
+                            ourTeam.featuredImage.altText ||
+                            "Our team"
+                          }
+                        />
+                      </div>
+                    )
+                  }
+                  {
+                    ourTeam.description && (
+                      <p
+                        className="animate-reveal max-w-[280px] text-sm_extra leading-[20px] mt-5"
+                        ref={ourTeamRefs[2]}
+                      >
+                        {ourTeam.description}
+                      </p>
+                    )
+                  }
+                </div>
+              ) 
+            }
 
             {ourTeam.featuredTeamMembers &&
               ourTeam.featuredTeamMembers.map((teamMember, i) => (
                 <div
                   key={`featured-team-member-${i}`}
-                  className={`flex flex-col mt-48${
+                  className={`flex flex-col${
                     i % 2 !== 0 ? ' ml-auto' : ''
-                  }`}
+                  }${ i !== ourTeam.featuredTeamMembers.length - 1 ? ' mb-24' : ''}`}
                 >
                   <TeamStudioFeatured data={{ ...teamMember }} />
                 </div>

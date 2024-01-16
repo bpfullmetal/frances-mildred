@@ -55,7 +55,7 @@ const DiscoverPageContent = ({ data, location }) => {
   }, [allCategoriesData, categoryParam]);
 
   return (
-    <PageLayout className="discover" hiddenBookSection>
+    <PageLayout className="discover bg-dark_blue" hiddenBookSection>
       <section
         className={`bg-dark_blue py-32 sm:py-32 ${
           animationEntrances.background ? 'fade-in' : ''
@@ -99,8 +99,13 @@ const DiscoverPageContent = ({ data, location }) => {
 
 export default DiscoverPageContent;
 
+export const Head = ({ data }) => <title>{`${data.wpPage.title} - Frances Mildred`}</title>;
+
 export const pageQuery = graphql`
-  {
+  query ($id: String!) {
+    wpPage(id: { eq: $id }) {
+      title
+    }
     allWpProject(sort: { date: DESC }) {
       edges {
         node {

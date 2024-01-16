@@ -8,15 +8,12 @@ const WorkParentPage = ({ data }) => {
   const title = wpPage?.title || '';
   const content = wpPage?.content || '';
 
-  console.log('title: ', title);
-  console.log('content: ', content);
-
   return <WorkPageContent content={content} title={title} />;
 };
 
 export default WorkParentPage;
 
-export const Head = () => <title>{title} s- Frances Mildred</title>;
+export const Head = ({ data }) => <title>{`${data.wpPage.title} - Frances Mildred`}</title>;
 
 export const pageQuery = graphql`
   query ($id: String!) {

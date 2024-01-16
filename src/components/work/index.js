@@ -177,7 +177,7 @@ const WorkPageContent = () => {
               className={`work-project-block animate-reveal max-w-[80%] h-work_project py-4 mb-40 ${
                 i % 2 ? 'ml-auto' : ''
               } sm:mb-32`}
-              key={i}
+              key={`work-project-${i}`}
               data-ref-type="project"
               data-title={project.node.title}
               ref={workProjectRefs[i]}
