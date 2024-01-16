@@ -120,6 +120,10 @@ footer .logo svg {
   width: 494px !important;
 }
 
+.swiper-wrapper {
+  display: inline-flex;
+}
+
 .swiper-slide-image {
   width: 100%;
   position: relative;

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import ProjectDetailImage1 from '../../assets/images/project-detail-1.png';
 import ProjectDetailImage2 from '../../assets/images/project-detail-2.png';
 import ProjectDetailImage3 from '../../assets/images/project-detail-3.png';
 import ProjectDetailImage4 from '../../assets/images/project-detail-4.png';
 import ProjectDetailImage5 from '../../assets/images/project-detail-5.png';
 import PageLayout from '../../components/page-layout';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import Helper from '../../helper';
 
 const ProjectSingle = ({ data }) => {
   console.log('PROJECT DATA', data);
@@ -51,22 +52,25 @@ const ProjectSingle = ({ data }) => {
   const imageMaskRef = React.useRef();
 
   React.useEffect(() => {
+    imageRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection)
+    );
+  }, [imageRefs]);
+
+  const handleIntersection = (entries) => {
+    const [entry] = entries;
+    if (!entry.isIntersecting && !entry.isVisible) return;
+
+    entry.target.classList.add('reveal');
+  };
+
+  React.useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleScroll = () => {
-    imageRefs.forEach((ref) => {
-      const imageEle = ref.current;
-      if (imageEle) {
-        const scrollOffsetTop = imageEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - window.innerHeight * 0.6 < 0) {
-          imageEle.classList.add('reveal');
-        }
-      }
-    });
-
     const imageMaskEle = imageMaskRef.current;
     const nextProjectAfterEle = nextProjectAfterEleRef.current;
 

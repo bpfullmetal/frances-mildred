@@ -1,7 +1,8 @@
 import * as React from 'react';
-import PageLayout from '../page-layout';
 import { useStaticQuery, graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import PageLayout from '../page-layout';
+import Helper from '../../helper';
 
 const ProjectBlockDetail = ({ project }) => {
   return (
@@ -25,6 +26,7 @@ const WorkPageContent = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [allProjects, setAllProjects] = React.useState([]);
   const [workProjectRefs, setWorkProjectRefs] = React.useState([]);
+  const moreProjectsRef = React.useRef();
 
   const { allWpProject } = useStaticQuery(
     graphql`
@@ -52,6 +54,8 @@ const WorkPageContent = () => {
     `
   );
 
+  React.useEffect(() => setIsPageEntered(true), []);
+
   React.useEffect(() => {
     // Concatenate new posts to the existing list
     console.log('setting all projects');
@@ -73,22 +77,6 @@ const WorkPageContent = () => {
     });
   };
 
-  const observer = new IntersectionObserver(handleIntersection, {
-    threshold: 0.5,
-  });
-
-  React.useEffect(() => {
-    const target = document.querySelector('#infinite-scroll-trigger');
-
-    if (target) {
-      observer.observe(target);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [observer]);
-
   console.log('CURRENT', currentPage, postsPerPage);
   const projects = allProjects.slice(0, currentPage * postsPerPage);
 
@@ -102,50 +90,27 @@ const WorkPageContent = () => {
     // Set the new refs to workProjectRefs
     setWorkProjectRefs(newRefs);
 
-    const options = {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px', // No margin
-      threshold: 0.5, // Trigger when 50% of the target is in the viewport
-    };
-
-    workProjectRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
+    Helper.setupIntersectionObserver(moreProjectsRef, handleIntersection, {
+      threshold: 0.5,
     });
   }, [allProjects]);
 
   React.useEffect(() => {
-    const options = {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px', // No margin
-      threshold: 0.5, // Trigger when 50% of the target is in the viewport
-    };
-    workProjectRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    });
+    workProjectRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection, {
+        threshold: 0.5,
+      })
+    );
   }, [projects]);
 
   return (
-    <PageLayout className="work">
+    <PageLayout className={`work opacity-0 ${isPageEntered ? 'fade-in' : ''}`}>
       {projects.length && (
         <section
           data-ref-type="project"
           data-title={projects[0].node.title}
           ref={workProjectRefs[0]}
-          className={`w-full max-w-main h-screen mx-auto mb-40 px-5 sm:mb-16 sm:px-12 opacity-0 ${
-            isPageEntered ? 'fade-in' : ''
-          }`}
+          className="w-full max-w-main h-screen mx-auto mb-40 px-5 sm:mb-16 sm:px-12"
         >
           {projects[0].node.featuredImage && (
             <a
@@ -202,9 +167,9 @@ const WorkPageContent = () => {
           );
         })}
         <div
-          id="infinite-scroll-trigger"
+          className="h-3"
           data-ref-type="more-projects"
-          style={{ height: '10px' }}
+          ref={moreProjectsRef}
         />
       </section>
     </PageLayout>

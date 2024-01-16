@@ -16,7 +16,11 @@ const WorkParentPage = ({ data }) => {
 
 export default WorkParentPage;
 
-export const Head = () => <title>{title} s- Frances Mildred</title>;
+export const Head = ({ data }) => {
+  const { wpPage } = data;
+  const title = wpPage?.title || '';
+  return <title>{title}- Frances Mildred</title>;
+};
 
 export const pageQuery = graphql`
   query ($id: String!) {

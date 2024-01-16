@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import Helper from '../../helper';
 
 const DesignProjectsGrid = ({ category, projects }) => {
   const projectRefs = Array(projects.length)
@@ -13,24 +14,11 @@ const DesignProjectsGrid = ({ category, projects }) => {
   }, [projects]);
 
   const setupIntersectionObservers = () => {
-    const options = {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px', // No margin
-      threshold: 0.3, // Trigger when 50% of the target is in the viewport
-    };
-
-    projectRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(
-        (entries) => handleIntersection(entries, i),
-        options
-      );
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    });
+    projectRefs.forEach((ref, i) =>
+      Helper.setupIntersectionObserver(ref, (entries) =>
+        handleIntersection(entries, i)
+      )
+    );
   };
 
   const handleIntersection = (entries, i) => {

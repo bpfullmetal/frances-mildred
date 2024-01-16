@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AboutBannerVideo from '../../assets/images/about-banner.mp4';
 import TeamImage1 from '../../assets/images/home-img-2.png';
+import Helper from '../../helper';
 import PageLayout from '../page-layout';
 import ByTheNumberBlock from './by-the-number';
 import TeamStudioFeatured from './team-studio-featured';
@@ -77,26 +78,16 @@ const AboutPageContent = (pageData) => {
   }, []);
 
   React.useEffect(() => {
-    const options = {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px', // No margin
-      threshold: 0.3, // Trigger when 50% of the target is in the viewport
-    };
-
-    const setupIntersectionObserver = (ref) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    };
-
-    navSectionRefs.forEach((ref) => setupIntersectionObserver(ref));
-    ourTeamRefs.forEach((ref) => setupIntersectionObserver(ref));
-    teamMemberRefs.forEach((ref) => setupIntersectionObserver(ref));
-    setupIntersectionObserver(openingsTitleRef);
+    navSectionRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection)
+    );
+    ourTeamRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection)
+    );
+    teamMemberRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection)
+    );
+    Helper.setupIntersectionObserver(openingsTitleRef, handleIntersection);
   }, [navSectionRefs, openingsTitleRef, ourTeamRefs, teamMemberRefs]);
 
   const handleIntersection = (entries) => {
@@ -146,7 +137,7 @@ const AboutPageContent = (pageData) => {
       case 'our-team':
         const orderIndex = parseInt(revealEl.getAttribute('data-index'));
         if (orderIndex === 2) {
-          setTimeout(() => revealEl.classList.add('reveal'), 1000);
+          setTimeout(() => revealEl.classList.add('reveal'), 500);
         } else {
           revealEl.classList.add('reveal');
         }
