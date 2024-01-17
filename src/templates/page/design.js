@@ -4,7 +4,7 @@ import PageLayout from '../../components/page-layout';
 import CategoryModal from '../../components/discover/category-modal';
 import DesignProjectsGrid from '../../components/discover/projects-grid';
 
-const DiscoverPageContent = ({ data, location }) => {
+const DesignPage = ({ data, location }) => {
   const params = new URLSearchParams(location.search);
   const categoryParam = params.get('category');
 
@@ -97,7 +97,7 @@ const DiscoverPageContent = ({ data, location }) => {
   );
 };
 
-export default DiscoverPageContent;
+export default DesignPage;
 
 export const Head = ({ data }) => <title>{`${data.wpPage.title} - Frances Mildred`}</title>;
 

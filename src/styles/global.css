@@ -4,6 +4,9 @@
 
 @import '../assets/fonts/fonts.css';
 
+* {
+  box-sizing: border-box;
+}
 body {
   color: #fff;
   font-family: 'Haas Grot Text Web';
@@ -120,6 +123,10 @@ footer .logo svg {
   width: 494px !important;
 }
 
+.swiper-wrapper {
+  display: inline-flex;
+}
+
 .swiper-slide-image {
   width: 100%;
   position: relative;
@@ -170,16 +177,31 @@ footer .logo svg {
 }
 
 /* Work Project */
-.work-project .image-reveal img {
+
+.work-project .project-block .description-reveal {
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0, 0, 0.58, 1),
+    opacity 0.8s cubic-bezier(0, 0, 0.58, 1),
+    filter 0.4s cubic-bezier(0, 0, 0.58, 1);
+  transition-delay: .6s;
+  transform: translateY(20px);
+}
+
+.work-project .project-block .gatsby-image-wrapper {
   filter: blur(10px);
   opacity: 0;
   transition: opacity 0.8s cubic-bezier(0, 0, 0.58, 1),
     filter 0.4s cubic-bezier(0, 0, 0.58, 1);
 }
 
-.work-project .image-reveal.reveal img {
+.work-project .project-block.reveal .gatsby-image-wrapper {
   filter: blur(0);
   opacity: 1;
+}
+
+.work-project .project-block.reveal .description-reveal {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .next-project img {

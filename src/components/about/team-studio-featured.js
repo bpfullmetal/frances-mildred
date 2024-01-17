@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import Helper from '../../helper';
 
 const TeamStudioFeatured = ({ data }) => {
   const [nameRevealed, setNameRevealed] = React.useState(false);
@@ -27,16 +28,10 @@ const TeamStudioFeatured = ({ data }) => {
       threshold: 0.5, // Trigger when 50% of the target is in the viewport
     };
 
-    scrollRevealRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    });
-  }, []);
+    scrollRevealRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection, options)
+    );
+  }, [scrollRevealRefs]);
 
   const handleIntersection = (entries) => {
     const [entry] = entries;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Helper from '../../../helper';
 
 const ProjectsCarousel = (props) => {
   const slides = props.slides;
@@ -21,29 +22,8 @@ const ProjectsCarousel = (props) => {
       threshold: 0.5, // Trigger when 50% of the target is in the viewport
     };
 
-    carouselSlideRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    });
-
-    const observer = new IntersectionObserver(handleIntersection, options);
-    if (carouselRef.current) {
-      observer.observe(carouselRef.current);
-    }
-
-    return () => {
-      if (carouselRef.current instanceof Element) {
-        observer.unobserve(carouselRef.current);
-      }
-    };
+    Helper.setupIntersectionObserver(carouselRef, handleIntersection, options);
   }, []);
-
-  console.log('carousel ref', carouselRef);
 
   const handleIntersection = (entries) => {
     const [entry] = entries;

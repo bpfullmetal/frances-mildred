@@ -1,13 +1,25 @@
-const sortMenuItemsByOrder = (menuItems) => {
-  return menuItems.sort((a, b) => {
-    if (a.order < b.order) return -1;
-    if (a.order > b.order) return 1;
-    return 0;
-  });
+const setupIntersectionObserver = (ref, handleIntersection, options = null) => {
+  const observerOptions = {
+    root: null, // Use the viewport as the root
+    rootMargin: '0px', // No margin
+    threshold: 0.3, // Trigger when 30% of the target is in the viewport
+    ...options
+  };
+
+  const observer = new IntersectionObserver(
+    handleIntersection,
+    observerOptions
+  );
+  if (ref.current) {
+    observer.observe(ref.current);
+  }
+  return () => {
+    observer.unobserve(ref.current);
+  };
 };
 
 const Helper = {
-  sortMenuItemsByOrder,
+  setupIntersectionObserver,
 };
 
 export default Helper;

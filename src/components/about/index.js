@@ -1,23 +1,21 @@
 import * as React from 'react';
 import AboutBannerVideo from '../../assets/images/about-banner.mp4';
 import TeamImage1 from '../../assets/images/home-img-2.png';
+import Helper from '../../helper';
 import PageLayout from '../page-layout';
+import ByTheNumberBlock from './by-the-number';
 import TeamStudioFeatured from './team-studio-featured';
 import TeamStudioItem from './team-studio-item';
 import OpeningJobItem from './opening-job-item';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const AboutPageContent = (pageData) => {
-  
   const { intro, ourTeam, studioOpenings } =
     pageData.content.template.pageAbout;
-  
+
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
-  const [byTheNumberIndex, setByTheNumberIndex] = React.useState(-1);
-  const [nIntervalId, setNIntervalId] = React.useState(null);
   const [jobListings, setJobListings] = React.useState([]);
-  const [intervalCount, setIntervalCount] = React.useState(0);
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
     Array(4).fill(false)
   );
@@ -62,7 +60,6 @@ const AboutPageContent = (pageData) => {
     .map((_) => {
       return React.useRef();
     });
-  const byTheNumberRef = React.useRef();
   const ourTeamRefs = Array(3)
     .fill()
     .map((_) => {
@@ -79,54 +76,20 @@ const AboutPageContent = (pageData) => {
     setJobListings(studioOpenings.jobListings.filter((job) => job.active));
 
     setTimeout(() => setIsPageEntered(true), 500);
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    const byTheNumberEle = byTheNumberRef.current;
-    if (byTheNumberEle) {
-      if (!byTheNumberEle.classList.value.includes('animate')) {
-        setTimeout(() => {
-          byTheNumberEle.classList.add('animate');
-          setByTheNumberIndex(0);
-        }, 1000);
-      }
-    }
-  }, [byTheNumberRef]);
-
-  React.useEffect(() => {
-    const setupIntersectionObserver = (arrayRefs) => {
-      const options = {
-        root: null, // Use the viewport as the root
-        rootMargin: '0px', // No margin
-        threshold: 0.3, // Trigger when 50% of the target is in the viewport
-      };
-
-      if (arrayRefs.filter((ref) => !ref.hasObserver).length > 0) {
-        arrayRefs.forEach((ref) => {
-          const observer = new IntersectionObserver(
-            handleIntersection,
-            options
-          );
-          if (ref.current) {
-            observer.observe(ref.current);
-            ref.hasObserver = true;
-          }
-          return () => {
-            observer.unobserve(ref.current);
-            ref.hasObserver = false;
-          };
-        });
-      }
-    };
-
-    setupIntersectionObserver(navSectionRefs);
-    setupIntersectionObserver(teamMemberRefs);
-    console.log('nav refs')
-  }, [navSectionRefs, teamMemberRefs]);
+    navSectionRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection)
+    );
+    ourTeamRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection)
+    );
+    teamMemberRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection)
+    );
+    Helper.setupIntersectionObserver(openingsTitleRef, handleIntersection);
+  }, [navSectionRefs, openingsTitleRef, ourTeamRefs, teamMemberRefs]);
 
   const handleIntersection = (entries) => {
     const [entry] = entries;
@@ -172,106 +135,19 @@ const AboutPageContent = (pageData) => {
         );
         setCurrentNavMenuItem(navMenuItems[sectionIndex].id);
         break;
-    }
-  };
-
-  React.useEffect(() => {
-    if (
-      !nIntervalId &&
-      byTheNumberIndex > -1 &&
-      byTheNumberIndex < intro.byTheNumber.metrics.length
-    ) {
-      if (intervalCount < 1) {
-        const intervalId = setInterval(
-          () => setIntervalCount((old) => old + 1),
-          1000 / intro.byTheNumber.metrics[byTheNumberIndex].count / 10
-        );
-        setNIntervalId(intervalId);
-      }
-    }
-  }, [byTheNumberIndex, intro.byTheNumber.metrics, intervalCount, nIntervalId]);
-
-  React.useEffect(() => {
-    if (
-      nIntervalId &&
-      byTheNumberIndex > -1 &&
-      byTheNumberIndex < intro.byTheNumber.metrics.length
-    ) {
-      if (
-        intervalCount >=
-        intro.byTheNumber.metrics[byTheNumberIndex].count * 10
-      ) {
-        clearInterval(nIntervalId);
-        setTimeout(() => {
-          setNIntervalId(null);
-          setByTheNumberIndex((old) => old + 1);
-          setIntervalCount(0);
-        }, 500);
-      }
-    }
-  }, [byTheNumberIndex, intro.byTheNumber.metrics, intervalCount, nIntervalId]);
-
-  const handleScroll = () => {
-    ourTeamRefs.forEach((ref, i) => {
-      const scrollRevealEle = ref.current;
-      if (scrollRevealEle) {
-        if (!scrollRevealEle.classList.value.includes(' animate')) {
-          const scrollOffsetTop = scrollRevealEle.getBoundingClientRect().top;
-          if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-            if (i === 1) {
-              setTimeout(() => scrollRevealEle.classList.add('reveal'), 1000);
-            } else {
-              scrollRevealEle.classList.add('reveal');
-            }
-            scrollRevealEle.classList.add('animate');
-          }
+      case 'our-team':
+        const orderIndex = parseInt(revealEl.getAttribute('data-index'));
+        if (orderIndex === 2) {
+          setTimeout(() => revealEl.classList.add('reveal'), 500);
+        } else {
+          revealEl.classList.add('reveal');
         }
-      }
-    });
-
-    const openingsTitleEle = openingsTitleRef.current;
-    if (openingsTitleEle) {
-      if (!openingsTitleEle.classList.value.includes(' reveal')) {
-        const scrollOffsetTop = openingsTitleEle.getBoundingClientRect().top;
-        if (scrollOffsetTop - window.innerHeight * 0.8 < 0) {
-          openingsTitleEle.classList.add('reveal');
-        }
-      }
+        break;
+      default:
+        revealEl.classList.add('reveal');
     }
   };
 
-  const dispCountingNumber = (item, i) => {
-    if (i > byTheNumberIndex) return '';
-
-    if (i === byTheNumberIndex) {
-      const stepCount = Math.floor(item.count / 3);
-      let countingNum = 0;
-
-      if (intervalCount <= item.count * 2) {
-        countingNum = Math.floor(
-          intervalCount / ((item.count * 2) / stepCount)
-        );
-      } else if (intervalCount <= item.count * 5) {
-        countingNum =
-          stepCount +
-          Math.floor(
-            (intervalCount - item.count * 2) / ((item.count * 3) / stepCount)
-          );
-      } else {
-        countingNum =
-          stepCount * 2 +
-          Math.floor(
-            (intervalCount - item.count * 5) /
-              ((item.count * 5) / (item.count - stepCount * 2))
-          );
-      }
-
-      return countingNum < 1 ? '' : countingNum;
-    }
-
-    return item.count;
-  };
-  
   return (
     <PageLayout className="relative">
       <div className={`hidden fixed top-2/4 left-10 md:flex flex-col z-10`}>
@@ -329,25 +205,7 @@ const AboutPageContent = (pageData) => {
               </div>
             )}
             {intro.byTheNumber.metrics?.length && (
-              <div className="h-[80vh]" ref={byTheNumberRef}>
-                {intro.byTheNumber.heading && (
-                  <p className="text-sm pt-[20vh] pb-5">
-                    {intro.byTheNumber.heading}
-                  </p>
-                )}
-                {intro.byTheNumber.metrics.map((item, i) => (
-                  <p className="text-2xl leading-[30px]" key={i}>
-                    {dispCountingNumber(item, i)}{' '}
-                    <span
-                      className={`${
-                        i < byTheNumberIndex ? 'fade-in' : 'opacity-0'
-                      }`}
-                    >
-                      {item.metric}
-                    </span>
-                  </p>
-                ))}
-              </div>
+              <ByTheNumberBlock data={intro.byTheNumber} />
             )}
           </div>
         </div>
@@ -368,6 +226,8 @@ const AboutPageContent = (pageData) => {
             <p
               className="animate-reveal text-4xl leading-none tracking-[0.36px] lg:w-[200px] lg:text-[65px] lg:leading-[65px] lg:tracking-[0.65px] lg:mr-10"
               ref={ourTeamRefs[0]}
+              data-animate-ref="our-team"
+              data-index="1"
             >
               Our Team
             </p>

@@ -7,7 +7,7 @@ const AboutPage = ({ data }) => {
 
   const title = wpPage.title;
   const content = wpPage.content;
-  
+
   return <AboutPageContent content={wpPage} title={title} />;
 };
 

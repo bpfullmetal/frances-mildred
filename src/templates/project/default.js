@@ -1,48 +1,21 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
-import ProjectDetailImage1 from '../../assets/images/project-detail-1.png';
-import ProjectDetailImage2 from '../../assets/images/project-detail-2.png';
-import ProjectDetailImage3 from '../../assets/images/project-detail-3.png';
-import ProjectDetailImage4 from '../../assets/images/project-detail-4.png';
-import ProjectDetailImage5 from '../../assets/images/project-detail-5.png';
-import PageLayout from '../../components/page-layout';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import PageLayout from '../../components/page-layout';
+import Helper from '../../helper';
 
 const ProjectSingle = ({ data }) => {
-    console.log('PROJECT DATA', data);
+
     const { wpProject, nextProject } = data;
     const { title, featuredImage, projectsSingle } = wpProject;
-    const imageBlocksData = [
-        {
-            text: 'Lorem Ipsum is simply dummy text of the interior and architect industry.',
-            image: ProjectDetailImage2,
-            size: 'medium',
-            pos: 'right',
-        },
-        {
-            text: '',
-            image: ProjectDetailImage3,
-            size: 'full',
-            pos: 'center',
-        },
-        {
-            text: 'Lorem Ipsum is simply dummy text of the interior and architect industry.',
-            image: ProjectDetailImage4,
-            size: 'large',
-            pos: 'right',
-        },
-        {
-            text: '',
-            image: ProjectDetailImage5,
-            size: 'small',
-            pos: 'left',
-        },
-    ];
+    const positions = ['right', 'left', 'center'];
+    let prevPosition;
+    let prevSize;
 
     const [revealProjectInfo, setRevealProjectInfo] = React.useState(false);
-    const [imageRefs] = React.useState(
-        Array(projectsSingle.projectImages.length)
-            .fill(projectsSingle.projectImages.length)
+    const [projectRefs] = React.useState(
+        Array(projectsSingle.projectImages ? projectsSingle.projectImages.length : 0)
+            .fill()
             .map((_) => {
                 return React.useRef();
             })
@@ -51,22 +24,25 @@ const ProjectSingle = ({ data }) => {
     const imageMaskRef = React.useRef();
 
     React.useEffect(() => {
+        projectRefs.forEach((ref) =>
+            Helper.setupIntersectionObserver(ref, handleIntersection, {threshold: .5})
+        );
+    }, [projectRefs]);
+
+    const handleIntersection = (entries) => {
+        const [entry] = entries;
+        if (!entry.isIntersecting && !entry.isVisible) return;
+
+        entry.target.classList.add('reveal');
+    };
+
+    React.useEffect(() => {
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleScroll = () => {
-        imageRefs.forEach((ref) => {
-            const imageEle = ref.current;
-            if (imageEle) {
-                const scrollOffsetTop = imageEle.getBoundingClientRect().top;
-                if (scrollOffsetTop - window.innerHeight * 0.6 < 0) {
-                    imageEle.classList.add('reveal');
-                }
-            }
-        });
-
         const imageMaskEle = imageMaskRef.current;
         const nextProjectAfterEle = nextProjectAfterEleRef.current;
 
@@ -102,18 +78,71 @@ const ProjectSingle = ({ data }) => {
         }
     };
 
+    // const size2Class = {
+    //     small: 'w-[360px] h-[480px]',
+    //     medium: 'w-[440px] h-[530px] gap-x-2.5',
+    //     large: 'w-[680px] h-[830px] gap-x-4',
+    //     full: 'w-full my-36 gap-x-6',
+    // };
+
     const size2Class = {
-        small: 'w-[360px] h-[480px]',
-        medium: 'w-[440px] h-[530px]',
-        large: 'w-[680px] h-[830px]',
-        full: 'w-full my-36',
+        small: 'w-[360px]',
+        medium: 'w-[440px]',
+        large: 'w-[680px]',
+        full: 'w-full',
     };
 
     const pos2Class = {
-        right: 'mr-0 sm:flex-row sm:mr-20',
-        center: 'jusitfy-center',
-        left: 'sm:flex-row-reverse',
+        right: 'mr-0 sm:flex-row sm:mr-20 sm:ml-12 mb-6 md:mb-12 gap-x-12',
+        center: 'jusitfy-center mx-auto w-full gap-y-6',
+        left: 'sm:flex-row-reverse gap-x-12 ml-0 sm:ml-10',
     };
+
+    // const ContentImages = () => {
+    //     let prevPosition = ''
+    //     if ( projectsSingle.projectImages?.length ) (
+    //         <div className="flex flex-col mt-8 md:mt-20">
+    //             {
+                    
+    //             }
+    //         </div>
+    //     )
+    // }
+
+    const getRandomPosition = () => {
+        let position;
+
+        do {
+            position = positions[Math.floor(Math.random() * positions.length)];
+        } while (position === prevPosition);
+
+        return position;
+    }
+
+    const getRandomSize = (currentPosition, orientation = '') => {
+        let sizes = ['small', 'medium', 'large', 'full'];
+        let size
+
+        switch (currentPosition) {
+            case 'right':
+            case 'left':
+                sizes = orientation === 'portrait' ? ['small', 'medium'] : ['small', 'medium', 'large']
+            break
+            case 'center':
+                sizes = ['large', 'full']
+                if ( orientation === 'portrait' ) return 'medium'
+            break
+        }
+
+        do {
+            size = sizes[Math.floor(Math.random() * sizes.length)];
+        } while (size === prevSize);
+
+        return size;
+    }
+    
+    prevPosition = getRandomPosition()
+    prevSize = getRandomSize('')
 
     return (
         <PageLayout>
@@ -123,9 +152,7 @@ const ProjectSingle = ({ data }) => {
                         <div className="relative w-full h-full flex items-center justify-center">
                             <GatsbyImage
                                 className="w-full h-full object-cover rounded-none"
-                                image={getImage(
-                                    featuredImage.node.gatsbyImage
-                                )}
+                                image={getImage(featuredImage.node.gatsbyImage)}
                                 alt={featuredImage.node.altText || title}
                             />
                             <h1 className="absolute max-w-[480px] text-4xl font-medium !leading-none text-center md:max-w-[580px] md:text-5xl lg:max-w-[680px] lg:text-[58px]">
@@ -145,7 +172,7 @@ const ProjectSingle = ({ data }) => {
                             </h1>
                         )
                     }
-                    {projectsSingle.projectDetails?.content && (
+                    {wpProject.content && (
                         <div className="flex flex-col mt-8">
                             <div
                                 className="flex items-center cursor-pointer"
@@ -169,7 +196,7 @@ const ProjectSingle = ({ data }) => {
                                 {projectsSingle.projectDetails.content && (
                                     <div
                                         dangerouslySetInnerHTML={{
-                                            __html: projectsSingle.projectDetails.content,
+                                            __html: wpProject.content,
                                         }}
                                     />
                                 )}
@@ -184,7 +211,7 @@ const ProjectSingle = ({ data }) => {
                                                         </p>
                                                     )}
                                                     {attribute.attributeListings && (
-                                                        <p className="text-taupe text-2xl leading-[44px] sm:text-[26px]">
+                                                        <div className="text-taupe text-2xl leading-[44px] sm:text-[26px]">
                                                             {attribute.attributeListings.map((attItem, a) => {
                                                                 return (
                                                                     <div key={`project-attribute-${a}`}>
@@ -201,7 +228,7 @@ const ProjectSingle = ({ data }) => {
                                                                     </div>
                                                                 );
                                                             })}
-                                                        </p>
+                                                        </div>
                                                     )}
                                                 </div>
                                             )
@@ -211,30 +238,57 @@ const ProjectSingle = ({ data }) => {
                             </div>
                         </div>
                     )}
+                    {
+                        projectsSingle.projectImages?.length && (
+                            <div className="flex flex-col mt-8 md:mt-20">
+                                {
 
-                    <div className="flex flex-col">
-                        {imageBlocksData.map((block, i) => (
-                            <div
-                                className={`min-h-[90vh] flex flex-col items-start ${block.text ? 'space-x-20' : ''
-                                    } ${block.pos ? pos2Class[block.pos] : ''} sm:items-center`}
-                                key={`project-image-${i}`}
-                            >
-                                <div className="flex-1 text-taupe text-sm_extra leading-[24px]">
-                                    {block.text}
-                                </div>
-                                <div
-                                    className={`image-reveal ${size2Class[block.size]} flex`}
-                                    ref={imageRefs[i]}
-                                >
-                                    <img
-                                        className="w-full h-full object-cover"
-                                        src={block.image}
-                                        alt=""
-                                    />
-                                </div>
+                                    projectsSingle.projectImages.map((block, i) => {
+                                        const blockPos = getRandomPosition()
+                                        prevPosition = blockPos   
+                                        const orientation = block.image 
+                                            ? block.image.node.width <= block.image.node.height ? 'portrait' : 'landscape'
+                                            : ''
+                                        const blockSize = getRandomSize(prevPosition, orientation)
+                                        prevSize = blockSize
+                                        
+                                        return (
+                                            <div
+                                                ref={projectRefs[i]}
+                                                className={`project-block mb-20 md:mb-40 flex flex-col-reverse items-start ${pos2Class[blockPos]} sm:items-center
+                                                `}
+                                                key={`project-image-${i}`}
+                                            >   
+                                                <div className="description-reveal flex-1 text-taupe text-sm_extra leading-[24px]">
+                                                    {
+                                                        block.description && block.description
+                                                    }
+                                                </div>
+                                                {
+                                                    block.image && (
+                                                        <div
+                                                            className={`image-reveal ${size2Class[blockSize]} flex`}
+                                                        >
+                                                            <GatsbyImage
+                                                                className="w-full h-full object-cover"
+                                                                image={getImage(
+                                                                    block.image.node.gatsbyImage
+                                                                )}
+                                                                alt={
+                                                                    block.image.node.altText ||
+                                                                    block.description || `${title} image ${i + 1}`
+                                                                }
+                                                            />
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
-                        ))}
-                    </div>
+                        )
+                    }
                 </div>
             </section>
 
@@ -325,9 +379,14 @@ export const pageQuery = graphql`
             node {
               gatsbyImage(
                 layout: FULL_WIDTH
-                width: 800
+                width: 1200
+                fit: COVER
+                cropFocus: CENTER
                 placeholder: BLURRED
               )
+              width
+              height
+              altText
             }
           }
           video {

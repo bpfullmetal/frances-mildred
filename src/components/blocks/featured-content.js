@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import Helper from '../../helper';
 
 const BlockFeaturedContent = ({ data }) => {
   const featuredContent = data;
@@ -26,15 +27,9 @@ const BlockFeaturedContent = ({ data }) => {
       threshold: 0.5, // Trigger when 50% of the target is in the viewport
     };
 
-    scrollRevealRefs.forEach((ref, i) => {
-      const observer = new IntersectionObserver(handleIntersection, options);
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-      return () => {
-        observer.unobserve(ref.current);
-      };
-    });
+    scrollRevealRefs.forEach((ref) =>
+      Helper.setupIntersectionObserver(ref, handleIntersection, options)
+    );
   }, []);
 
   const handleIntersection = (entries) => {
@@ -66,6 +61,7 @@ const BlockFeaturedContent = ({ data }) => {
                   <div
                     key={`featured-content-${i}`}
                     className="scroll-reveal mb-6 sm:mb-8"
+                    key={i}
                     ref={scrollRevealRefs[i + 1]}
                   >
                     <GatsbyImage
@@ -84,6 +80,7 @@ const BlockFeaturedContent = ({ data }) => {
                   <p
                     key={`featured-content-${i}`}
                     className="scroll-reveal text-dark_green text-lg mb-6 sm:text-xl sm:mb-8"
+                    key={i}
                     ref={scrollRevealRefs[i + 1]}
                   >
                     {content.text}

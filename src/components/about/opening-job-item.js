@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Helper from '../../helper';
 
 const OpeningJobItem = ({ data, order, opened = false }) => {
   const [isEntered, setIsEntered] = React.useState(false);
@@ -14,28 +15,8 @@ const OpeningJobItem = ({ data, order, opened = false }) => {
     });
 
   React.useEffect(() => {
-    const setupIntersectionObserver = (ref) => {
-      const options = {
-        root: null, // Use the viewport as the root
-        rootMargin: '0px', // No margin
-        threshold: 0.3, // Trigger when 50% of the target is in the viewport
-      };
-
-      if (!ref.hasObserver) {
-        const observer = new IntersectionObserver(handleIntersection, options);
-        if (ref.current) {
-          observer.observe(ref.current);
-          ref.hasObserver = true;
-        }
-        return () => {
-          observer.unobserve(ref.current);
-          ref.hasObserver = false;
-        };
-      }
-    };
-
-    setupIntersectionObserver(contentRef);
-    setupIntersectionObserver(applyRef);
+    Helper.setupIntersectionObserver(contentRef, handleIntersection);
+    Helper.setupIntersectionObserver(applyRef, handleIntersection);
   }, [applyRef, contentRef]);
 
   const handleIntersection = (entries) => {
