@@ -220,6 +220,39 @@ footer .logo svg {
     translate(calc((100vw - 660px) / 2), calc((100vh - 440px) / 2));
 }
 
+/* Project Carousel Modal */
+.project-carousel-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.project-carousel-modal .swiper {
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+}
+
+.project-carousel-modal .slide-prev-block {
+  cursor: url('../assets/images/cursor-arrow-left.svg'), pointer;
+}
+
+.project-carousel-modal .slide-next-block {
+  cursor: url('../assets/images/cursor-arrow-right.svg'), pointer;
+}
+
+.project-carousel-modal .swiper-wrapper {
+  height: 100%;
+}
+
+.project-carousel-modal .swiper-slide {
+  height: 100%;
+}
+
 /* Underline animation */
 .animate-underline {
   position: relative;
