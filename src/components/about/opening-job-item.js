@@ -40,6 +40,17 @@ const OpeningJobItem = ({ data, order, opened = false }) => {
     }
   };
 
+  const handleOpenJobItem = React.useCallback(() => {
+    if (!isOpened) {
+      const contentEle = contentRef.current;
+      if (contentEle) {
+        window.scrollTo({ top: contentEle.offsetTop - 60, behavior: 'smooth' });
+      }
+    }
+
+    setIsOpened((old) => !old);
+  }, [contentRef, isOpened]);
+
   return (
     <div
       className={`animate-reveal flex flex-col ${isEntered ? 'reveal' : ''}`}
@@ -48,7 +59,7 @@ const OpeningJobItem = ({ data, order, opened = false }) => {
     >
       <div
         className="flex items-center cursor-pointer"
-        onClick={() => setIsOpened((old) => !old)}
+        onClick={handleOpenJobItem}
       >
         <div className="relative flex items-center justify-center w-[30px] h-[30px] border border-black rounded-full mr-2.5">
           <div className="absolute w-3 h-0.5 bg-black"></div>
