@@ -20,7 +20,10 @@ const ProjectCarouselModal = ({ imageBlocks, onClose }) => {
   }, []);
 
   return (
-    <div className="project-carousel-modal fixed w-screen h-screen top-0 bg-[#000000E6] z-20">
+    <div
+      className="project-carousel-modal fixed w-screen h-screen top-0 bg-[#000000E6] z-20"
+      aria-modal={true}
+    >
       <div
         className="absolute w-8 h-8 flex items-center justify-center top-6 right-6 rotate-45 cursor-pointer"
         onClick={onClose}
