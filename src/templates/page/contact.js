@@ -131,7 +131,9 @@ const ContactPage = ({ data }) => {
 
 export default ContactPage;
 
-export const Head = ({ data }) => <title>{`${data.wpPage.title} - Frances Mildred`}</title>;
+export const Head = ({ data }) => (
+  <title>{`${data.wpPage.title} - Frances Mildred`}</title>
+);
 
 export const pageQuery = graphql`
   query ($id: String!) {

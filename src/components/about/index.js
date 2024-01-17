@@ -234,45 +234,34 @@ const AboutPageContent = (pageData) => {
           </div>
 
           <div className="max-w-[860px] flex flex-col">
-            {
-              (ourTeam.featuredImage || ourTeam.description) && (
-                <div className="flex flex-col mb-48">
-                  {
-                    ourTeam.featuredImage && (
-                      <div className="animate-reveal" ref={ourTeamRefs[1]}>
-                        <GatsbyImage
-                          image={getImage(
-                            ourTeam.featuredImage.node.gatsbyImage
-                          )}
-                          alt={
-                            ourTeam.featuredImage.altText ||
-                            "Our team"
-                          }
-                        />
-                      </div>
-                    )
-                  }
-                  {
-                    ourTeam.description && (
-                      <p
-                        className="animate-reveal max-w-[280px] text-sm_extra leading-[20px] mt-5"
-                        ref={ourTeamRefs[2]}
-                      >
-                        {ourTeam.description}
-                      </p>
-                    )
-                  }
-                </div>
-              ) 
-            }
+            {(ourTeam.featuredImage || ourTeam.description) && (
+              <div className="flex flex-col mb-48">
+                {ourTeam.featuredImage && (
+                  <div className="animate-reveal" ref={ourTeamRefs[1]}>
+                    <GatsbyImage
+                      image={getImage(ourTeam.featuredImage.node.gatsbyImage)}
+                      alt={ourTeam.featuredImage.altText || 'Our team'}
+                    />
+                  </div>
+                )}
+                {ourTeam.description && (
+                  <p
+                    className="animate-reveal max-w-[280px] text-sm_extra leading-[20px] mt-5"
+                    ref={ourTeamRefs[2]}
+                  >
+                    {ourTeam.description}
+                  </p>
+                )}
+              </div>
+            )}
 
             {ourTeam.featuredTeamMembers &&
               ourTeam.featuredTeamMembers.map((teamMember, i) => (
                 <div
                   key={`featured-team-member-${i}`}
-                  className={`flex flex-col${
-                    i % 2 !== 0 ? ' ml-auto' : ''
-                  }${ i !== ourTeam.featuredTeamMembers.length - 1 ? ' mb-24' : ''}`}
+                  className={`flex flex-col${i % 2 !== 0 ? ' ml-auto' : ''}${
+                    i !== ourTeam.featuredTeamMembers.length - 1 ? ' mb-24' : ''
+                  }`}
                 >
                   <TeamStudioFeatured data={{ ...teamMember }} />
                 </div>

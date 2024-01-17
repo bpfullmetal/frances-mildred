@@ -3,7 +3,7 @@ const setupIntersectionObserver = (ref, handleIntersection, options = null) => {
     root: null, // Use the viewport as the root
     rootMargin: '0px', // No margin
     threshold: 0.3, // Trigger when 30% of the target is in the viewport
-    ...options
+    ...options,
   };
 
   const observer = new IntersectionObserver(

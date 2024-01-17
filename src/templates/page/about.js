@@ -13,7 +13,9 @@ const AboutPage = ({ data }) => {
 
 export default AboutPage;
 
-export const Head = ({ data }) => <title>{`${data.wpPage.title} - Frances Mildred`}</title>;
+export const Head = ({ data }) => (
+  <title>{`${data.wpPage.title} - Frances Mildred`}</title>
+);
 
 export const pageQuery = graphql`
   query ($id: String!) {
