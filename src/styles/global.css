@@ -178,6 +178,18 @@ footer .logo svg {
 
 /* Work Project */
 
+.work-project .project-details a span {
+  position: relative;
+}
+.work-project .project-details a span::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(197 193 185 / var(--tw-text-opacity));
+  top: 100%;
+  left: 0;
+}
 .work-project .project-block .description-reveal {
   opacity: 0;
   transition: transform 0.8s cubic-bezier(0, 0, 0.58, 1),

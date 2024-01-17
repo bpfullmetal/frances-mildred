@@ -207,12 +207,12 @@ const ProjectSingle = ({ data }) => {
                   />
                 )}
                 {projectsSingle.projectDetails.attributes && (
-                  <>
+                  <div className="project-details">
                     {projectsSingle.projectDetails.attributes.map(
                       (attribute, i) => (
                         <div
                           key={`project-details-${i}`}
-                          className="flex flex-col pt-9"
+                          className="flex flex-col pt-9 space-y-2"
                         >
                           {attribute.label && (
                             <p className="text-taupe text-xs">
@@ -220,13 +220,13 @@ const ProjectSingle = ({ data }) => {
                             </p>
                           )}
                           {attribute.attributeListings && (
-                            <div className="text-taupe text-2xl leading-[44px] sm:text-[26px]">
+                            <div className="text-taupe text-xl leading-[34px] sm:text-[20px]">
                               {attribute.attributeListings.map((attItem, a) => {
                                 return (
                                   <div key={`project-attribute-${a}`}>
                                     {attItem.link ? (
                                       <a target="_blank" href={attItem.link}>
-                                        {attItem.title}
+                                        <span>{attItem.title}</span>
                                       </a>
                                     ) : (
                                       <>{attItem.title}</>
@@ -242,7 +242,7 @@ const ProjectSingle = ({ data }) => {
                         </div>
                       )
                     )}
-                  </>
+                  </div>
                 )}
               </div>
             </div>
