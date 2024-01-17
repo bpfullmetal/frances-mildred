@@ -204,6 +204,10 @@ footer .logo svg {
   transform: translateY(0);
 }
 
+.work-project .image-reveal {
+  cursor: url('../assets/images/cursor-hover-plus.svg'), pointer;
+}
+
 .next-project img {
   position: absolute;
   top: 0;
@@ -238,11 +242,19 @@ footer .logo svg {
 }
 
 .project-carousel-modal .slide-prev-block {
-  cursor: url('../assets/images/cursor-arrow-left.svg'), pointer;
+  cursor: url('../assets/images/cursor-arrow-left.png'), pointer;
+}
+
+.project-carousel-modal .slide-prev-block-opacity {
+  cursor: url('../assets/images/cursor-arrow-left-opacity.png'), pointer;
 }
 
 .project-carousel-modal .slide-next-block {
-  cursor: url('../assets/images/cursor-arrow-right.svg'), pointer;
+  cursor: url('../assets/images/cursor-arrow-right.png'), pointer;
+}
+
+.project-carousel-modal .slide-next-block-opacity {
+  cursor: url('../assets/images/cursor-arrow-right-opacity.png'), pointer;
 }
 
 .project-carousel-modal .swiper-wrapper {
