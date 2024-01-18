@@ -2,7 +2,7 @@ import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
-const ProjectCarouselModal = ({ imageBlocks, onClose }) => {
+const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
   React.useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Escape') {
@@ -32,7 +32,7 @@ const ProjectCarouselModal = ({ imageBlocks, onClose }) => {
         <div className="absolute w-0.5 h-8 bg-white"></div>
       </div>
 
-      <Swiper slidesPerView={1}>
+      <Swiper initialSlide={initialSlide} slidesPerView={1}>
         {imageBlocks.map((block, i) => {
           const imageNode = block.image?.node;
           let width = window.innerWidth > 1000 ? 800 : window.innerWidth * 0.8;
