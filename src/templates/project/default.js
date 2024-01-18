@@ -9,8 +9,6 @@ const ProjectSingle = ({ data }) => {
   const { wpProject, nextProject } = data;
   const { title, featuredImage, projectsSingle } = wpProject;
   const positions = ['right', 'left', 'center'];
-  let prevPosition;
-  let prevSize;
 
   const [revealProjectInfo, setRevealProjectInfo] = React.useState(false);
   const [projectRefs] = React.useState(
@@ -22,9 +20,41 @@ const ProjectSingle = ({ data }) => {
         return React.useRef();
       })
   );
-  const [showCarousel, setShowCarousel] = React.useState(false);
+  const [clickedImageOrder, setClickedImageOrder] = React.useState(-1);
+  const [imageBlockPositions, setImageBlockPositions] = React.useState([]);
+  const [imageBlockSizes, setImageBlockSizes] = React.useState([]);
+
   const nextProjectAfterEleRef = React.useRef();
   const imageMaskRef = React.useRef();
+
+  React.useEffect(() => {
+    let prevPosition = getRandomPosition();
+    let prevSize = getRandomSize();
+
+    const randomPositions = projectsSingle.projectImages.map((_) => {
+      const pos = getRandomPosition(prevPosition);
+      prevPosition = pos;
+      return pos;
+    });
+    setImageBlockPositions(randomPositions);
+
+    setImageBlockSizes(
+      projectsSingle.projectImages.map((imageBlock, i) => {
+        const orientation = imageBlock.image
+          ? imageBlock.image.node.width <= imageBlock.image.node.height
+            ? 'portrait'
+            : 'landscape'
+          : '';
+        const blockSize = getRandomSize(
+          randomPositions[i],
+          orientation,
+          prevSize
+        );
+        prevSize = blockSize;
+        return blockSize;
+      })
+    );
+  }, [projectsSingle.projectImages]);
 
   React.useEffect(() => {
     projectRefs.forEach((ref) =>
@@ -83,13 +113,6 @@ const ProjectSingle = ({ data }) => {
     }
   };
 
-  // const size2Class = {
-  //     small: 'w-[360px] h-[480px]',
-  //     medium: 'w-[440px] h-[530px] gap-x-2.5',
-  //     large: 'w-[680px] h-[830px] gap-x-4',
-  //     full: 'w-full my-36 gap-x-6',
-  // };
-
   const size2Class = {
     small: 'w-[360px]',
     medium: 'w-[440px]',
@@ -103,18 +126,7 @@ const ProjectSingle = ({ data }) => {
     left: 'sm:flex-row-reverse gap-x-12 ml-0 sm:ml-10',
   };
 
-  // const ContentImages = () => {
-  //     let prevPosition = ''
-  //     if ( projectsSingle.projectImages?.length ) (
-  //         <div className="flex flex-col mt-8 md:mt-20">
-  //             {
-
-  //             }
-  //         </div>
-  //     )
-  // }
-
-  const getRandomPosition = () => {
+  const getRandomPosition = (prevPosition = -1) => {
     let position;
 
     do {
@@ -124,7 +136,7 @@ const ProjectSingle = ({ data }) => {
     return position;
   };
 
-  const getRandomSize = (currentPosition, orientation = '') => {
+  const getRandomSize = (currentPosition, orientation = '', prevSize = -1) => {
     let sizes = ['small', 'medium', 'large', 'full'];
     let size;
 
@@ -148,9 +160,6 @@ const ProjectSingle = ({ data }) => {
 
     return size;
   };
-
-  prevPosition = getRandomPosition();
-  prevSize = getRandomSize('');
 
   return (
     <PageLayout>
@@ -250,15 +259,8 @@ const ProjectSingle = ({ data }) => {
           {projectsSingle.projectImages?.length && (
             <div className="flex flex-col mt-8 md:mt-20">
               {projectsSingle.projectImages.map((block, i) => {
-                const blockPos = getRandomPosition();
-                prevPosition = blockPos;
-                const orientation = block.image
-                  ? block.image.node.width <= block.image.node.height
-                    ? 'portrait'
-                    : 'landscape'
-                  : '';
-                const blockSize = getRandomSize(prevPosition, orientation);
-                prevSize = blockSize;
+                const blockPos = imageBlockPositions[i];
+                const blockSize = imageBlockSizes[i];
 
                 return (
                   <div
@@ -273,7 +275,7 @@ const ProjectSingle = ({ data }) => {
                     {block.image && (
                       <div
                         className={`image-reveal ${size2Class[blockSize]} flex`}
-                        onClick={() => setShowCarousel(true)}
+                        onClick={() => setClickedImageOrder(i)}
                       >
                         <GatsbyImage
                           className="w-full h-full object-cover"
@@ -337,10 +339,11 @@ const ProjectSingle = ({ data }) => {
         ref={nextProjectAfterEleRef}
       ></section>
 
-      {showCarousel && (
+      {clickedImageOrder > -1 && (
         <ProjectCarouselModal
           imageBlocks={projectsSingle.projectImages}
-          onClose={() => setShowCarousel(false)}
+          initialSlide={clickedImageOrder}
+          onClose={() => setClickedImageOrder(-1)}
         />
       )}
     </PageLayout>
