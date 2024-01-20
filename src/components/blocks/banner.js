@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import HomeBannerVideo from '../../assets/images/home-banner.mp4';
 import LetterA from '../../assets/js/icons/letter-a';
 import LetterC from '../../assets/js/icons/letter-c';
 import LetterD from '../../assets/js/icons/letter-d';
@@ -16,6 +15,7 @@ import LetterS from '../../assets/js/icons/letter-s';
 const BlockLogoBanner = ({ data }) => {
   const [startAnimate, setStartAnimate] = React.useState(false);
   const [prevScrollY, setPrevScrollY] = React.useState(0);
+  const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -42,30 +42,48 @@ const BlockLogoBanner = ({ data }) => {
 
   if (!data.backgroundImage && !data.backgroundVideo) return <></>;
 
+  
   return (
     <section
       className="relative h-home_banner home-banner"
       onClick={handleBannerClick}
     >
       {data.backgroundVideo ? (
-        <video
-          autoPlay
-          muted
-          loop
-          className="absolute w-full h-full object-cover"
-        >
-          <source
-            src={data.backgroundVideo.node.sourceUrl}
-            type="video/mp4"
-          ></source>
-        </video>
-      ) : (
-        <GatsbyImage
-          className="w-full h-full object-cover absolute"
-          image={getImage(data.backgroundImage.node.gatsbyImage)}
-          alt={data.backgroundImage.node.altText}
-        />
-      )}
+        <div className="absolute w-full h-full object-cover">
+          {
+            isVideoLoaded
+            ? null
+            : data.backgroundImage.node 
+              ? <GatsbyImage
+                  className="w-full h-full object-cover absolute"
+                  image={getImage(data.backgroundImage.node.gatsbyImage)}
+                  alt={data.backgroundImage.node.altText}
+                />
+              : null
+          }
+          <video
+            autoPlay
+            muted
+            loop
+            onLoadedData={() => setIsVideoLoaded(true)}
+            className="absolute w-full h-full object-cover"
+          >
+            <source
+              src={data.backgroundVideo.node.mediaItemUrl}
+              type="video/mp4"
+            ></source>
+          </video>
+        </div>
+      ) : data.backgroundImage.node 
+          ? (
+            <GatsbyImage
+              className="w-full h-full object-cover absolute"
+              image={getImage(data.backgroundImage.node.gatsbyImage)}
+              alt={data.backgroundImage.node.altText}
+            />
+          )
+          : null
+      }
       <div className="relative h-full flex flex-col items-center justify-center uppercase">
         <div className="flex justify-between w-[400px]">
           <div className="flex justify-center w-8 h-9">

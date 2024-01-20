@@ -1,6 +1,4 @@
 import * as React from 'react';
-import AboutBannerVideo from '../../assets/images/about-banner.mp4';
-import TeamImage1 from '../../assets/images/home-img-2.png';
 import Helper from '../../helper';
 import PageLayout from '../page-layout';
 import ByTheNumberBlock from './by-the-number';
@@ -16,6 +14,7 @@ const AboutPageContent = (pageData) => {
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
   const [jobListings, setJobListings] = React.useState([]);
+  const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
     Array(4).fill(false)
   );
@@ -38,6 +37,7 @@ const AboutPageContent = (pageData) => {
       link: `#${stringToSlug(intro.menuName)}`,
     });
   }
+  
   if (ourTeam.menuName) {
     sectionsArray.push(ourTeam.menuName);
     navMenuItems.push({
@@ -46,6 +46,7 @@ const AboutPageContent = (pageData) => {
       link: `#${stringToSlug(ourTeam.menuName)}`,
     });
   }
+  
   if (studioOpenings.menuName) {
     sectionsArray.push(studioOpenings.menuName);
     navMenuItems.push({
@@ -60,16 +61,19 @@ const AboutPageContent = (pageData) => {
     .map((_) => {
       return React.useRef();
     });
+
   const ourTeamRefs = Array(3)
     .fill()
     .map((_) => {
       return React.useRef();
     });
+
   const teamMemberRefs = Array(ourTeam.teamMembers.length)
     .fill()
     .map((_) => {
       return React.useRef();
     });
+
   const openingsTitleRef = React.useRef();
 
   React.useEffect(() => {
@@ -182,14 +186,43 @@ const AboutPageContent = (pageData) => {
         ref={navSectionRefs[0]}
         data-background="dark"
       >
-        <video
-          autoPlay
-          loop
-          muted
-          className="absolute w-full h-full object-cover"
-        >
-          <source src={AboutBannerVideo} type="video/mp4"></source>
-        </video>
+        {
+          intro.backgroundVideo ? (
+            <div className="absolute w-full h-full object-cover">
+              {
+                isVideoLoaded
+                ? null
+                : intro.backgroundImage 
+                  ? <GatsbyImage
+                      className="w-full h-full object-cover absolute"
+                      image={getImage(intro.backgroundImage.node.gatsbyImage)}
+                      alt={intro.backgroundImage.node.altText}
+                    />
+                  : null
+              }
+              <video
+                autoPlay
+                muted
+                loop
+                onLoadedData={() => setIsVideoLoaded(true)}
+                className="absolute w-full h-full object-cover"
+              >
+                <source
+                  src={intro.backgroundVideo.node.mediaItemUrl}
+                  type="video/mp4"
+                ></source>
+              </video>
+            </div>
+          ) : intro.backgroundImage
+              ? (
+                <GatsbyImage
+                  className="w-full h-full object-cover absolute"
+                  image={getImage(intro.backgroundImage.node.gatsbyImage)}
+                  alt={intro.backgroundImage.node.altText}
+                />
+              )
+              : <div className="absolute w-full h-full bg-dark_red"></div>
+        }
 
         <div className="relative w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="relative max-w-[860px] flex flex-col items-between ml-auto">

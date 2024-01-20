@@ -47,7 +47,7 @@ const ProjectsCarousel = (props) => {
             <div className="flex flex-col px-2 sm:px-0.5">
               <div
                 ref={carouselSlideRefs[i]}
-                className="swiper-slide-image bg-[#f8f8f8] rounded"
+                className="swiper-slide-image bg-[#f8f8f8] rounded aspect-[5/7]"
               >
                 {project.image && (
                   <a href={project.link}>
@@ -58,11 +58,11 @@ const ProjectsCarousel = (props) => {
                   </a>
                 )}
               </div>
-              <div className="flex flex-col flex-wrap items-start text-dark_green sm:flex-row sm:items-center">
-                <p className="text-lg leading-[20px] tracking-[0.4px] mt-4 mr-3 sm:text-lg sm:tracking-[0.48px] sm:mr-7">
+              <div className="flex flex-col flex-wrap items-start text-dark_green">
+                <p className="text-lg leading-[20px] tracking-[0.4px] mt-2 mr-3 sm:text-lg sm:tracking-[0.48px] sm:mr-7">
                   {project.title}
                 </p>
-                <p className="text-base leading-[16px] tracking-[0.32px] uppercase animate-underline mt-4 sm:text-lg sm:leading-[20px] sm:tracking-[0.42px]">
+                <p className="text-base leading-[16px] tracking-[0.32px] mt-1 uppercase animate-underline sm:text-sm sm:leading-[20px] sm:tracking-[0.42px]">
                   <a className="whitespace-nowrap" href={project.link}>
                     View project
                   </a>

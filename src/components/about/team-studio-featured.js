@@ -68,7 +68,7 @@ const TeamStudioFeatured = ({ data }) => {
       )}
       <div className="text-sm_extra leading-[20px] mt-8">
         <div
-          className="mb-10"
+          className="mb-8"
           data-animate-ref="name"
           ref={scrollRevealRefs[1]}
         >
@@ -83,7 +83,7 @@ const TeamStudioFeatured = ({ data }) => {
           )}
           {data.role && (
             <p
-              className={`animate-reveal text-4xl leading-[44px] ${
+              className={`animate-reveal text-md uppercase tracking-[2px] leading-[22px] ${
                 roleRevealed ? 'reveal' : ''
               }`}
             >
@@ -98,7 +98,7 @@ const TeamStudioFeatured = ({ data }) => {
             ref={scrollRevealRefs[2]}
           >
             <p
-              className={`animate-reveal max-w-[420px] text-sm_extra leading-[20px] tracking-[0.45px] mb-5 ${
+              className={`animate-reveal max-w-[420px] text-sm_extra leading-[24px] tracking-[0.25px] mb-5 ${
                 bioRevealed ? 'reveal' : ''
               }`}
             >

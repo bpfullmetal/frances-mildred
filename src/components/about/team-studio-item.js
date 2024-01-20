@@ -24,14 +24,14 @@ const TeamStudioItem = ({ data, animate }) => {
         }`}
       ></div>
       <p
-        className={`animate-reveal text-4xl leading-[44px] mb-3 ${
+        className={`animate-reveal text-4xl leading-[44px] mb-1 ${
           nameRevealed ? 'reveal' : ''
         }`}
       >
         {data.name}
       </p>
       <p
-        className={`animate-reveal text-xs tracking-[0.24px] uppercase mb-9 ${
+        className={`animate-reveal text-xs tracking-[2px] uppercase mb-9 ${
           roleRevealed ? 'reveal' : ''
         }`}
       >
@@ -43,14 +43,14 @@ const TeamStudioItem = ({ data, animate }) => {
           {data.bioMore && (
             <>
               <p
-                className={`mt-4 animate-reveal-down animate-hidden ${
+                className={`mt-1 animate-reveal-down animate-hidden ${
                   readMoreDisplayed ? 'reveal-down' : ''
                 }`}
               >
                 {data.bioMore}
               </p>
               <button
-                className="mt-4 text-sm_extra leading-[20px] tracking-[0.45px] underline uppercase"
+                className="mt-4 text-sm leading-[20px] tracking-[0.45px] underline uppercase"
                 onClick={() => setReadMoreDisplayed(!readMoreDisplayed)}
               >
                 {`Read ${readMoreDisplayed ? 'less' : 'more'}`}

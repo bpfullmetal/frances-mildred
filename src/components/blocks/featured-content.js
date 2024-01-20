@@ -80,7 +80,6 @@ const BlockFeaturedContent = ({ data }) => {
                   <p
                     key={`featured-content-${i}`}
                     className="scroll-reveal text-dark_green text-lg mb-6 sm:text-xl sm:mb-8"
-                    key={i}
                     ref={scrollRevealRefs[i + 1]}
                   >
                     {content.text}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
-import AboutBannerVideo from '../../assets/images/about-banner.mp4';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import LogoIconGif from '../../assets/images/logo-monogram.gif';
 import LetterA from '../../assets/js/icons/letter-a';
 import LetterC from '../../assets/js/icons/letter-c';
@@ -16,22 +16,52 @@ import LetterS from '../../assets/js/icons/letter-s';
 import HeaderMenu from '../../components/header-menu';
 
 const ContactPage = ({ data }) => {
-  console.log('contact data', data);
   const { wpPage, wp } = data;
+  const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
   const contactInfo = wp?.settings?.fmSettings?.contactInfo || {};
+  
   return (
     <main className="h-screen flex flex-col">
       <HeaderMenu currentURI={wpPage.uri} />
 
       <footer className="relative flex-1">
-        <video
-          autoPlay
-          loop
-          muted
-          className="absolute w-full h-full object-cover"
-        >
-          <source src={AboutBannerVideo} type="video/mp4"></source>
-        </video>
+      {
+        wpPage?.template?.blockContact?.backgroundVideo ? (
+          <div className="absolute w-full h-full object-cover">
+            {
+              isVideoLoaded
+              ? null
+              : wpPage?.template?.blockContact?.backgroundImage 
+                ? <GatsbyImage
+                    className="w-full h-full object-cover absolute"
+                    image={getImage(wpPage.template.blockContact.backgroundImage.node.gatsbyImage)}
+                    alt={wpPage.template.blockContact.backgroundImage.node.altText}
+                  />
+                : null
+            }
+            <video
+              autoPlay
+              muted
+              loop
+              onLoadedData={() => setIsVideoLoaded(true)}
+              className="absolute w-full h-full object-cover"
+            >
+              <source
+                src={wpPage.template.blockContact.backgroundVideo.node.mediaItemUrl}
+                type="video/mp4"
+              ></source>
+            </video>
+          </div>
+        ) : wpPage?.template?.blockContact?.backgroundImage
+            ? (
+              <GatsbyImage
+                className="w-full h-full object-cover absolute"
+                image={getImage(wpPage.template.blockContact.backgroundImage.node.gatsbyImage)}
+                alt={wpPage.template.blockContact.backgroundImage.node.altText}
+              />
+            )
+            : <div className="absolute w-full h-full bg-dark_blue"></div>
+      }
 
         <div className="relative h-full flex flex-col justify-between max-w-main mx-auto px-5 sm:px-12">
           <div className="flex items-center justify-between py-20">

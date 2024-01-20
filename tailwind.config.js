@@ -18,6 +18,9 @@ module.exports = {
         'dark_green': '#15341C',
         'taupe': '#C5C1B9',
       },
+      aspectRatio: {
+        '5/7': '5 / 7',
+      },
       fontSize: {
         'text-sm_extra': '15px',
       },

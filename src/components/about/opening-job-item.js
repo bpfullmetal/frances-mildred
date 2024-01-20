@@ -5,7 +5,7 @@ const OpeningJobItem = ({ data, order, opened = false }) => {
   const [isEntered, setIsEntered] = React.useState(false);
   const [isOpened, setIsOpened] = React.useState(opened);
   const [beginApplyAnimate, setBeginApplyAnimate] = React.useState(false);
-
+  console.log(data)
   const contentRef = React.useRef();
   const applyRef = React.useRef();
   const applyContentRefs = Array(3)
@@ -87,22 +87,22 @@ const OpeningJobItem = ({ data, order, opened = false }) => {
             ref={applyRef}
           >
             <div
-              className="animate-reveal text-black text-2xl leading-[30px] underline"
+              className="animate-reveal text-black text-2xl leading-[30px] underline mb-2"
               ref={applyContentRefs[0]}
             >
-              <a href="/">How to apply</a>
+              <a target="_blank" href={data.applicationLink}>How to apply</a>
             </div>
             <p
-              className="animate-reveal text-black text-2xl leading-[30px]"
+              className="animate-reveal text-black text-lg leading-[30px]"
               ref={applyContentRefs[1]}
             >
               {data.howToApply}
             </p>
             <div
-              className="animate-reveal text-black text-sm underline uppercase mt-16"
+              className="animate-reveal text-black text-sm underline uppercase tracking-[1px] mt-16"
               ref={applyContentRefs[2]}
             >
-              <a href="/">Apply here</a>
+              <a target="_blank" href={data.applicationLink}>Apply here</a>
             </div>
           </div>
         )}

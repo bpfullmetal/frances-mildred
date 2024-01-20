@@ -74,6 +74,9 @@ exports.createPages = async ({ graphql, actions }) => {
                     }
                 }
             }
+            wpPage(slug: {eq: "design"}) {
+              id
+            }
         }
     `);
   
@@ -85,7 +88,8 @@ exports.createPages = async ({ graphql, actions }) => {
         context: {
           // Pass data to the template, if needed
           categorySlug: category.node.slug,
-        },
+          id: result.data.wpPage.id
+        }
       });
     });
 

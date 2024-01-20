@@ -40,7 +40,7 @@ const HeaderMenu = ({ currentURI }) => {
         // Rest of your component logic...
 
         return (
-          <header className="sticky top-0 bg-white px-12 z-10">
+          <header className="sticky top-0 bg-white px-12 z-20">
             <ul className="hidden justify-between sm:flex">
               {menuItems.map((item, i) => (
                 <li key={i} className="text-black text-sm py-3">

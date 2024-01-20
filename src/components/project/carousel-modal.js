@@ -34,18 +34,18 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
 
       <Swiper initialSlide={initialSlide} slidesPerView={1}>
         {imageBlocks.map((block, i) => {
-          const imageNode = block.image?.node;
+          const mediaNode = block.video?.node || block.image?.node;
           let width = window.innerWidth > 1000 ? 800 : window.innerWidth * 0.8;
           let height = window.innerHeight * 0.8 - 40;
-          let isLandscape = imageNode && imageNode.width > imageNode.height;
-          const aspectRatio = imageNode
-            ? imageNode.width / imageNode.height
+          let isLandscape = mediaNode && mediaNode.width > mediaNode.height;
+          const aspectRatio = mediaNode
+            ? mediaNode.width / mediaNode.height
             : 0;
-          if (imageNode) {
+          if (mediaNode) {
             if (isLandscape) {
-              if (width > imageNode.width) {
-                width = imageNode.width;
-                height = imageNode.height;
+              if (width > mediaNode.width) {
+                width = mediaNode.width;
+                height = mediaNode.height;
               } else {
                 const croppedHeight = width / aspectRatio;
                 if (croppedHeight > height) {
@@ -55,9 +55,9 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
                 }
               }
             } else {
-              if (height > imageNode.height) {
-                height = imageNode.height;
-                width = imageNode.width;
+              if (height > mediaNode.height) {
+                height = mediaNode.height;
+                width = mediaNode.width;
               } else {
                 const croppedWidth = height * aspectRatio;
                 if (croppedWidth > width) {
@@ -73,18 +73,35 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
             <SwiperSlide className="relative" key={i}>
               <SlidePrevBlock disabled={i === 0} />
 
-              {block.image && (
-                <div className="flex flex-col items-center justify-center w-full h-full">
-                  <GatsbyImage
-                    image={getImage(block.image.node.gatsbyImage)}
-                    alt={block.image.node.altText || block.description || ''}
-                    style={{ width, height, objectFit: 'cover' }}
-                  />
-                  <div className="description-reveal text-taupe text-sm_extra leading-[24px] mt-4">
-                    {block.description && block.description}
+              {
+                (block.image || block.video) && (
+                  <div className="flex flex-col items-center justify-center w-full h-full">
+                    {
+                      block.video 
+                      ? <video
+                          autoPlay
+                          muted
+                          loop
+                          controls={true}
+                          style={{ width, height, objectFit: 'cover' }}
+                        >
+                            <source
+                                src={block.video.node.mediaItemUrl}
+                                type="video/mp4"
+                            />
+                        </video>
+                      : <GatsbyImage
+                          image={getImage(block.image.node.gatsbyImage)}
+                          alt={block.image.node.altText || block.description || ''}
+                          style={{ width, height, objectFit: 'cover' }}
+                        />
+                    }
+                    <div className="description-reveal text-taupe text-sm_extra leading-[24px] mt-4">
+                      {block.description && block.description}
+                    </div>
                   </div>
-                </div>
-              )}
+                )
+              }
 
               <SlideNextBlock disabled={i === imageBlocks.length - 1} />
             </SwiperSlide>

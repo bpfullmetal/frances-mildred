@@ -61,10 +61,10 @@ const DesignProjectsGrid = ({ category, projects }) => {
               />
             </a>
           )}
-          <p className="text-xl leading-none tracking-[0.48px] mb-3 sm:text-[22px]">
-            {project.node.title}
+          <p className="text-xl leading-none tracking-[0.48px] mb-1 sm:text-lg">
+            <a href={project.node.link}>{project.node.title}</a>
           </p>
-          <div className="w-fit text-base !leading-none tracking-[0.32px] uppercase animate-underline sm:text-lg sm:tracking-[0.42px]">
+          <div className="w-fit text-base !leading-none tracking-[0.32px] uppercase animate-underline sm:text-sm sm:tracking-[0.42px]">
             <a href={project.node.link}>View Project</a>
           </div>
         </div>

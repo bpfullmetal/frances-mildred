@@ -3,14 +3,14 @@ import HeaderMenu from './header-menu';
 import BookConsultation from './book-consultation';
 import FooterSection from './footer-section';
 
-const PageLayout = ({ className, children, hiddenBookSection = false }) => {
+const PageLayout = ({ className, children, options = {} }) => {
   return (
     <main className={className}>
-      <HeaderMenu />
+      {!options.hiddenHeader && <HeaderMenu />}
 
       {children}
 
-      {!hiddenBookSection && <BookConsultation />}
+      {!options.hiddenBookSection && <BookConsultation />}
       <FooterSection />
     </main>
   );

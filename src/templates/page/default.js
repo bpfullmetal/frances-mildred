@@ -6,13 +6,27 @@ import BlockFeaturedContent from '../../components/blocks/featured-content';
 import BlockProjectsCarousel from '../../components/blocks/projects-carousel';
 import FooterSection from '../../components/footer-section';
 import HeaderMenu from '../../components/header-menu';
+import PageLayout from '../../components/page-layout';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
-
+  const [shouldRenderHeader, setShouldRenderheader] = React.useState(true);
   if (!wpPage) return <>No page data found</>;
+
+  React.useEffect(() => {
+    if ( wpPage.editorBlocks ) {
+      const hasHeader = wpPage.editorBlocks.find(
+        block => block.__typename === 'WpAcfHeaderNav'
+      )
+      if ( hasHeader) {
+        setShouldRenderheader(false)
+      }
+    }
+  }, [])
+  console.log(shouldRenderHeader, 'render')
+
   return (
-    <div>
+    <PageLayout className="default-page" options={{ 'hiddenHeader': !shouldRenderHeader } }>
       {wpPage.editorBlocks && (
         <div>
           {wpPage.editorBlocks.filter(
@@ -71,7 +85,7 @@ const PageDefault = ({ data }) => {
       {wpPage.editorBlocks.find(
         (block) => block.__typename === 'WpAcfContact'
       ) === undefined && <FooterSection />}
-    </div>
+    </PageLayout>
   );
 };
 
@@ -101,8 +115,8 @@ export const pageQuery = graphql`
               node {
                 gatsbyImage(
                   layout: FULL_WIDTH
-                  width: 800
-                  placeholder: DOMINANT_COLOR
+                  width: 1200
+                  placeholder: BLURRED
                 )
                 sourceUrl
                 altText
