@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import Helper from '../../helper';
 import PageLayout from '../../components/page-layout';
 
 const PostSingle = ({ data }) => {
@@ -29,7 +28,7 @@ const PostSingle = ({ data }) => {
     );
 };
 
-export default ProjectSingle;
+export default PostSingle;
 
 export const Head = ({ data }) => {
     const { title } = data.wpPost;
@@ -37,7 +36,7 @@ export const Head = ({ data }) => {
 };
 
 export const pageQuery = graphql`
-  query post($id: String!, $currentDate: Date!) {
+  query post($id: String!) {
     wpPost(id: { eq: $id }) {
       uri
       title
