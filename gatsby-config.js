@@ -4,8 +4,9 @@
 module.exports = {
   siteMetadata: {
     title: `Frances Mildred`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://fullmetalworkshop.com`
   },
+  pathPrefix: "/clients/frances-mildred-staging/",
   plugins: [
     {
       resolve: 'gatsby-source-wordpress',
