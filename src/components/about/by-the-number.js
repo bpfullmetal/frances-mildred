@@ -28,7 +28,9 @@ const ByTheNumberBlock = ({ data }) => {
       if (intervalCount < 1) {
         const intervalId = setInterval(
           () => setIntervalCount((old) => old + 1),
-          1000 / data.metrics[byTheNumberIndex].count / 10
+          (data.metrics[byTheNumberIndex].count * 100) /
+            data.metrics[byTheNumberIndex].count /
+            10
         );
         setNIntervalId(intervalId);
       }

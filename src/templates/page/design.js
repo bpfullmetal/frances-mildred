@@ -4,11 +4,10 @@ import PageLayout from '../../components/page-layout';
 import CategoryModal from '../../components/discover/category-modal';
 import DesignProjectsGrid from '../../components/discover/projects-grid';
 
-const DesignPage = ({ data, location }) => {
-
+const DesignPage = ({ data }) => {
   const allProjectsData = data.allWpProject.edges || [];
   const allCategoriesData = data.allWpCategory.edges || [];
-  const currentCategory = data.wpCategory ? data.wpCategory.slug : null
+  const currentCategory = data.wpCategory ? data.wpCategory.slug : null;
 
   const [openModal, setOpenModal] = React.useState(false);
   const [selectedCat, setSelectedCat] = React.useState(
@@ -23,7 +22,8 @@ const DesignPage = ({ data, location }) => {
   });
 
   React.useEffect(() => {
-    [500, 1500, 2000, 2500].forEach((ms, i) => {
+    const timingsArray = currentCategory ? [0, 0, 0, 250] : [0, 250, 750, 1250];
+    timingsArray.forEach((ms, i) => {
       setTimeout(
         () =>
           setAnimationEntrances({
@@ -35,7 +35,7 @@ const DesignPage = ({ data, location }) => {
         ms
       );
     });
-  }, []);
+  }, [currentCategory]);
 
   React.useEffect(() => {
     const categoryNode = (
@@ -54,18 +54,41 @@ const DesignPage = ({ data, location }) => {
   }, [allCategoriesData, currentCategory]);
 
   return (
-    <PageLayout className="discover bg-dark_blue" hiddenBookSection>
+    <PageLayout
+      className="discover bg-dark_blue"
+      options={{ hiddenBookSection: true }}
+    >
       <section
         className={`bg-dark_blue py-32 sm:py-32 ${
-          animationEntrances.background ? 'fade-in' : ''
+          currentCategory
+            ? 'no-animation'
+            : animationEntrances.background
+            ? 'fade-in'
+            : ''
         }`}
       >
         <div className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="title flex items-center text-3xl leading-[44px] mb-16 sm:text-4xl sm:mb-32">
-            <p className={animationEntrances.title1 ? 'fade-in-top' : ''}>
+            <p
+              className={
+                currentCategory
+                  ? 'no-animation'
+                  : animationEntrances.title1
+                  ? 'fade-in-top'
+                  : ''
+              }
+            >
               Design for &nbsp;
             </p>
-            <p className={animationEntrances.title2 ? 'fade-in-top' : ''}>
+            <p
+              className={
+                currentCategory
+                  ? 'no-animation'
+                  : animationEntrances.title2
+                  ? 'fade-in-top'
+                  : ''
+              }
+            >
               <span
                 className="underline cursor-pointer"
                 onClick={() => setOpenModal(true)}
@@ -128,7 +151,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    wpCategory(slug: {eq: $categorySlug}) {
+    wpCategory(slug: { eq: $categorySlug }) {
       slug
     }
     allWpCategory(
