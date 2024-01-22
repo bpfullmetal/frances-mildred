@@ -54,7 +54,10 @@ const DesignPage = ({ data }) => {
   }, [allCategoriesData, currentCategory]);
 
   return (
-    <PageLayout className="discover bg-dark_blue" hiddenBookSection>
+    <PageLayout
+      className="discover bg-dark_blue"
+      options={{ hiddenBookSection: true }}
+    >
       <section
         className={`bg-dark_blue py-32 sm:py-32 ${
           currentCategory
