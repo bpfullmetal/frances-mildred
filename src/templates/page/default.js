@@ -82,9 +82,6 @@ const PageDefault = ({ data }) => {
           })}
         </div>
       )}
-      {wpPage.editorBlocks.find(
-        (block) => block.__typename === 'WpAcfContact'
-      ) === undefined && <FooterSection />}
     </PageLayout>
   );
 };
