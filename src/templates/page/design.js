@@ -5,11 +5,10 @@ import CategoryModal from '../../components/discover/category-modal';
 import DesignProjectsGrid from '../../components/discover/projects-grid';
 
 const DesignPage = ({ data, location }) => {
-  const params = new URLSearchParams(location.search);
-  const categoryParam = params.get('category');
 
   const allProjectsData = data.allWpProject.edges || [];
   const allCategoriesData = data.allWpCategory.edges || [];
+  const currentCategory = data.wpCategory ? data.wpCategory.slug : null
 
   const [openModal, setOpenModal] = React.useState(false);
   const [selectedCat, setSelectedCat] = React.useState(
@@ -40,7 +39,7 @@ const DesignPage = ({ data, location }) => {
 
   React.useEffect(() => {
     const categoryNode = (
-      allCategoriesData.find((cat) => cat.node.slug === categoryParam) ||
+      allCategoriesData.find((cat) => cat.node.slug === currentCategory) ||
       allCategoriesData[0]
     )?.node;
     setSelectedCat(categoryNode);
@@ -52,7 +51,7 @@ const DesignPage = ({ data, location }) => {
     );
 
     setFilteredProjects(matchedProjects);
-  }, [allCategoriesData, categoryParam]);
+  }, [allCategoriesData, currentCategory]);
 
   return (
     <PageLayout className="discover bg-dark_blue" hiddenBookSection>
@@ -104,7 +103,7 @@ export const Head = ({ data }) => (
 );
 
 export const pageQuery = graphql`
-  query ($id: String!) {
+  query ($id: String!, $categorySlug: String!) {
     wpPage(id: { eq: $id }) {
       title
     }
@@ -128,6 +127,9 @@ export const pageQuery = graphql`
           }
         }
       }
+    }
+    wpCategory(slug: {eq: $categorySlug}) {
+      slug
     }
     allWpCategory(
       filter: { slug: { nin: "uncategorized" }, count: { gt: 0 } }

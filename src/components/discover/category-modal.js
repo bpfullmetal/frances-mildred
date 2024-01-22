@@ -27,7 +27,7 @@ const CategoryModal = ({ categories, selectedCat, onClose }) => {
               <Link
                 key={category.node.slug}
                 className="title flex items-center w-fit text-3xl leading-[44px] capitalize my-2 sm:text-4xl"
-                to={`/design?category=${category.node.slug}`}
+                to={`/design/${category.node.slug}`}
               >
                 {category.node.name}
               </Link>

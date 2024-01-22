@@ -19,7 +19,7 @@ module.exports = {
         type: {
           MediaItem: {
             localFile: {
-              excludeByMimeTypes: [`video/mp4`]
+              excludeByMimeTypes: [`video/mp4`, 'image/jpg', 'image/png', 'image/jpeg']
             }
           }
         }
@@ -31,7 +31,7 @@ module.exports = {
          templatesPath: `./src/templates`, 
          useACF: true,
          excludedNodeTypes: [`MediaItem`], // excludes creating pages for individual media items
-         excludedRoutes: ['**/category/**', '**/tag/**'],
+         excludedRoutes: ['**/taxonomy/**', '**/category/**', '**/tag/**'],
          type: {
           __all: { 
             postsPerPage: 999
