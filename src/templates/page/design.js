@@ -103,7 +103,7 @@ export const Head = ({ data }) => (
 );
 
 export const pageQuery = graphql`
-  query ($id: String!, $categorySlug: String!) {
+  query ($id: String!, $categorySlug: String = "") {
     wpPage(id: { eq: $id }) {
       title
     }
