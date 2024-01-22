@@ -65,7 +65,10 @@ const BlockLogoBanner = ({ data }) => {
             autoPlay
             muted
             loop
+            onLoadedMetadata={() => setIsVideoLoaded(true)}
+            onCanPlay={() => setIsVideoLoaded(true)}
             onLoadedData={() => setIsVideoLoaded(true)}
+            onError={e => console.error(e)}
             className="absolute w-full h-full object-cover"
           >
             <source
