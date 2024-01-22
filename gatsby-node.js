@@ -87,7 +87,8 @@ exports.createPages = async ({ graphql, actions }) => {
         component: path.resolve('./src/templates/page/design.js'),
         context: {
           // Pass data to the template, if needed
-          categorySlug: category.node.slug
+          categorySlug: category.node.slug,
+          id: result.data.wpPage.id
         }
       });
     });
