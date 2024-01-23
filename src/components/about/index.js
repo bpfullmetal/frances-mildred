@@ -14,6 +14,7 @@ const AboutPageContent = (pageData) => {
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const [currentNavMenuItem, setCurrentNavMenuItem] = React.useState('about');
   const [jobListings, setJobListings] = React.useState([]);
+  const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
     Array(4).fill(false)
   );
@@ -188,10 +189,22 @@ const AboutPageContent = (pageData) => {
         {
           intro.backgroundVideo ? (
             <div className="absolute w-full h-full object-cover">
+              {
+                isVideoLoaded
+                ? null
+                : intro.backgroundImage 
+                  ? <GatsbyImage
+                      className="w-full h-full object-cover absolute"
+                      image={getImage(intro.backgroundImage.node.gatsbyImage)}
+                      alt={intro.backgroundImage.node.altText}
+                    />
+                  : null
+              }
               <video
                 autoPlay
                 muted
                 loop
+                onLoadedData={() => setIsVideoLoaded(true)}
                 className="absolute w-full h-full object-cover"
               >
                 <source

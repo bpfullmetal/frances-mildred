@@ -82,7 +82,6 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
                           autoPlay
                           muted
                           loop
-                          controls={true}
                           style={{ width, height, objectFit: 'cover' }}
                         >
                             <source

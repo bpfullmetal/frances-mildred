@@ -17,6 +17,7 @@ import HeaderMenu from '../../components/header-menu';
 
 const ContactPage = ({ data }) => {
   const { wpPage, wp } = data;
+  const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
   const contactInfo = wp?.settings?.fmSettings?.contactInfo || {};
   
   return (
@@ -27,10 +28,22 @@ const ContactPage = ({ data }) => {
       {
         wpPage?.template?.blockContact?.backgroundVideo ? (
           <div className="absolute w-full h-full object-cover">
+            {
+              isVideoLoaded
+              ? null
+              : wpPage?.template?.blockContact?.backgroundImage 
+                ? <GatsbyImage
+                    className="w-full h-full object-cover absolute"
+                    image={getImage(wpPage.template.blockContact.backgroundImage.node.gatsbyImage)}
+                    alt={wpPage.template.blockContact.backgroundImage.node.altText}
+                  />
+                : null
+            }
             <video
               autoPlay
               muted
               loop
+              onLoadedData={() => setIsVideoLoaded(true)}
               className="absolute w-full h-full object-cover"
             >
               <source

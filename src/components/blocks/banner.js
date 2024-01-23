@@ -40,6 +40,11 @@ const BlockLogoBanner = ({ data }) => {
     }
   };
 
+  const handleVideoOnLoad = () => {
+    console.log('video loaded')
+    setIsVideoLoaded(true)
+  }
+
   if (!data.backgroundImage && !data.backgroundVideo) return <></>;
   
   return (
@@ -49,16 +54,31 @@ const BlockLogoBanner = ({ data }) => {
     >
       {data.backgroundVideo ? (
         <div className="absolute w-full h-full object-cover">
+          {
+            isVideoLoaded
+            ? null
+            : data.backgroundImage.node 
+              ? <GatsbyImage
+                  className="w-full h-full object-cover absolute"
+                  image={getImage(data.backgroundImage.node.gatsbyImage)}
+                  alt={data.backgroundImage.node.altText}
+                />
+              : null
+          }
           <video
             autoPlay
             muted
             loop
+            onLoadedMetadata={handleVideoOnLoad}
+            onCanPlay={handleVideoOnLoad}
+            onLoadedData={handleVideoOnLoad}
             onError={e => console.error('video error', e)}
             className="absolute w-full h-full object-cover"
           >
             <source
               src={data.backgroundVideo.node.mediaItemUrl}
-              type="video/mp4"/>
+              type="video/mp4"
+            ></source>
           </video>
         </div>
       ) : data.backgroundImage.node 
