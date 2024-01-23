@@ -114,6 +114,7 @@ export const pageQuery = graphql`
                   layout: FULL_WIDTH
                   width: 1200
                   placeholder: BLURRED
+                  fadeIn: false
                 )
                 sourceUrl
                 altText
