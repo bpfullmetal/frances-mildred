@@ -40,8 +40,12 @@ const BlockLogoBanner = ({ data }) => {
     }
   };
 
-  if (!data.backgroundImage && !data.backgroundVideo) return <></>;
+  const handleVideoOnLoad = () => {
+    console.log('video loaded')
+    setIsVideoLoaded(true)
+  }
 
+  if (!data.backgroundImage && !data.backgroundVideo) return <></>;
   
   return (
     <section
@@ -65,10 +69,10 @@ const BlockLogoBanner = ({ data }) => {
             autoPlay
             muted
             loop
-            onLoadedMetadata={() => setIsVideoLoaded(true)}
-            onCanPlay={() => setIsVideoLoaded(true)}
-            onLoadedData={() => setIsVideoLoaded(true)}
-            onError={e => console.error(e)}
+            onLoadedMetadata={handleVideoOnLoad}
+            onCanPlay={handleVideoOnLoad}
+            onLoadedData={handleVideoOnLoad}
+            onError={e => console.error('video error', e)}
             className="absolute w-full h-full object-cover"
           >
             <source
