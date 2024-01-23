@@ -30,7 +30,6 @@ module.exports = {
       options: {
          templatesPath: `./src/templates`, 
          useACF: true,
-         excludedNodeTypes: [`MediaItem`], // excludes creating pages for individual media items
          excludedRoutes: ['**/taxonomy/**', '**/category/**', '**/tag/**'],
          type: {
           __all: { 
