@@ -113,8 +113,6 @@ export const pageQuery = graphql`
                 gatsbyImage(
                   layout: FULL_WIDTH
                   width: 1200
-                  placeholder: BLURRED
-                  fadeIn: false
                 )
                 sourceUrl
                 altText
