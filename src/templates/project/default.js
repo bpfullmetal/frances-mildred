@@ -24,7 +24,6 @@ const ProjectSingle = ({ data }) => {
     const [clickedImageOrder, setClickedImageOrder] = React.useState(-1);
     const [imageBlockPositions, setImageBlockPositions] = React.useState([]);
     const [imageBlockSizes, setImageBlockSizes] = React.useState([]);
-    const [imageBlockDetails, setImageBlockDetails] = React.useState([])
 
     const nextProjectAfterEleRef = React.useRef();
     const imageMaskRef = React.useRef();
@@ -40,14 +39,7 @@ const ProjectSingle = ({ data }) => {
             return pos;
         });
 
-        setImageBlockPositions(randomPositions);
-
-        setImageBlockDetails(projectsSingle.projectImages.map((imageBlock, i) => {
-            return {
-                type: imageBlock.video ? 'video' : 'image',
-                isLoaded: false
-            }
-        }))
+        setImageBlockPositions(randomPositions)
 
         setImageBlockSizes(
             projectsSingle.projectImages.map((imageBlock, i) => {
@@ -313,37 +305,17 @@ const ProjectSingle = ({ data }) => {
                                                 {
                                                     block.video
                                                         ? (
-                                                            <div>
-                                                                {
-                                                                    (imageBlockDetails.length && imageBlockDetails[i].isLoaded)
-                                                                        ? null
-                                                                        : block.image
-                                                                            ? <GatsbyImage
-                                                                                className="w-full h-full object-cover"
-                                                                                image={getImage(block.image.node.gatsbyImage)}
-                                                                                alt={
-                                                                                    block.image.node.altText ||
-                                                                                    block.description ||
-                                                                                    `${title} image ${i + 1}`
-                                                                                }
-                                                                            />
-                                                                            : null
-                                                                }
-                                                                <video
-                                                                    autoPlay
-                                                                    muted
-                                                                    loop
-                                                                    onLoadedData={() => setImageBlockDetails(imageBlockDetails.map((item, index) =>
-                                                                        index === i ? { ...item, isLoaded: true } : item
-                                                                    ))}
-                                                                    className="w-full h-full"
-                                                                >
-                                                                    <source
-                                                                        src={block.video.node.mediaItemUrl}
-                                                                        type="video/mp4"
-                                                                    />
-                                                                </video>
-                                                            </div>
+                                                            <video
+                                                                autoPlay
+                                                                muted
+                                                                loop
+                                                                className="w-full h-full"
+                                                            >
+                                                                <source
+                                                                    src={block.video.node.mediaItemUrl}
+                                                                    type="video/mp4"
+                                                                />
+                                                            </video>
                                                         )
                                                         : <GatsbyImage
                                                             className="w-full h-full object-cover"
