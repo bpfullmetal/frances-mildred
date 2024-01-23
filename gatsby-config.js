@@ -16,13 +16,13 @@ module.exports = {
           hardCacheMediaFiles: false
         },
         verbose: true,
-        type: {
-          MediaItem: {
-            localFile: {
-              excludeByMimeTypes: [`video/mp4`, 'image/jpg', 'image/png', 'image/jpeg']
-            }
-          }
-        }
+        // type: {
+        //   MediaItem: {
+        //     localFile: {
+        //       excludeByMimeTypes: [`video/mp4`, 'image/jpg', 'image/png', 'image/jpeg']
+        //     }
+        //   }
+        // }
       }
     }, 
     {
