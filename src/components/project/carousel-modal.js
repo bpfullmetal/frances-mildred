@@ -21,7 +21,7 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
 
   return (
     <div
-      className="project-carousel-modal fixed w-screen h-screen top-0 bg-[#000000E6] z-20"
+      className="project-carousel-modal fixed w-screen h-screen top-0 bg-[#FFFFFFE6] z-20"
       aria-modal={true}
     >
       <div
@@ -95,9 +95,6 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
                           style={{ width, height, objectFit: 'cover' }}
                         />
                     }
-                    <div className="description-reveal text-taupe text-sm_extra leading-[24px] mt-4">
-                      {block.description && block.description}
-                    </div>
                   </div>
                 )
               }
