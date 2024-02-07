@@ -52,7 +52,7 @@ header li:hover .home-logo {
   height: 90px;
 }
 
-header li:not(:first-child)::before,
+header li:not(.icon-instagram):not(:first-child)::before,
 footer li::before {
   content: '';
   position: absolute;

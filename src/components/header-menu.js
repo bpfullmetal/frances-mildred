@@ -11,6 +11,7 @@ import LetterM from '../assets/js/icons/letter-m';
 import LetterN from '../assets/js/icons/letter-n';
 import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
+import IconInstagram from '../assets/images/icon-instagram.svg';
 
 const HeaderMenu = ({ currentURI }) => {
   const [isOpened, setIsOpened] = React.useState(false);
@@ -53,6 +54,14 @@ const HeaderMenu = ({ currentURI }) => {
                   </a>
                 </li>
               ))}
+              <li className="text-black text-sm py-3 icon-instagram">
+                <a
+                  href="https://www.instagram.com/frances.mildred/"
+                  target="_blank"
+                >
+                  <img src={IconInstagram} alt="instagram" />
+                </a>
+              </li>
             </ul>
             <div className="flex justify-center sm:hidden py-1">
               <div
