@@ -286,19 +286,19 @@ footer .logo svg {
 }
 
 .project-carousel-modal .slide-prev-block {
-  cursor: url('../assets/images/cursor-arrow-left.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-left.svg'), pointer;
 }
 
 .project-carousel-modal .slide-prev-block-opacity {
-  cursor: url('../assets/images/cursor-arrow-left-opacity.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-left-opacity.svg'), pointer;
 }
 
 .project-carousel-modal .slide-next-block {
-  cursor: url('../assets/images/cursor-arrow-right.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-right.svg'), pointer;
 }
 
 .project-carousel-modal .slide-next-block-opacity {
-  cursor: url('../assets/images/cursor-arrow-right-opacity.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-right-opacity.svg'), pointer;
 }
 
 .project-carousel-modal .swiper-wrapper {
