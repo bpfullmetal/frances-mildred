@@ -116,7 +116,7 @@ footer .logo svg {
 /* Home - Our latest work */
 .project-carousel,
 .project-carousel .swiper-slide-image img {
-  cursor: url('../assets/images/cursor-hover-latest-works.svg'), pointer;
+  cursor: url('../assets/images/cursor-hover-latest-works.svg'), 25 15, auto;
 }
 
 .project-carousel .swiper-slide {
