@@ -59,14 +59,9 @@ const ProjectsCarousel = (props) => {
                 )}
               </div>
               <div className="flex flex-col flex-wrap items-start text-dark_green">
-                <p className="text-lg leading-[20px] tracking-[0.4px] mt-2 mr-3 sm:text-lg sm:tracking-[0.48px] sm:mr-7">
+                <a className="text-lg leading-[20px] tracking-[0.4px] mt-2 mr-3 sm:text-lg sm:tracking-[0.48px] sm:mr-7 hover:underline" href={project.link}>
                   {project.title}
-                </p>
-                <p className="text-base leading-[16px] tracking-[0.32px] mt-1 uppercase animate-underline sm:text-sm sm:leading-[20px] sm:tracking-[0.42px]">
-                  <a className="whitespace-nowrap" href={project.link}>
-                    View project
-                  </a>
-                </p>
+                </a>
               </div>
             </div>
           </SwiperSlide>

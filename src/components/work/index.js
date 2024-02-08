@@ -7,14 +7,8 @@ import Helper from '../../helper';
 const ProjectBlockDetail = ({ project }) => {
   return (
     <div className="flex flex-col items-start mt-5 space-y-3 lg:flex-row lg:items-center lg:space-x-7 lg:space-y-0">
-      <p className="text-dark_green text-xl leading-none tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px]">
+      <a className="text-dark_green text-xl leading-none tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px] hover:underline" href={project.link}>
         {project.title}
-      </p>
-      <a
-        className="text-dark_green text-base leading-none tracking-[0.32px] uppercase whitespace-nowrap animate-underline sm:text-[21px] sm:tracking-[0.42px]"
-        href={project.link}
-      >
-        View Project
       </a>
     </div>
   );
