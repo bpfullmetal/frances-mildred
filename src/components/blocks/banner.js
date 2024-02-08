@@ -41,12 +41,12 @@ const BlockLogoBanner = ({ data }) => {
   };
 
   const handleVideoOnLoad = () => {
-    console.log('video loaded')
-    setIsVideoLoaded(true)
-  }
+    console.log('video loaded');
+    setIsVideoLoaded(true);
+  };
 
   if (!data.backgroundImage && !data.backgroundVideo) return <></>;
-  
+
   return (
     <section
       className="relative h-home_banner home-banner"
@@ -54,17 +54,13 @@ const BlockLogoBanner = ({ data }) => {
     >
       {data.backgroundVideo ? (
         <div className="absolute w-full h-full object-cover">
-          {
-            isVideoLoaded
-            ? null
-            : data.backgroundImage.node 
-              ? <GatsbyImage
-                  className="w-full h-full object-cover absolute"
-                  image={getImage(data.backgroundImage.node.gatsbyImage)}
-                  alt={data.backgroundImage.node.altText}
-                />
-              : null
-          }
+          {isVideoLoaded ? null : data.backgroundImage.node ? (
+            <GatsbyImage
+              className="w-full h-full object-cover absolute"
+              image={getImage(data.backgroundImage.node.gatsbyImage)}
+              alt={data.backgroundImage.node.altText}
+            />
+          ) : null}
           <video
             autoPlay
             muted
@@ -72,7 +68,7 @@ const BlockLogoBanner = ({ data }) => {
             onLoadedMetadata={handleVideoOnLoad}
             onCanPlay={handleVideoOnLoad}
             onLoadedData={handleVideoOnLoad}
-            onError={e => console.error('video error', e)}
+            onError={(e) => console.error('video error', e)}
             className="absolute w-full h-full object-cover"
           >
             <source
@@ -81,37 +77,34 @@ const BlockLogoBanner = ({ data }) => {
             ></source>
           </video>
         </div>
-      ) : data.backgroundImage.node 
-          ? (
-            <GatsbyImage
-              className="w-full h-full object-cover absolute"
-              image={getImage(data.backgroundImage.node.gatsbyImage)}
-              alt={data.backgroundImage.node.altText}
-            />
-          )
-          : null
-      }
+      ) : data.backgroundImage.node ? (
+        <GatsbyImage
+          className="w-full h-full object-cover absolute"
+          image={getImage(data.backgroundImage.node.gatsbyImage)}
+          alt={data.backgroundImage.node.altText}
+        />
+      ) : null}
       <div className="relative h-full flex flex-col items-center justify-center uppercase">
-        <div className="flex justify-between w-[400px]">
-          <div className="flex justify-center w-8 h-9">
+        <div className="flex justify-between space-x-6 sm:space-x-8">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterF />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterR />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterA />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterN />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterC />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterE />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterS />
           </div>
         </div>
@@ -120,26 +113,26 @@ const BlockLogoBanner = ({ data }) => {
             startAnimate ? 'h-1/2' : 'h-10'
           }`}
         ></div>
-        <div className="flex justify-between w-[400px]">
-          <div className="flex justify-center w-8 h-9">
+        <div className="flex justify-between space-x-6 sm:space-x-8">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterM />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterI />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterL />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterD />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterR />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterE />
           </div>
-          <div className="flex justify-center w-8 h-9">
+          <div className="letter flex justify-center w-8 h-[30px] sm:h-9">
             <LetterD />
           </div>
         </div>

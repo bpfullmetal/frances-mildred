@@ -52,7 +52,7 @@ header li:hover .home-logo {
   height: 90px;
 }
 
-header li:not(:first-child)::before,
+header li:not(.icon-instagram):not(:first-child)::before,
 footer li::before {
   content: '';
   position: absolute;
@@ -79,9 +79,17 @@ footer .logo svg {
   height: 100%;
 }
 
+/* Homepage Banner */
 .home-banner svg {
   width: auto;
   height: 100%;
+}
+
+@media (min-width: 1920px) {
+  .home-banner .letter {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
 }
 
 /* SignUp Email Form */
@@ -281,24 +289,24 @@ footer .logo svg {
 
 .project-carousel-modal .swiper {
   position: relative;
-  width: 80vw;
-  height: 80vh;
+  width: 90vw;
+  height: 90vh;
 }
 
 .project-carousel-modal .slide-prev-block {
-  cursor: url('../assets/images/cursor-arrow-left.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-left.svg'), pointer;
 }
 
 .project-carousel-modal .slide-prev-block-opacity {
-  cursor: url('../assets/images/cursor-arrow-left-opacity.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-left-opacity.svg'), pointer;
 }
 
 .project-carousel-modal .slide-next-block {
-  cursor: url('../assets/images/cursor-arrow-right.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-right.svg'), pointer;
 }
 
 .project-carousel-modal .slide-next-block-opacity {
-  cursor: url('../assets/images/cursor-arrow-right-opacity.png'), pointer;
+  cursor: url('../assets/images/cursor-arrow-right-opacity.svg'), pointer;
 }
 
 .project-carousel-modal .swiper-wrapper {

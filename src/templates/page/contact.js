@@ -101,7 +101,7 @@ const ContactPage = ({ data }) => {
               )}
             </div>
             <div className="flex flex-1 flex-col items-end">
-              <img className="w-[68px]" src={LogoIconGif} alt="logo gif" />
+              <img className="w-[100px]" src={LogoIconGif} alt="logo gif" />
             </div>
           </div>
 
