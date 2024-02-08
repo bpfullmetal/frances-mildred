@@ -6,7 +6,7 @@ import FooterSection from './footer-section';
 const PageLayout = ({ className, children, options = {} }) => {
   return (
     <main className={className}>
-      {!options.hiddenHeader && <HeaderMenu />}
+      {!options.hiddenHeader && <HeaderMenu options={options} />}
 
       {children}
 

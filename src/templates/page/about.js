@@ -8,7 +8,7 @@ const AboutPage = ({ data }) => {
   const title = wpPage.title;
   const content = wpPage.content;
 
-  return <AboutPageContent content={wpPage} title={title} />;
+  return <AboutPageContent content={wpPage} title={title} currentURI={wpPage.uri} />;
 };
 
 export default AboutPage;
@@ -20,6 +20,7 @@ export const Head = ({ data }) => (
 export const pageQuery = graphql`
   query ($id: String!) {
     wpPage(id: { eq: $id }) {
+      uri
       content
       contentType {
         node {

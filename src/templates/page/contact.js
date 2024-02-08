@@ -22,7 +22,7 @@ const ContactPage = ({ data }) => {
   
   return (
     <main className="h-screen flex flex-col">
-      <HeaderMenu currentURI={wpPage.uri} />
+      <HeaderMenu options={ { currentURI: wpPage.uri } } />
 
       <footer className="relative flex-1">
       {

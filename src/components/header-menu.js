@@ -13,8 +13,29 @@ import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
 import IconInstagram from '../assets/images/icon-instagram.svg';
 
-const HeaderMenu = ({ currentURI }) => {
+const HeaderMenu = ({ options }) => {
+  console.log(options)
   const [isOpened, setIsOpened] = React.useState(false);
+  const [scrollPercentage, setScrollPercentage] = React.useState(0);
+
+  React.useEffect(() => {
+    if ( options?.scrollIndicator ) {
+      const updateScrollPercentage = () => {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.body.clientHeight;
+        const totalScroll = documentHeight - windowHeight;
+        const percentage = (scrollPosition / totalScroll) * 100;
+        setScrollPercentage(percentage);
+      };
+  
+      window.addEventListener('scroll', updateScrollPercentage);
+  
+      return () => {
+        window.removeEventListener('scroll', updateScrollPercentage);
+      };
+    }
+  }, []);
 
   return (
     <StaticQuery
@@ -39,117 +60,126 @@ const HeaderMenu = ({ currentURI }) => {
         }
 
         // Rest of your component logic...
-
+        console.log(menuItems)
         return (
-          <header className="sticky top-0 bg-white px-12 z-20">
-            <ul className="hidden justify-between sm:flex">
-              {menuItems.map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-center text-black text-sm py-3"
-                >
-                  <a href={item.label === 'Home' ? '/' : item.url}>
-                    {item.label === 'Home' ? (
-                      <div className="home-logo"></div>
-                    ) : (
-                      <span>{item.label}</span>
-                    )}
+          <div className="sticky top-0 z-20">
+            <header className="bg-white px-12">
+              <ul className="hidden justify-between sm:flex">
+                {menuItems.map((item, i) => (
+                  <li
+                    key={i}
+                    className={`flex items-center text-black text-sm py-3${ options?.currentURI === item.url ? ' is-active' : '' }`}
+                  >
+                    <a href={item.label === 'Home' ? '/' : item.url}>
+                      {item.label === 'Home' ? (
+                        <div className="home-logo"></div>
+                      ) : (
+                        <span>{item.label}</span>
+                      )}
+                    </a>
+                  </li>
+                ))}
+                <li className="text-black text-sm py-3 icon-instagram">
+                  <a
+                    href="https://www.instagram.com/frances.mildred/"
+                    target="_blank"
+                  >
+                    <img src={IconInstagram} alt="instagram" />
                   </a>
                 </li>
-              ))}
-              <li className="text-black text-sm py-3 icon-instagram">
-                <a
-                  href="https://www.instagram.com/frances.mildred/"
-                  target="_blank"
+              </ul>
+              <div className="flex justify-center sm:hidden py-1">
+                <div
+                  className="text-black text-sm text-center leading-[40px] tracking-[0.42px]"
+                  onClick={() => setIsOpened(true)}
                 >
-                  <img src={IconInstagram} alt="instagram" />
-                </a>
-              </li>
-            </ul>
-            <div className="flex justify-center sm:hidden py-1">
-              <div
-                className="text-black text-sm text-center leading-[40px] tracking-[0.42px]"
-                onClick={() => setIsOpened(true)}
-              >
-                Menu
-              </div>
-              <div
-                className={`${
-                  isOpened ? 'translate-0' : '-translate-x-full'
-                } fixed top-0 w-screen h-screen `}
-              >
-                <div className="h-full flex flex-col items-center bg-white">
-                  <div
-                    className="w-full flex justify-center py-5"
-                    onClick={() => setIsOpened(false)}
-                  >
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                      <path d="M1 1L12 12" stroke="black" />
-                      <path d="M12 1L1 12" stroke="black" />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col mt-10">
-                    {menuItems.map((item, i) => (
-                      <div
-                        key={i}
-                        className="text-black leading-[40px] tracking-[0.48px] text-center"
-                      >
-                        <a href={item.url}>{item.label}</a>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="w-full flex flex-col logo px-5 py-8 mt-auto space-y-6">
-                    <div className="flex justify-between">
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterF fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterR fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterA fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterN fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterC fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterE fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterS fill="black" />
-                      </div>
+                  Menu
+                </div>
+                <div
+                  className={`${
+                    isOpened ? 'translate-0' : '-translate-x-full'
+                  } fixed top-0 w-screen h-screen `}
+                >
+                  <div className="h-full flex flex-col items-center bg-white">
+                    <div
+                      className="w-full flex justify-center py-5"
+                      onClick={() => setIsOpened(false)}
+                    >
+                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                        <path d="M1 1L12 12" stroke="black" />
+                        <path d="M12 1L1 12" stroke="black" />
+                      </svg>
                     </div>
-                    <div className="flex justify-between">
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterM fill="black" />
+                    <div className="flex flex-col mt-10">
+                      {menuItems.map((item, i) => (
+                        <div
+                          key={i}
+                          className="text-black leading-[40px] tracking-[0.48px] text-center"
+                        >
+                          <a href={item.url}>{item.label}</a>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="w-full flex flex-col logo px-5 py-8 mt-auto space-y-6">
+                      <div className="flex justify-between">
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterF fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterR fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterA fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterN fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterC fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterE fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterS fill="black" />
+                        </div>
                       </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterI fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterL fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterD fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterR fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterE fill="black" />
-                      </div>
-                      <div className="flex justify-center w-8 h-[30px]">
-                        <LetterD fill="black" />
+                      <div className="flex justify-between">
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterM fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterI fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterL fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterD fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterR fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterE fill="black" />
+                        </div>
+                        <div className="flex justify-center w-8 h-[30px]">
+                          <LetterD fill="black" />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </header>
+            </header>
+            {
+              options?.scrollIndicator && (
+                <div className="scroll-progress-bar-container bg-dark_blue">
+                  <div className="scroll-progress-bar" style={{ width: `${scrollPercentage}%` }} />
+                </div>
+              )
+            }
+          </div>
         );
       }}
     />
