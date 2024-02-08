@@ -79,9 +79,17 @@ footer .logo svg {
   height: 100%;
 }
 
+/* Homepage Banner */
 .home-banner svg {
   width: auto;
   height: 100%;
+}
+
+@media (min-width: 1920px) {
+  .home-banner .letter {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
 }
 
 /* SignUp Email Form */
