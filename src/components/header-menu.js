@@ -44,7 +44,10 @@ const HeaderMenu = ({ currentURI }) => {
           <header className="sticky top-0 bg-white px-12 z-20">
             <ul className="hidden justify-between sm:flex">
               {menuItems.map((item, i) => (
-                <li key={i} className="text-black text-sm py-3">
+                <li
+                  key={i}
+                  className="flex items-center text-black text-sm py-3"
+                >
                   <a href={item.label === 'Home' ? '/' : item.url}>
                     {item.label === 'Home' ? (
                       <div className="home-logo"></div>
