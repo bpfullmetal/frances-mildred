@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import CloseIcon from '../../assets/images/close.svg';
 
 const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
   React.useEffect(() => {
@@ -25,11 +26,10 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
       aria-modal={true}
     >
       <div
-        className="absolute w-8 h-8 flex items-center justify-center top-6 right-6 rotate-45 cursor-pointer"
+        className="absolute flex items-center justify-center top-6 right-6 cursor-pointer z-[99]"
         onClick={onClose}
       >
-        <div className="absolute w-8 h-0.5 bg-black"></div>
-        <div className="absolute w-0.5 h-8 bg-black"></div>
+        <img src={CloseIcon} alt="close" />
       </div>
 
       <Swiper initialSlide={initialSlide} slidesPerView={1}>
