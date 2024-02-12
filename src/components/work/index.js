@@ -7,7 +7,10 @@ import Helper from '../../helper';
 const ProjectBlockDetail = ({ project }) => {
   return (
     <div className="flex flex-col items-start mt-5 space-y-3 lg:flex-row lg:items-center lg:space-x-7 lg:space-y-0">
-      <a className="text-dark_green text-xl leading-none tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px] hover:underline" href={project.link}>
+      <a
+        className="text-dark_green text-xl leading-none tracking-[0.4px] sm:text-2xl sm:tracking-[0.48px] hover:underline"
+        href={project.link}
+      >
         {project.title}
       </a>
     </div>
@@ -17,7 +20,7 @@ const ProjectBlockDetail = ({ project }) => {
 const WorkPageContent = () => {
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const postsPerPage = 10;
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(2);
   const [allProjects, setAllProjects] = React.useState([]);
   const [workProjectRefs, setWorkProjectRefs] = React.useState([]);
   const moreProjectsRef = React.useRef();
@@ -52,7 +55,6 @@ const WorkPageContent = () => {
 
   React.useEffect(() => {
     // Concatenate new posts to the existing list
-    console.log('setting all projects');
     setAllProjects((prevProjects) => [...prevProjects, ...allWpProject.edges]);
   }, [allWpProject.edges]);
 
@@ -133,9 +135,12 @@ const WorkPageContent = () => {
         <section className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
           {projects.map((project, i) => {
             if (i === 0) return <React.Fragment key={i}></React.Fragment>;
+            const isPreload = i / postsPerPage > currentPage - 1;
             return (
               <div
-                className={`work-project-block animate-reveal w-full max-w-[65%] h-work_project py-4 mb-40 ${
+                className={`${
+                  isPreload ? '!hidden' : ''
+                } work-project-block animate-reveal w-full max-w-[65%] h-work_project py-4 mb-40 ${
                   i % 2 ? 'ml-auto' : ''
                 } sm:mb-32`}
                 key={`work-project-${i}`}

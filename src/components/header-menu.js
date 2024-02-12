@@ -14,12 +14,11 @@ import LetterS from '../assets/js/icons/letter-s';
 import IconInstagram from '../assets/images/icon-instagram.svg';
 
 const HeaderMenu = ({ options }) => {
-  console.log(options)
   const [isOpened, setIsOpened] = React.useState(false);
   const [scrollPercentage, setScrollPercentage] = React.useState(0);
 
   React.useEffect(() => {
-    if ( options?.scrollIndicator ) {
+    if (options?.scrollIndicator) {
       const updateScrollPercentage = () => {
         const scrollPosition = window.scrollY;
         const windowHeight = window.innerHeight;
@@ -28,9 +27,9 @@ const HeaderMenu = ({ options }) => {
         const percentage = (scrollPosition / totalScroll) * 100;
         setScrollPercentage(percentage);
       };
-  
+
       window.addEventListener('scroll', updateScrollPercentage);
-  
+
       return () => {
         window.removeEventListener('scroll', updateScrollPercentage);
       };
@@ -53,14 +52,11 @@ const HeaderMenu = ({ options }) => {
       `}
       render={(data) => {
         const menuItems = data?.wpMenu?.menuItems?.nodes || [];
-        // console.log('menuItems: ', menuItems);
-
         if (menuItems.length < 1) {
           return <></>;
         }
 
         // Rest of your component logic...
-        console.log(menuItems)
         return (
           <div className="sticky top-0 z-20">
             <header className="bg-white px-12">
@@ -68,7 +64,9 @@ const HeaderMenu = ({ options }) => {
                 {menuItems.map((item, i) => (
                   <li
                     key={i}
-                    className={`flex items-center text-black text-sm py-3${ options?.currentURI === item.url ? ' is-active' : '' }`}
+                    className={`flex items-center text-black text-sm py-3${
+                      options?.currentURI === item.url ? ' is-active' : ''
+                    }`}
                   >
                     <a href={item.label === 'Home' ? '/' : item.url}>
                       {item.label === 'Home' ? (
@@ -105,7 +103,12 @@ const HeaderMenu = ({ options }) => {
                       className="w-full flex justify-center py-5"
                       onClick={() => setIsOpened(false)}
                     >
-                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 13 13"
+                        fill="none"
+                      >
                         <path d="M1 1L12 12" stroke="black" />
                         <path d="M12 1L1 12" stroke="black" />
                       </svg>
@@ -172,13 +175,14 @@ const HeaderMenu = ({ options }) => {
                 </div>
               </div>
             </header>
-            {
-              options?.scrollIndicator && (
-                <div className="scroll-progress-bar-container bg-dark_blue">
-                  <div className="scroll-progress-bar" style={{ width: `${scrollPercentage}%` }} />
-                </div>
-              )
-            }
+            {options?.scrollIndicator && (
+              <div className="scroll-progress-bar-container bg-dark_blue">
+                <div
+                  className="scroll-progress-bar"
+                  style={{ width: `${scrollPercentage}%` }}
+                />
+              </div>
+            )}
           </div>
         );
       }}
