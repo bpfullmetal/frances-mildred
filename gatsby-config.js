@@ -25,7 +25,6 @@ module.exports = {
         // }
       }
     }, 
-    `gatsby-theme-wordpress-gutenberg`,
     {
       resolve: 'gatsby-theme-headless-wordpress',
       options: {
