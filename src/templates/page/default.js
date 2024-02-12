@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
-import BlockLogoBanner from '../../gatsby-theme-wordpress-gutenberg/components/blocks/banner';
-import BlockFeaturedProject from '../../gatsby-theme-wordpress-gutenberg/components/blocks/featured-project';
-import BlockFeaturedContent from '../../gatsby-theme-wordpress-gutenberg/components/blocks/featured-content';
-import BlockProjectsCarousel from '../../gatsby-theme-wordpress-gutenberg/components/blocks/projects-carousel';
+import BlockLogoBanner from '../../components/blocks/banner';
+import BlockFeaturedProject from '../../components/blocks/featured-project';
+import BlockFeaturedContent from '../../components/blocks/featured-content';
+import BlockProjectsCarousel from '../../components/blocks/projects-carousel';
 import FooterSection from '../../components/footer-section';
 import HeaderMenu from '../../components/header-menu';
 import PageLayout from '../../components/page-layout';
