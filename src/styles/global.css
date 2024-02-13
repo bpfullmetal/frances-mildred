@@ -110,6 +110,20 @@ footer .logo svg {
   }
 }
 
+@media (min-width: 2200px) {
+  .home-banner .letter {
+    width: 4.5rem !important;
+    height: 4rem !important;
+  }
+}
+
+@media (min-width: 2400px) {
+  .home-banner .letter {
+    width: 6rem !important;
+    height: 5rem !important;
+  }
+}
+
 /* SignUp Email Form */
 .signup-email {
   display: flex;
