@@ -83,11 +83,11 @@ const ProjectSingle = ({ data }) => {
         entry.target.classList.add('reveal');
     };
 
-    // React.useEffect(() => {
-    //     window.addEventListener('scroll', handleScroll, { passive: true });
-    //     return () => window.removeEventListener('scroll', handleScroll);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    React.useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     React.useEffect(() => {
         const handleResize = () => {
@@ -105,41 +105,41 @@ const ProjectSingle = ({ data }) => {
         };
     }, [])
 
-    // const handleScroll = () => {
-    //     const imageMaskEle = imageMaskRef.current;
-    //     const nextProjectAfterEle = nextProjectAfterEleRef.current;
+    const handleScroll = () => {
+        const imageMaskEle = imageMaskRef.current;
+        const nextProjectAfterEle = nextProjectAfterEleRef.current;
 
-    //     if (imageMaskEle && nextProjectAfterEle) {
-    //         const initialMaskWidth = 660;
-    //         const initialMaskHeight = 440;
-    //         let maskScale = 1;
-    //         let translateX = (window.innerWidth - initialMaskWidth) / 2;
-    //         let translateY = (window.innerHeight - initialMaskHeight) / 2;
-    //         const scrollMovePos =
-    //             window.innerHeight * 1.5 -
-    //             nextProjectAfterEle.getBoundingClientRect().top;
+        if (imageMaskEle && nextProjectAfterEle) {
+            const initialMaskWidth = 660;
+            const initialMaskHeight = 440;
+            let maskScale = 1;
+            let translateX = (window.innerWidth - initialMaskWidth) / 2;
+            let translateY = (window.innerHeight - initialMaskHeight) / 2;
+            const scrollMovePos =
+                window.innerHeight * 1.5 -
+                nextProjectAfterEle.getBoundingClientRect().top;
 
-    //         if (scrollMovePos > 0 && scrollMovePos < window.innerHeight * 1.5) {
-    //             maskScale =
-    //                 1 +
-    //                 ((Math.floor(window.innerWidth / initialMaskWidth) * scrollMovePos) /
-    //                     window.innerHeight) *
-    //                 2;
-    //             if (maskScale > 3) {
-    //                 maskScale = 3;
-    //             }
-    //             translateX =
-    //                 ((window.innerWidth - initialMaskWidth * maskScale) / 2 / maskScale) *
-    //                 1;
-    //             translateY =
-    //                 ((window.innerHeight - initialMaskHeight * maskScale) /
-    //                     2 /
-    //                     maskScale) *
-    //                 1;
-    //             imageMaskEle.style.transform = `scale(${maskScale}) translate(${translateX}px, ${translateY}px)`;
-    //         }
-    //     }
-    // };
+            if (scrollMovePos > 0 && scrollMovePos < window.innerHeight * 1.5) {
+                maskScale =
+                    1 +
+                    ((Math.floor(window.innerWidth / initialMaskWidth) * scrollMovePos) /
+                        window.innerHeight) *
+                    2;
+                if (maskScale > 3) {
+                    maskScale = 3;
+                }
+                translateX =
+                    ((window.innerWidth - initialMaskWidth * maskScale) / 2 / maskScale) *
+                    1;
+                translateY =
+                    ((window.innerHeight - initialMaskHeight * maskScale) /
+                        2 /
+                        maskScale) *
+                    1;
+                imageMaskEle.style.transform = `scale(${maskScale}) translate(${translateX}px, ${translateY}px)`;
+            }
+        }
+    };
 
     const size2Class = {
         small: 'w-full md:w-6/12',
@@ -194,7 +194,7 @@ const ProjectSingle = ({ data }) => {
     };
     
     return (
-        <PageLayout options={ { currentURI: '/work/', scrollIndicator: true } }>
+        <PageLayout options={ { currentURI: '/work/', scrollIndicator: 'project-images-container' } }>
             {featuredImage && (
                 <section className="h-home_banner">
                     <div className="relative w-full h-full flex items-center justify-center">
@@ -290,7 +290,7 @@ const ProjectSingle = ({ data }) => {
                         )
                     }
                     {projectsSingle.projectImages?.length && (
-                        <div className="flex flex-col mt-8 md:mt-20">
+                        <div id="project-images-container" className="flex flex-col mt-8 md:mt-20">
                             {projectsSingle.projectImages.map((block, i) => {
                                 const blockPos = imageBlockPositions[i];
                                 const blockSize = imageBlockSizes[i];
@@ -489,7 +489,7 @@ export const pageQuery = graphql`
             altText
             gatsbyImage(
               layout: FULL_WIDTH
-              width: 800
+              width: 1200
               placeholder: DOMINANT_COLOR
             )
           }

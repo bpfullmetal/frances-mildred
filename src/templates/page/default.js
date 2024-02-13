@@ -26,7 +26,7 @@ const PageDefault = ({ data }) => {
   console.log(shouldRenderHeader, 'render')
 
   return (
-    <PageLayout className="default-page" options={{ hiddenHeader: !shouldRenderHeader, currentURI: wpPage.uri } }>
+    <PageLayout className="default-page" options={ { hiddenHeader: !shouldRenderHeader, currentURI: wpPage.uri } }>
       {wpPage.editorBlocks && (
         <div>
           {wpPage.editorBlocks.filter(

@@ -6,16 +6,16 @@ module.exports = {
     title: `Frances Mildred`,
     siteUrl: `https://fullmetalworkshop.com`
   },
-  pathPrefix: "/clients/frances-mildred-staging/",
+  // pathPrefix: "/clients/frances-mildred-staging/",
   plugins: [
     {
       resolve: 'gatsby-source-wordpress',
       options: {
         url: "https://fullmetalworkshop.com/clients/francesmildred/graphql",
-        develop: {
-          hardCacheMediaFiles: false
-        },
-        verbose: true,
+        // develop: {
+        //   hardCacheMediaFiles: false
+        // },
+        // verbose: true,
         // type: {
         //   MediaItem: {
         //     localFile: {

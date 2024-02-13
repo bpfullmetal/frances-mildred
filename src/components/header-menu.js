@@ -22,9 +22,10 @@ const HeaderMenu = ({ options }) => {
       const updateScrollPercentage = () => {
         const scrollPosition = window.scrollY;
         const windowHeight = window.innerHeight;
-        const documentHeight = document.body.clientHeight;
-        const totalScroll = documentHeight - windowHeight;
-        const percentage = (scrollPosition / totalScroll) * 100;
+        const scrollContainerHeight = document.getElementById(options.scrollIndicator).clientHeight;
+        
+        // const totalScroll = scrollContainerHeight - windowHeight;
+        const percentage = (scrollPosition / scrollContainerHeight) * 100;
         setScrollPercentage(percentage);
       };
 
