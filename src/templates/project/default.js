@@ -363,6 +363,7 @@ const ProjectSingle = ({ data }) => {
                         {nextProject.nodes[0].featuredImage && (
                             <a href={nextProject.nodes[0].link} className={ !isMobile ? 'static' : 'relative w-full h-auto' }>
                                 <GatsbyImage
+                                    loading="eager"
                                     className={ !isMobile ? 'static' : 'relative w-full h-auto' }
                                     href={nextProject.nodes[0].link}
                                     image={getImage(
@@ -496,6 +497,8 @@ export const pageQuery = graphql`
               layout: FULL_WIDTH
               width: 1200
               placeholder: DOMINANT_COLOR
+              fit: COVER
+              cropFocus: CENTER
             )
           }
         }
