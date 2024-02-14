@@ -36,7 +36,7 @@ const WorkPageContent = () => {
                 node {
                   altText
                   gatsbyImage(
-                    layout: CONSTRAINED
+                    layout: FULL_WIDTH
                     width: 800
                     placeholder: BLURRED
                   )
@@ -108,7 +108,7 @@ const WorkPageContent = () => {
             data-ref-type="project"
             data-title={projects[0].node.title}
             ref={workProjectRefs[0]}
-            className="w-full max-w-main h-screen mx-auto mb-40 px-5 sm:mb-16 sm:px-12"
+            className="w-full h-screen mx-auto mb-40 px-5 sm:mb-16 sm:px-12"
           >
             {projects[0].node.featuredImage && (
               <a
@@ -132,7 +132,7 @@ const WorkPageContent = () => {
           </section>
         )}
 
-        <section className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
+        <section className="flex flex-col w-full max-w-wide mx-auto px-5 sm:px-12">
           {projects.map((project, i) => {
             if (i === 0) return <React.Fragment key={i}></React.Fragment>;
             const isPreload = i / postsPerPage > currentPage - 1;
@@ -140,7 +140,7 @@ const WorkPageContent = () => {
               <div
                 className={`${
                   isPreload ? '!hidden' : ''
-                } work-project-block animate-reveal w-full max-w-[65%] h-work_project py-4 mb-40 ${
+                } work-project-block animate-reveal w-full max-w-[65%] py-4 mb-40 ${
                   i % 2 ? 'ml-auto' : ''
                 } sm:mb-32`}
                 key={`work-project-${i}`}
@@ -151,7 +151,7 @@ const WorkPageContent = () => {
                 {project.node.featuredImage && (
                   <a className="w-full h-full" href={project.node.link}>
                     <GatsbyImage
-                      className="w-full h-full aspect-[5/7]"
+                      className="w-full h-full aspect-[3/2]"
                       href="/"
                       image={getImage(
                         project.node.featuredImage.node.gatsbyImage

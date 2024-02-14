@@ -20,6 +20,7 @@ module.exports = {
       },
       aspectRatio: {
         '5/7': '5 / 7',
+        '3/2': '3 / 2',
       },
       fontSize: {
         'text-sm_extra': '15px',
@@ -32,7 +33,8 @@ module.exports = {
         'work_project': 'calc(100vh - 100px)'
       },
       maxWidth: {
-        'main': '1440px'
+        'main': '1440px',
+        'wide': '1800px'
       },
       margin: {
         'our_latest_work': 'calc((100vw - 1440px) / 2)'
