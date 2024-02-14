@@ -10,6 +10,7 @@ const ProjectSingle = ({ data }) => {
     const { title, featuredImage, projectsSingle } = wpProject;
     const positions = ['right', 'left', 'center'];
 
+    const scrollContainerRef = React.useRef();
     const [isMobile, setIsMobile] = React.useState(false);
     const [revealProjectInfo, setRevealProjectInfo] = React.useState(false);
     const [projectRefs] = React.useState(
@@ -192,9 +193,13 @@ const ProjectSingle = ({ data }) => {
 
         return size;
     };
+
+    if ( nextProject.nodes.length ) {
+        console.log('next image', nextProject.nodes[0].featuredImage)
+    }
     
     return (
-        <PageLayout options={ { currentURI: '/work/', scrollIndicator: 'project-images-container' } }>
+        <PageLayout options={ { currentURI: '/work/', scrollIndicator: scrollContainerRef } }>
             {featuredImage && (
                 <section className="h-home_banner">
                     <div className="relative w-full h-full flex items-center justify-center">
@@ -290,7 +295,7 @@ const ProjectSingle = ({ data }) => {
                         )
                     }
                     {projectsSingle.projectImages?.length && (
-                        <div id="project-images-container" className="flex flex-col mt-8 md:mt-20">
+                        <div id="project-images-container" ref={scrollContainerRef} className="flex flex-col mt-8 md:mt-20">
                             {projectsSingle.projectImages.map((block, i) => {
                                 const blockPos = imageBlockPositions[i];
                                 const blockSize = imageBlockSizes[i];
