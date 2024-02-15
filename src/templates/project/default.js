@@ -364,7 +364,7 @@ const ProjectSingle = ({ data }) => {
                             <a href={nextProject.nodes[0].link} className={ !isMobile ? 'static' : 'relative w-full h-auto' }>
                                 <GatsbyImage
                                     loading="eager"
-                                    className={ !isMobile ? 'static' : 'relative w-full h-auto' }
+                                    className={ !isMobile ? '!static' : 'relative w-full h-auto' }
                                     href={nextProject.nodes[0].link}
                                     image={getImage(
                                         nextProject.nodes[0].featuredImage.node.gatsbyImage
