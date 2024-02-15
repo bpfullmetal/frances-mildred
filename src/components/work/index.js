@@ -108,7 +108,7 @@ const WorkPageContent = () => {
             data-ref-type="project"
             data-title={projects[0].node.title}
             ref={workProjectRefs[0]}
-            className="w-full h-screen mx-auto mb-40 px-5 sm:mb-16 sm:px-12"
+            className="w-screen h-screen mx-auto mb-40 sm:mb-16"
           >
             {projects[0].node.featuredImage && (
               <a
@@ -128,7 +128,9 @@ const WorkPageContent = () => {
                 />
               </a>
             )}
-            <ProjectBlockDetail project={projects[0].node} />
+            <div className="px-5 sm:px-8">
+              <ProjectBlockDetail project={projects[0].node} />
+            </div>
           </section>
         )}
 
