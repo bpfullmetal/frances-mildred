@@ -287,6 +287,10 @@ footer .logo svg {
   border-radius: 0;
 }
 
+.gatsby-image-wrapper.static {
+  position: static !important;
+}
+
 .work-project .project-block.reveal .description-reveal {
   opacity: 1;
   transform: translateY(0);
