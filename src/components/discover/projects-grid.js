@@ -62,7 +62,7 @@ const DesignProjectsGrid = ({ category, projects }) => {
             </a>
           )}
           <p className="text-xl leading-none tracking-[0.48px] mb-1 sm:text-lg">
-            <a className="hover:underline" href={project.node.link}>{project.node.title}</a>
+            <a href={project.node.link}>{project.node.title}</a>
           </p>
         </div>
       ))}
