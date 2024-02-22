@@ -108,7 +108,7 @@ const WorkPageContent = () => {
             data-ref-type="project"
             data-title={projects[0].node.title}
             ref={workProjectRefs[0]}
-            className="w-screen h-screen mx-auto mb-40 sm:mb-16"
+            className="w-screen h-screen mx-auto mb-40 sm:mb-16 hover-animate"
           >
             {projects[0].node.featuredImage && (
               <a
@@ -144,7 +144,7 @@ const WorkPageContent = () => {
                   isPreload ? '!hidden' : ''
                 } work-project-block animate-reveal w-full max-w-[65%] py-4 mb-40 ${
                   i % 2 ? 'ml-auto' : ''
-                } sm:mb-32`}
+                } sm:mb-32 hover-animate`}
                 key={`work-project-${i}`}
                 data-ref-type="project"
                 data-title={project.node.title}

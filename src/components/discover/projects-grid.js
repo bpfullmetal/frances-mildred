@@ -45,7 +45,7 @@ const DesignProjectsGrid = ({ category, projects }) => {
     <div className="projects-grid">
       {Array.from(projects).map((project, i) => (
         <div
-          className="projects-grid__item flex flex-col"
+          className="projects-grid__item flex flex-col hover-animate"
           key={`${category}-${i}`}
           ref={projectRefs[i]}
         >

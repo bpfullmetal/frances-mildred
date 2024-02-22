@@ -291,6 +291,19 @@ footer .logo svg {
   position: static !important;
 }
 
+.hover-animate:hover {
+  overflow: hidden;
+}
+
+.hover-animate .gatsby-image-wrapper img {
+  transform-origin: center;
+  transition: transform 1s ease-in;
+}
+
+.hover-animate:hover .gatsby-image-wrapper img {
+  transform: scale(1.1);
+}
+
 .work-project .project-block.reveal .description-reveal {
   opacity: 1;
   transform: translateY(0);

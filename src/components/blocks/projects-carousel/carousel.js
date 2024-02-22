@@ -44,7 +44,7 @@ const ProjectsCarousel = (props) => {
       <Swiper slidesPerView={'auto'} spaceBetween={4}>
         {slides.map((project, i) => (
           <SwiperSlide key={project.id}>
-            <div className="flex flex-col px-2 sm:px-0.5">
+            <div className="flex flex-col px-2 sm:px-0.5 hover-animate">
               <div
                 ref={carouselSlideRefs[i]}
                 className="swiper-slide-image bg-[#f8f8f8] rounded aspect-[5/7]"

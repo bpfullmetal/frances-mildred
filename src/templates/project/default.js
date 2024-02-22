@@ -202,7 +202,7 @@ const ProjectSingle = ({ data }) => {
         <PageLayout options={ { currentURI: '/work/', scrollIndicator: scrollContainerRef } }>
             {featuredImage && (
                 <section className="h-home_banner">
-                    <div className="relative w-full h-full flex items-center justify-center">
+                    <div className="relative w-full h-full flex items-center justify-center hover-animate">
                         <GatsbyImage
                             className="w-full h-full object-cover rounded-none"
                             image={getImage(featuredImage.node.gatsbyImage)}
@@ -312,7 +312,7 @@ const ProjectSingle = ({ data }) => {
                                         </div>
                                         {(block.image || block.video) && (
                                             <div
-                                                className={`image-reveal ${size2Class[blockSize]} flex`}
+                                                className={`image-reveal ${size2Class[blockSize]} flex hover-animate`}
                                                 onClick={() => !isMobile ? setClickedImageOrder(i) : null}
                                             >
                                                 {
