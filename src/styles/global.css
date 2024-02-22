@@ -297,7 +297,7 @@ footer .logo svg {
 }
 
 .work-project .image-reveal {
-  cursor: url('../assets/images/cursor-hover-plus.svg') 20 20, pointer;
+  cursor: url('../assets/images/cursor-hover-plus.png') 10 10, pointer;
 }
 
 .next-project img {
@@ -331,22 +331,6 @@ footer .logo svg {
   position: relative;
   width: 98vw;
   height: 98vh;
-}
-
-.project-carousel-modal .slide-prev-block {
-  cursor: url('../assets/images/cursor-arrow-left.svg') 20 20, pointer;
-}
-
-.project-carousel-modal .slide-prev-block-opacity {
-  cursor: url('../assets/images/cursor-arrow-left-opacity.svg') 20 20, pointer;
-}
-
-.project-carousel-modal .slide-next-block {
-  cursor: url('../assets/images/cursor-arrow-right.svg') 20 20, pointer;
-}
-
-.project-carousel-modal .slide-next-block-opacity {
-  cursor: url('../assets/images/cursor-arrow-right-opacity.svg') 20 20, pointer;
 }
 
 .project-carousel-modal .swiper-wrapper {
