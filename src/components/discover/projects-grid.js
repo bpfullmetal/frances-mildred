@@ -45,13 +45,14 @@ const DesignProjectsGrid = ({ category, projects }) => {
     <div className="projects-grid">
       {Array.from(projects).map((project, i) => (
         <div
-          className="projects-grid__item flex flex-col"
+          className="projects-grid__item flex flex-col hover-animate"
           key={`${category}-${i}`}
           ref={projectRefs[i]}
         >
           {project.node.featuredImage && (
             <a className="mb-4" href={project.node.link}>
               <GatsbyImage
+                className="rounded"
                 image={getImage(project.node.featuredImage.node.gatsbyImage)}
                 alt={
                   project.node.featuredImage
@@ -62,7 +63,7 @@ const DesignProjectsGrid = ({ category, projects }) => {
             </a>
           )}
           <p className="text-xl leading-none tracking-[0.48px] mb-1 sm:text-lg">
-            <a className="hover:underline" href={project.node.link}>{project.node.title}</a>
+            <a href={project.node.link}>{project.node.title}</a>
           </p>
         </div>
       ))}

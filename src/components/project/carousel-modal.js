@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import ArrowLeftIcon from '../../assets/images/arrow-left.svg';
+import ArrowRightIcon from '../../assets/images/arrow-right.svg';
 import CloseIcon from '../../assets/images/close.svg';
 
 const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
@@ -59,12 +61,19 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
             }
           }
 
+          let isLargeLandscape = Boolean(
+            width > window.innerWidth * 0.98 - 200
+          );
+
           return (
-            <SwiperSlide className="relative" key={i}>
-              <SlidePrevBlock disabled={i === 0} />
+            <SwiperSlide
+              className="relative flex justify-center items-center"
+              key={i}
+            >
+              <SlidePrevBlock disabled={i === 0} fixed={isLargeLandscape} />
 
               {(block.image || block.video) && (
-                <div className="flex flex-col items-center justify-center w-full h-full">
+                <div className="flex flex-col items-center justify-center h-full">
                   {block.video ? (
                     <video
                       autoPlay
@@ -87,7 +96,10 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
                 </div>
               )}
 
-              <SlideNextBlock disabled={i === imageBlocks.length - 1} />
+              <SlideNextBlock
+                disabled={i === imageBlocks.length - 1}
+                fixed={isLargeLandscape}
+              />
             </SwiperSlide>
           );
         })}
@@ -98,28 +110,32 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
 
 export default ProjectCarouselModal;
 
-const SlidePrevBlock = ({ disabled }) => {
+const SlidePrevBlock = ({ disabled, fixed }) => {
   const swiper = useSwiper();
 
   return (
     <div
-      className={`${
-        disabled ? 'slide-prev-block-opacity' : 'slide-prev-block'
-      } absolute top-0 w-1/2 h-full z-10`}
-      onClick={() => swiper.slidePrev()}
-    ></div>
+      className={`${disabled ? 'opacity-75' : 'cursor-pointer'} ${
+        fixed ? 'absolute left-8' : 'mr-8'
+      } z-10`}
+      onClick={() => !disabled && swiper.slidePrev()}
+    >
+      <img src={ArrowLeftIcon} alt="arrow left" />
+    </div>
   );
 };
 
-const SlideNextBlock = ({ disabled }) => {
+const SlideNextBlock = ({ disabled, fixed }) => {
   const swiper = useSwiper();
 
   return (
     <div
-      className={`${
-        disabled ? 'slide-next-block-opacity' : 'slide-next-block'
-      } absolute top-0 right-0 w-1/2 h-full`}
-      onClick={() => swiper.slideNext()}
-    ></div>
+      className={`${disabled ? 'opacity-75' : 'cursor-pointer'} ${
+        fixed ? 'absolute right-8' : 'ml-8'
+      } z-10`}
+      onClick={() => !disabled && swiper.slideNext()}
+    >
+      <img src={ArrowRightIcon} alt="arrow right" />
+    </div>
   );
 };
