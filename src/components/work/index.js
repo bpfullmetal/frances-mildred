@@ -134,7 +134,7 @@ const WorkPageContent = () => {
           </section>
         )}
 
-        <section className="flex flex-col w-full max-w-wide mx-auto px-5 sm:px-12">
+        <section className="grid grid-cols-2 w-full max-w-wide mx-auto px-5 sm:px-12 space-x-8">
           {projects.map((project, i) => {
             if (i === 0) return <React.Fragment key={i}></React.Fragment>;
             const isPreload = i / postsPerPage > currentPage - 1;
@@ -142,9 +142,7 @@ const WorkPageContent = () => {
               <div
                 className={`${
                   isPreload ? '!hidden' : ''
-                } work-project-block animate-reveal w-full max-w-[65%] py-4 mb-40 ${
-                  i % 2 ? 'ml-auto' : ''
-                } sm:mb-32 hover-animate`}
+                } work-project-block animate-reveal py-4 mb-40 sm:mb-32 hover-animate`}
                 key={`work-project-${i}`}
                 data-ref-type="project"
                 data-title={project.node.title}
