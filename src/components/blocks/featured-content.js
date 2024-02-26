@@ -56,7 +56,6 @@ const BlockFeaturedContent = ({ data }) => {
           {featuredContent.content.map((content, i) => {
             switch (content.contentType[0]) {
               case 'image':
-                console.log(content.imageBlock);
                 return (
                   <div
                     key={`featured-content-${i}`}

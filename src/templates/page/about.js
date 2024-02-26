@@ -22,6 +22,12 @@ export const pageQuery = graphql`
     wpPage(id: { eq: $id }) {
       uri
       content
+      title
+      featuredImage {
+        node {
+          mediaItemUrl
+        }
+      }
       contentType {
         node {
           isFrontPage

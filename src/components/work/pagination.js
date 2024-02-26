@@ -2,7 +2,6 @@ import * as React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 
 const ProjectPagination = ({ id, date }) => {
-  console.log('id', id, 'date', date);
 
   return <></>;
   return {

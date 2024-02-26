@@ -4,7 +4,8 @@
 module.exports = {
   siteMetadata: {
     title: `Frances Mildred`,
-    siteUrl: `https://fullmetalworkshop.com`
+    siteUrl: `https://fullmetalworkshop.com`,
+    author: 'Full Metal Workshop LLC'
   },
   // pathPrefix: "/clients/frances-mildred-staging/",
   plugins: [
@@ -13,7 +14,7 @@ module.exports = {
       options: {
         url: "https://fullmetalworkshop.com/clients/francesmildred/graphql",
         develop: {
-          hardCacheMediaFiles: false
+          hardCacheMediaFiles: true
         },
         verbose: true,
         // type: {

@@ -17,7 +17,7 @@ const ProjectBlockDetail = ({ project }) => {
   );
 };
 
-const WorkPageContent = () => {
+const WorkPageContent = (pageData) => {
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const postsPerPage = 10;
   const [currentPage, setCurrentPage] = React.useState(2);
@@ -73,7 +73,6 @@ const WorkPageContent = () => {
     });
   };
 
-  console.log('CURRENT', currentPage, postsPerPage);
   const projects = allProjects.slice(0, currentPage * postsPerPage);
 
   React.useEffect(() => {
@@ -101,7 +100,7 @@ const WorkPageContent = () => {
 
   return (
     // opacity-0 ${isPageEntered ? 'fade-in' : ''}
-    <PageLayout className={`work`}>
+    <PageLayout className={`work`} pageData={pageData}>
       <div className="min-h-screen">
         {projects.length && (
           <section

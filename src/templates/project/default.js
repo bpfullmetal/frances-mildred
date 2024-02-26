@@ -193,13 +193,9 @@ const ProjectSingle = ({ data }) => {
 
         return size;
     };
-
-    if ( nextProject.nodes.length ) {
-        console.log('next image', nextProject.nodes[0].featuredImage)
-    }
     
     return (
-        <PageLayout options={ { currentURI: '/work/', scrollIndicator: scrollContainerRef } }>
+        <PageLayout options={ { currentURI: '/work/', scrollIndicator: scrollContainerRef } } pageData={wpProject}>
             {featuredImage && (
                 <section className="h-home_banner">
                     <div className="relative w-full h-full flex items-center justify-center">
@@ -432,6 +428,7 @@ export const pageQuery = graphql`
       content
       featuredImage {
         node {
+          mediaItemUrl
           altText
           gatsbyImage(
             layout: FULL_WIDTH

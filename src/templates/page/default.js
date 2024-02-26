@@ -23,10 +23,9 @@ const PageDefault = ({ data }) => {
       }
     }
   }, [])
-  console.log(shouldRenderHeader, 'render')
 
   return (
-    <PageLayout className="default-page" options={ { hiddenHeader: !shouldRenderHeader, currentURI: wpPage.uri } }>
+    <PageLayout className="default-page" options={ { hiddenHeader: !shouldRenderHeader, currentURI: wpPage.uri } } pageData={wpPage}>
       {wpPage.editorBlocks && (
         <div>
           {wpPage.editorBlocks.filter(
@@ -98,6 +97,11 @@ export const pageQuery = graphql`
       id
       title
       uri
+      featuredImage {
+        node {
+          mediaItemUrl
+        }
+      }
       editorBlocks {
         renderedHtml
         __typename

@@ -57,6 +57,7 @@ const DesignPage = ({ data }) => {
     <PageLayout
       className="discover bg-dark_blue"
       options={{ hiddenBookSection: true, currentURI: data.wpPage.uri }}
+      pageData={data.wpPage}
     >
       <section
         className={`bg-dark_blue py-32 sm:py-32 ${
@@ -130,6 +131,11 @@ export const pageQuery = graphql`
     wpPage(id: { eq: $id }) {
       title
       uri
+      featuredImage {
+        node {
+          mediaItemUrl
+        }
+      }
     }
     allWpProject(sort: { date: DESC }) {
       edges {

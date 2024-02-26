@@ -8,7 +8,7 @@ const WorkParentPage = ({ data }) => {
   const title = wpPage?.title || '';
   const content = wpPage?.content || '';
 
-  return <WorkPageContent content={content} title={title} />;
+  return <WorkPageContent content={content} title={title} pageData={wpPage} />;
 };
 
 export default WorkParentPage;
@@ -23,6 +23,11 @@ export const pageQuery = graphql`
       id
       content
       title
+      featuredImage {
+        node {
+          mediaItemUrl
+        }
+      }
     }
   }
 `;

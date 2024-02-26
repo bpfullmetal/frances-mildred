@@ -72,7 +72,6 @@ const BlockProjectsCarousel = ({ data }) => {
             }
           `}
           render={(data) => {
-            console.log('projects data', data);
             data?.allWpProject?.edges?.length === 0 && <>No projects found</>;
             return (
               <ProjectsCarousel

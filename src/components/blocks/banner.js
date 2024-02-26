@@ -16,8 +16,24 @@ const BlockLogoBanner = ({ data }) => {
   const [startAnimate, setStartAnimate] = React.useState(false);
   const [prevScrollY, setPrevScrollY] = React.useState(0);
   const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
+  const [videoCanAutoplay, setVideoCanAutoplay] = React.useState(true);
+
+  const videoRef = React.useRef();
 
   React.useEffect(() => {
+
+    if ('mediaSession' in navigator) {
+      // Check if the browser supports autoplay
+      const supportsAutoplay = document.createElement('video').autoplay === true;
+    
+      // Check if autoplay is allowed by the browser's settings
+      const autoplayAllowed = supportsAutoplay && MediaSession.permission === 'granted';
+    
+      if ( !autoplayAllowed ) {
+        setVideoCanAutoplay(false)
+      } 
+    }
+
     setTimeout(() => {
       setStartAnimate(true);
     }, 1000);
@@ -41,8 +57,8 @@ const BlockLogoBanner = ({ data }) => {
   };
 
   const handleVideoOnLoad = () => {
-    console.log('video loaded');
     setIsVideoLoaded(true);
+    // videoRef.current.play()
   };
 
   if (!data.backgroundImage && !data.backgroundVideo) return <></>;
@@ -52,38 +68,55 @@ const BlockLogoBanner = ({ data }) => {
       className="relative h-home_banner home-banner"
       onClick={handleBannerClick}
     >
-      {data.backgroundVideo ? (
-        <div className="absolute w-full h-full object-cover">
-          {isVideoLoaded ? null : data.backgroundImage.node ? (
-            <GatsbyImage
-              className="w-full h-full object-cover absolute"
-              image={getImage(data.backgroundImage.node.gatsbyImage)}
-              alt={data.backgroundImage.node.altText}
-            />
-          ) : null}
-          <video
-            autoPlay
-            muted
-            loop
-            onLoadedMetadata={handleVideoOnLoad}
-            onCanPlay={handleVideoOnLoad}
-            onLoadedData={handleVideoOnLoad}
-            onError={(e) => console.error('video error', e)}
-            className="absolute w-full h-full object-cover"
-          >
-            <source
-              src={data.backgroundVideo.node.mediaItemUrl}
-              type="video/mp4"
-            ></source>
-          </video>
-        </div>
-      ) : data.backgroundImage.node ? (
-        <GatsbyImage
-          className="w-full h-full object-cover absolute"
-          image={getImage(data.backgroundImage.node.gatsbyImage)}
-          alt={data.backgroundImage.node.altText}
-        />
-      ) : null}
+      {
+        data.backgroundVideo 
+          ? (
+            <div className="absolute w-full h-full object-cover">
+              {
+                isVideoLoaded 
+                ? null 
+                : data.backgroundImage.node 
+                  ? (
+                    <GatsbyImage
+                      className="w-full h-full object-cover absolute"
+                      image={getImage(data.backgroundImage.node.gatsbyImage)}
+                      alt={data.backgroundImage.node.altText}
+                    />
+                  ) 
+                  : null
+              }
+              <video
+                autoPlay
+                muted
+                ref={videoRef}
+                loop
+                style={ isVideoLoaded ? {opacity: 1} : {opacity: 0} }
+                controls={false}
+                onLoadedMetadata={handleVideoOnLoad}
+                onCanPlay={handleVideoOnLoad}
+                onLoadedData={handleVideoOnLoad}
+                onError={(e) => console.error('video error', e)}
+                className="absolute w-full h-full object-cover"
+              >
+                <source
+                  src={data.backgroundVideo.node.mediaItemUrl}
+                  type="video/mp4"
+                >
+                  
+                </source>
+              </video>
+            </div>
+          ) 
+          : data.backgroundImage.node 
+            ? (
+              <GatsbyImage
+                className="w-full h-full object-cover absolute"
+                image={getImage(data.backgroundImage.node.gatsbyImage)}
+                alt={data.backgroundImage.node.altText}
+              />
+            ) 
+            : null
+      }
       <div className="relative h-full flex flex-col items-center justify-center uppercase">
         <div className="flex justify-between space-x-6 sm:space-x-8">
           <div className="letter flex justify-center w-8 h-[30px] sm:h-9">

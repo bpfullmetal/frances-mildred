@@ -9,7 +9,7 @@ const PostSingle = ({ data }) => {
     const { title, featuredImage } = wpPost;
 
     return (
-        <PageLayout>
+        <PageLayout pageData={wpPost}>
             {featuredImage && (
                 <section className="h-home_banner">
                     <div className="relative w-full h-full flex items-center justify-center">
@@ -46,6 +46,7 @@ export const pageQuery = graphql`
       featuredImage {
         node {
           altText
+          mediaItemUrl
           gatsbyImage(
             layout: FULL_WIDTH
             width: 1200

@@ -153,7 +153,7 @@ const AboutPageContent = (pageData) => {
   };
 
   return (
-    <PageLayout className="relative" options={{ currentURI: pageData.uri}}>
+    <PageLayout className="relative" options={{ currentURI: pageData.uri}} pageData={pageData?.content || null}>
       <div className={`hidden fixed top-2/4 left-10 md:flex flex-col z-10`}>
         {navMenuItems.map((item) => (
           <div className="uppercase" key={item.id}>

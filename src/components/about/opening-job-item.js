@@ -5,7 +5,6 @@ const OpeningJobItem = ({ data, order, opened = false }) => {
   const [isEntered, setIsEntered] = React.useState(false);
   const [isOpened, setIsOpened] = React.useState(opened);
   const [beginApplyAnimate, setBeginApplyAnimate] = React.useState(false);
-  console.log(data)
   const contentRef = React.useRef();
   const applyRef = React.useRef();
   const applyContentRefs = Array(3)
