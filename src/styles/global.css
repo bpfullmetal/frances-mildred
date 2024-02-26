@@ -297,7 +297,7 @@ footer .logo svg {
 
 .hover-animate .gatsby-image-wrapper img {
   transform-origin: center;
-  transition: transform 1s ease-in;
+  transition: transform 1s ease-in, opacity 500ms linear 1s!important;
 }
 
 .hover-animate:hover .gatsby-image-wrapper img {

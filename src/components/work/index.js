@@ -93,7 +93,7 @@ const WorkPageContent = (pageData) => {
   React.useEffect(() => {
     workProjectRefs.forEach((ref) =>
       Helper.setupIntersectionObserver(ref, handleIntersection, {
-        threshold: 0.5,
+        threshold: 0.2,
       })
     );
   }, [projects]);
@@ -109,7 +109,7 @@ const WorkPageContent = (pageData) => {
               <div
                 className={`${
                   isPreload ? '!hidden' : ''
-                } work-project-block animate-reveal py-4 mb-20 hover-animate`}
+                } work-project-block animate-reveal py-4 mb-8 hover-animate`}
                 key={`work-project-${i}`}
                 data-ref-type="project"
                 data-title={project.node.title}

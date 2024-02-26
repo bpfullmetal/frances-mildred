@@ -60,7 +60,7 @@ const DesignPage = ({ data }) => {
       pageData={data.wpPage}
     >
       <section
-        className={`bg-dark_blue py-32 sm:py-32 ${
+        className={`bg-dark_blue py-32 sm:py-32 min-h-screen ${
           currentCategory
             ? 'no-animation'
             : animationEntrances.background
