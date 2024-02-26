@@ -336,7 +336,7 @@ const ProjectSingle = ({ data }) => {
                                                             </div>
                                                         )
                                                         : <GatsbyImage
-                                                            className="w-full h-full object-cover"
+                                                            className="w-full h-full object-cover rounded"
                                                             image={getImage(block.image.node.gatsbyImage)}
                                                             alt={
                                                                 block.image.node.altText ||

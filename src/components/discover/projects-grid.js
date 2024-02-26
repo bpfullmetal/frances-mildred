@@ -52,6 +52,7 @@ const DesignProjectsGrid = ({ category, projects }) => {
           {project.node.featuredImage && (
             <a className="mb-4" href={project.node.link}>
               <GatsbyImage
+                className="rounded"
                 image={getImage(project.node.featuredImage.node.gatsbyImage)}
                 alt={
                   project.node.featuredImage

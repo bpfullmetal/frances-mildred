@@ -100,49 +100,16 @@ const WorkPageContent = () => {
   }, [projects]);
 
   return (
-    // opacity-0 ${isPageEntered ? 'fade-in' : ''}
     <PageLayout className={`work`}>
       <div className="min-h-screen">
-        {projects.length && (
-          <section
-            data-ref-type="project"
-            data-title={projects[0].node.title}
-            ref={workProjectRefs[0]}
-            className="w-screen h-screen mx-auto mb-40 sm:mb-16 hover-animate"
-          >
-            {projects[0].node.featuredImage && (
-              <a
-                className="flex w-full h-work_project"
-                href={projects[0].node.link}
-              >
-                <GatsbyImage
-                  className="w-full h-full object-cover rounded-none"
-                  href={projects[0].node.link}
-                  image={getImage(
-                    projects[0].node.featuredImage.node.gatsbyImage
-                  )}
-                  alt={
-                    projects[0].node.featuredImage.node.altText ||
-                    projects[0].node.title
-                  }
-                />
-              </a>
-            )}
-            <div className="px-5 sm:px-8">
-              <ProjectBlockDetail project={projects[0].node} />
-            </div>
-          </section>
-        )}
-
-        <section className="grid grid-cols-2 w-full max-w-wide mx-auto px-5 sm:px-12 space-x-8">
+        <section className="grid grid-cols-2 w-full max-w-wide mx-auto px-5 sm:px-12 gap-x-8">
           {projects.map((project, i) => {
-            if (i === 0) return <React.Fragment key={i}></React.Fragment>;
             const isPreload = i / postsPerPage > currentPage - 1;
             return (
               <div
                 className={`${
                   isPreload ? '!hidden' : ''
-                } work-project-block animate-reveal py-4 mb-40 sm:mb-32 hover-animate`}
+                } work-project-block animate-reveal py-4 mb-20 hover-animate`}
                 key={`work-project-${i}`}
                 data-ref-type="project"
                 data-title={project.node.title}
@@ -151,7 +118,7 @@ const WorkPageContent = () => {
                 {project.node.featuredImage && (
                   <a className="w-full h-full" href={project.node.link}>
                     <GatsbyImage
-                      className="w-full h-full aspect-[3/2]"
+                      className="w-full h-full aspect-[3/2] rounded"
                       href="/"
                       image={getImage(
                         project.node.featuredImage.node.gatsbyImage
