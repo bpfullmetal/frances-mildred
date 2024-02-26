@@ -6,6 +6,9 @@ import ArrowRightIcon from '../../assets/images/arrow-right.svg';
 import CloseIcon from '../../assets/images/close.svg';
 
 const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
+
+  const backgroundRef = React.useRef(null);
+
   React.useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Escape') {
@@ -22,16 +25,26 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
     };
   }, []);
 
+  const handleClickBackground = (event) => {
+    // Check if the click target is the background element or one of its children
+    console.log(event.target, backgroundRef.current)
+    if (event.target === backgroundRef.current) {
+      onClose()
+    }
+  };
+
   return (
     <div
       className="project-carousel-modal fixed w-screen h-screen top-0 bg-[#FFFFFFE6] z-20"
       aria-modal={true}
+      ref={backgroundRef}
+      onClick={handleClickBackground}
     >
       <div
-        className="absolute flex items-center justify-center top-6 right-6 cursor-pointer z-[99]"
+        className="absolute flex items-center justify-center top-6 right-6 cursor-pointer z-[99] w-8 h-8"
         onClick={onClose}
       >
-        <img src={CloseIcon} alt="close" />
+        <img className="w-full h-full" src={CloseIcon} alt="close" />
       </div>
 
       <Swiper initialSlide={initialSlide} slidesPerView={1}>
