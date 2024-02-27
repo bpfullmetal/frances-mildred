@@ -102,7 +102,7 @@ const WorkPageContent = (pageData) => {
     // opacity-0 ${isPageEntered ? 'fade-in' : ''}
     <PageLayout className={`work`} pageData={pageData}>
       <div className="min-h-screen">
-        <section className="grid grid-cols-2 w-full max-w-wide mx-auto px-5 sm:px-12 gap-x-8">
+        <section className="grid grid-cols-1 md:grid-cols-2 w-full max-w-wide mx-auto px-5 sm:px-12 gap-x-8">
           {projects.map((project, i) => {
             const isPreload = i / postsPerPage > currentPage - 1;
             return (
@@ -118,7 +118,8 @@ const WorkPageContent = (pageData) => {
                 {project.node.featuredImage && (
                   <a className="w-full h-full" href={project.node.link}>
                     <GatsbyImage
-                      className="w-full h-full aspect-[3/2] rounded"
+                      // className="w-full h-full aspect-[3/2] rounded"
+                      className="w-full rounded"
                       href="/"
                       image={getImage(
                         project.node.featuredImage.node.gatsbyImage
@@ -127,6 +128,10 @@ const WorkPageContent = (pageData) => {
                         project.node.featuredImage.node.altText ||
                         project.node.title
                       }
+                      style={{
+                        height: 1,
+                        paddingTop: '66.67%',
+                      }}
                     />
                   </a>
                 )}
