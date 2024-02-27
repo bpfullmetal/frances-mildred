@@ -92,9 +92,9 @@ const BlockLogoBanner = ({ data }) => {
                 loop
                 style={ isVideoLoaded ? {opacity: 1} : {opacity: 0} }
                 controls={false}
-                onLoadedMetadata={handleVideoOnLoad}
+                // onLoadedMetadata={handleVideoOnLoad}
                 onCanPlay={handleVideoOnLoad}
-                onLoadedData={handleVideoOnLoad}
+                // onLoadedData={handleVideoOnLoad}
                 onError={(e) => console.error('video error', e)}
                 className="absolute w-full h-full object-cover"
               >
