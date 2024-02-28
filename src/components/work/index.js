@@ -102,7 +102,7 @@ const WorkPageContent = (pageData) => {
     // opacity-0 ${isPageEntered ? 'fade-in' : ''}
     <PageLayout className={`work`} pageData={pageData}>
       <div className="min-h-screen">
-        <section className="grid grid-cols-1 md:grid-cols-2 w-full max-w-wide mx-auto px-5 sm:px-12 gap-x-8">
+        <section className="w-full grid grid-cols-1 md:grid-cols-2 max-w-wide mx-auto px-5 sm:px-12 gap-x-8">
           {projects.map((project, i) => {
             const isPreload = i / postsPerPage > currentPage - 1;
             return (
