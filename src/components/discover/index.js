@@ -133,7 +133,7 @@ const DiscoverPageContent = () => {
           <div className="projects-grid">
             {allProjectsData.map((project, i) => (
               <div
-                className="projects-grid__item flex flex-col hover-animate"
+                className="projects-grid__item flex flex-col"
                 key={`grid-project-${i}`}
                 ref={projectRefs[i]}
               >
