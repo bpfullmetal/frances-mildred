@@ -48,8 +48,7 @@ header .home-logo {
 
 header li:hover .home-logo {
   background-image: url(../assets/images/logo-monogram.gif);
-  width: 70px;
-  height: 90px;
+  background-size: contain;
 }
 
 header li:not(.icon-instagram).is-active::before,
