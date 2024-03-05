@@ -109,7 +109,7 @@ const WorkPageContent = (pageData) => {
               <div
                 className={`${
                   isPreload ? '!hidden' : ''
-                } work-project-block animate-reveal py-4 mb-8 hover-animate`}
+                } work-project-block animate-reveal py-4 mb-8`}
                 key={`work-project-${i}`}
                 data-ref-type="project"
                 data-title={project.node.title}
