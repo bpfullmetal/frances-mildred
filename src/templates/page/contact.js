@@ -15,6 +15,7 @@ import LetterR from '../../assets/js/icons/letter-r';
 import LetterS from '../../assets/js/icons/letter-s';
 import HeaderMenu from '../../components/header-menu';
 import SEO from '../../components/SEO';
+import FooterSection from '../../components/footer-section';
 
 const ContactPage = ({ data }) => {
   const { wpPage, wp } = data;
@@ -31,10 +32,10 @@ const ContactPage = ({ data }) => {
           url={wpPage.uri}
         />
       }
-      <main className="h-screen flex flex-col">
+      <main className="min-h-screen flex flex-col">
         <HeaderMenu options={ { currentURI: wpPage.uri } } />
-
-        <footer className="relative flex-1">
+        <FooterSection showMenu={false}/>
+        {/* <footer className="relative flex-1">
         {
           wpPage?.template?.blockContact?.backgroundVideo ? (
             <div className="absolute w-full h-full object-cover">
@@ -111,7 +112,7 @@ const ContactPage = ({ data }) => {
                 )}
               </div>
               <div className="flex flex-1 flex-col items-end">
-                <img className="w-[40px]" src={LogoIconGif} alt="logo gif" />
+                <img className="w-[40px] max-w-[40px]" src={LogoIconGif} alt="logo gif" />
               </div>
             </div>
 
@@ -164,7 +165,7 @@ const ContactPage = ({ data }) => {
               </div>
             </div>
           </div>
-        </footer>
+        </footer> */}
       </main>
     </>
   );

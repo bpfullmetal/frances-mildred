@@ -10,10 +10,11 @@ const DesignPage = ({ data }) => {
   const currentCategory = data.wpCategory ? data.wpCategory.slug : null;
 
   const [openModal, setOpenModal] = React.useState(false);
+  const [activeCategories, setActiveCategories] = React.useState(allCategoriesData);
   const [selectedCat, setSelectedCat] = React.useState(
     data.allWpCategory.edges[0].node
   );
-  const [filteredProjects, setFilteredProjects] = React.useState([]);
+  const [filteredProjectImages, setFilteredProjectImages] = React.useState([]);
   const [animationEntrances, setAnimationEntrances] = React.useState({
     background: false,
     title1: false,
@@ -37,20 +38,73 @@ const DesignPage = ({ data }) => {
     });
   }, [currentCategory]);
 
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+    }
+    return shuffled;
+  }
+
   React.useEffect(() => {
     const categoryNode = (
       allCategoriesData.find((cat) => cat.node.slug === currentCategory) ||
       allCategoriesData[0]
     )?.node;
     setSelectedCat(categoryNode);
-
+    
     const matchedProjects = allProjectsData.filter((project) =>
       project.node.categories.nodes.find(
         (category) => category.slug === categoryNode.slug
       )
     );
 
-    setFilteredProjects(matchedProjects);
+    const allProjectImages = allProjectsData.flatMap((project) => {
+      if ( project.node.projectsSingle.projectImages ) {
+        return project.node.projectsSingle.projectImages.filter( projectImage => {
+          if ( !projectImage.category ) return false
+          return true
+        })
+      }
+      return []
+    })
+
+    let matchedImages = allProjectsData.flatMap((project) => {
+      if ( project.node.projectsSingle.projectImages ) {
+        let projectImages = project.node.projectsSingle.projectImages.filter( projectImage => {
+          if ( !projectImage.category ) return false
+          return projectImage.category.nodes.some(({ slug }) => slug === categoryNode.slug)
+        })
+        if ( projectImages.length ) {
+          projectImages = projectImages.map( image => {
+            return {
+              image: image.image,
+              video: image.video,
+              title: project.node.title,
+              link: project.node.link,
+              categories: image.category.nodes
+            }
+          })
+          return projectImages
+        }
+      }
+      return [];
+    });
+    
+    matchedImages = shuffleArray(matchedImages)
+    
+    const filteredCategories = activeCategories.filter(category =>
+      allProjectImages.some(image =>
+        image.category.nodes.some(imageCategory =>
+          imageCategory.slug === category.node.slug
+        )
+      )
+    );
+    
+    setActiveCategories(filteredCategories)
+
+    setFilteredProjectImages(matchedImages);
   }, [allCategoriesData, currentCategory]);
 
   return (
@@ -103,7 +157,7 @@ const DesignPage = ({ data }) => {
           {animationEntrances.project && (
             <DesignProjectsGrid
               category={selectedCat?.slug}
-              projects={filteredProjects}
+              projects={filteredProjectImages}
             />
           )}
         </div>
@@ -112,7 +166,7 @@ const DesignPage = ({ data }) => {
       {openModal && (
         <CategoryModal
           selectedCat={selectedCat}
-          categories={data.allWpCategory.edges}
+          categories={activeCategories}
           onClose={() => setOpenModal(false)}
         />
       )}
@@ -125,6 +179,15 @@ export default DesignPage;
 export const Head = ({ data }) => (
   <title>{`${data.wpPage.title} - Frances Mildred`}</title>
 );
+
+export const WpAcfTermNodeConnectionTypeFragment = graphql`
+  fragment WpAcfTermNodeConnectionTypeFragment on WpAcfTermNodeConnectionType {
+    nodes {
+      slug
+    }
+  }
+`;
+
 
 export const pageQuery = graphql`
   query ($id: String!, $categorySlug: String = "") {
@@ -153,6 +216,34 @@ export const pageQuery = graphql`
             nodes {
               name
               slug
+            }
+          }
+          projectsSingle {
+            projectImages {
+              image {
+                node {
+                  gatsbyImage(
+                    layout: FULL_WIDTH
+                    width: 1200
+                    fit: COVER
+                    cropFocus: CENTER
+                    placeholder: BLURRED
+                  )
+                  width
+                  height
+                  altText
+                }
+              }
+              video {
+                node {
+                  mediaItemUrl
+                  width
+                  height
+                }
+              }
+              category {
+                ...WpAcfTermNodeConnectionTypeFragment
+              }
             }
           }
         }

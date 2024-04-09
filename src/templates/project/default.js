@@ -308,7 +308,7 @@ const ProjectSingle = ({ data }) => {
                                         </div>
                                         {(block.image || block.video) && (
                                             <div
-                                                className={`image-reveal ${size2Class[blockSize]} flex`}
+                                                className={`image-to-lightbox image-reveal ${size2Class[blockSize]} flex`}
                                                 onClick={() => !isMobile ? setClickedImageOrder(i) : null}
                                             >
                                                 {

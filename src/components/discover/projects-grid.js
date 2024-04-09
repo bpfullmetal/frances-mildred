@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import Helper from '../../helper';
+import ProjectCarouselModal from '../project/carousel-modal';
 
 const DesignProjectsGrid = ({ category, projects }) => {
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [clickedImageOrder, setClickedImageOrder] = React.useState(-1);
+
   const projectRefs = Array(projects.length)
     .fill()
     .map((_) => {
@@ -12,6 +16,22 @@ const DesignProjectsGrid = ({ category, projects }) => {
   React.useEffect(() => {
     setupIntersectionObservers();
   }, [projects]);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+        setIsMobile(window.innerWidth <= 600);
+    };
+
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+        window.removeEventListener('resize', handleResize);
+    };
+}, [])
 
   const setupIntersectionObservers = () => {
     projectRefs.forEach((ref, i) =>
@@ -39,6 +59,17 @@ const DesignProjectsGrid = ({ category, projects }) => {
     );
   };
 
+  const handleClickImage = (index, url) => {
+    console.log('hello?')
+    if ( isMobile ) {
+      window.location.href = url;
+      return
+    }
+    setClickedImageOrder(index) 
+  }
+
+  console.log('helloooo?')
+
   if (projectRefs.length < 1) return <></>;
 
   return (
@@ -49,24 +80,34 @@ const DesignProjectsGrid = ({ category, projects }) => {
           key={`${category}-${i}`}
           ref={projectRefs[i]}
         >
-          {project.node.featuredImage && (
-            <a className="mb-4" href={project.node.link}>
+          {project.image && (
+            <div className="image-to-lightbox" onClick={() => handleClickImage(i, project.link)}>
               <GatsbyImage
                 className="rounded"
-                image={getImage(project.node.featuredImage.node.gatsbyImage)}
+                image={getImage(project.image.node.gatsbyImage)}
+                
                 alt={
-                  project.node.featuredImage
-                    ? project.node.featuredImage.node.altText
-                    : project.node.title
+                  project.image
+                    ? project.image.node.altText
+                    : project.title
                 }
               />
-            </a>
+            </div>
           )}
           <p className="text-xl leading-none tracking-[0.48px] mb-1 sm:text-lg">
-            <a href={project.node.link}>{project.node.title}</a>
+            <a href={project.link}>{project.title}</a>
           </p>
         </div>
       ))}
+      {
+          clickedImageOrder > -1 && (
+              <ProjectCarouselModal
+                  imageBlocks={projects}
+                  initialSlide={clickedImageOrder}
+                  onClose={() => setClickedImageOrder(-1)}
+              />
+          )
+      }
     </div>
   );
 };

@@ -65,11 +65,11 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
     });
   }, [imageBlocks]);
 
-  console.log('activeSlideIndex: ', activeSlideIndex);
+  console.log('activeSlideIndex: ', activeSlideIndex, croppedImageBlocks.length);
 
   return (
     <div
-      className="project-carousel-modal fixed w-screen h-screen top-0 bg-[#FFFFFFE6] z-20"
+      className="project-carousel-modal fixed w-screen h-screen top-0 left-0 bg-[#FFFFFFE6] z-20"
       aria-modal={true}
       ref={backgroundRef}
       onClick={handleClickBackground}
@@ -142,7 +142,7 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
         })}
 
         <SlideNextArrow
-          disabled={activeSlideIndex >= croppedImageBlocks.length}
+          disabled={activeSlideIndex + 1 >= croppedImageBlocks.length}
           width={croppedImageBlocks?.[activeSlideIndex]?.width}
           isLargeLandscape={
             croppedImageBlocks?.[activeSlideIndex]?.isLargeLandscape
@@ -205,7 +205,7 @@ const SlideNextArrow = ({ disabled, width, isLargeLandscape }) => {
   return (
     <div
       className={`fixed top-[50%] ${
-        disabled ? 'opacity-75' : 'transition hover:scale-[1.2] cursor-pointer'
+        disabled ? 'opacity-25' : 'transition hover:scale-[1.2] cursor-pointer'
       } z-10`}
       style={{
         right: isLargeLandscape ? 32 : (window.innerWidth - width) / 2 - 80,
