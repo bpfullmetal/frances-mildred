@@ -4,7 +4,7 @@ import { graphql, StaticQuery } from 'gatsby';
 import LogoImage from '../assets/images/placeholder.png';
 
 const SEO = ({ title, description, image, url }) => {
-    console.log(title, description, image)
+    
   return (
     <StaticQuery
       query={graphql`
@@ -27,7 +27,7 @@ const SEO = ({ title, description, image, url }) => {
             siteUrl,
             twitterUsername,
         } = data.site.siteMetadata;
-        // console.log(title, siteTitle)
+        
         return (
             <Helmet>
                 {/* General metadata */}

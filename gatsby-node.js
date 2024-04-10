@@ -40,8 +40,6 @@ const path = require(`path`)
 //         }
 //     `)
 
-//     console.log('PAGES', pages)
-
 //     if (pages.data.errors) {
 //         reporter.panicOnBuild(`Error while running GraphQL query.`)
 //         return
@@ -128,7 +126,6 @@ exports.createPages = async ({ graphql, actions }) => {
   };
 
   // exports.onCreatePage = async ({ page, actions, graphql }) => {
-  //   console.log('graphql', graphql)
   //   const { createPage, deletePage } = actions;
   
   //   // Check if the page is the one you're interested in modifying
@@ -151,7 +148,6 @@ exports.createPages = async ({ graphql, actions }) => {
   //     }
   
   //     const project = result.data.wpProject;
-  //     console.log('projet', project)
   //     // Add the project data to the page context
   //     deletePage(page);
   //     createPage({

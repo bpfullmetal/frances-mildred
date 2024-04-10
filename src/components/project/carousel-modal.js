@@ -28,7 +28,6 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
 
   const handleClickBackground = (event) => {
     // Check if the click target is the background element or one of its children
-    console.log(event.target, backgroundRef.current);
     if (event.target === backgroundRef.current) {
       onClose();
     }
@@ -64,8 +63,6 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
       return { ...block, width, height, isLargeLandscape };
     });
   }, [imageBlocks]);
-
-  console.log('activeSlideIndex: ', activeSlideIndex, croppedImageBlocks.length);
 
   return (
     <div

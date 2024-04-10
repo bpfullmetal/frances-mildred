@@ -60,15 +60,12 @@ const DesignProjectsGrid = ({ category, projects }) => {
   };
 
   const handleClickImage = (index, url) => {
-    console.log('hello?')
     if ( isMobile ) {
       window.location.href = url;
       return
     }
     setClickedImageOrder(index) 
   }
-
-  console.log('helloooo?')
 
   if (projectRefs.length < 1) return <></>;
 

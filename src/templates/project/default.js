@@ -56,13 +56,18 @@ const ProjectSingle = ({ data }) => {
                     ? imageBlock.image.node.width <= imageBlock.image.node.height
                         ? 'portrait'
                         : 'landscape'
-                    : '';
-                const blockSize = getRandomSize(
-                    randomPositions[i],
-                    orientation,
-                    prevSize,
-                    imageBlock.video ? 'video' : 'image'
-                );
+                    : imageBlock.video.node.width <= imageBlock.video.node.height
+                        ? 'portrait'
+                        : 'landscape';
+                // const blockSize = getRandomSize(
+                //     randomPositions[i],
+                //     orientation,
+                //     prevSize,
+                //     imageBlock.video ? 'video' : 'image'
+                // );
+               const blockSize = orientation === 'portrait'
+                ? ['small']
+                : ['large'];
                 prevSize = blockSize;
                 return blockSize;
             })
@@ -149,10 +154,16 @@ const ProjectSingle = ({ data }) => {
         full: 'w-full md:w-10/12',
     };
 
+    // const pos2Class = {
+    //     right: 'mr-0 sm:flex-row sm:mr-20 sm:ml-12 gap-y-3 mb-18 md:mb-12 gap-x-12',
+    //     center: 'jusitfy-center mx-auto w-full gap-y-3 mb-18 md:mb-12 gap-x-12',
+    //     left: 'sm:flex-row-reverse gap-x-12 ml-0 sm:ml-10 gap-y-3 mb-18 md:mb-12 gap-x-12',
+    // };
+
     const pos2Class = {
-        right: 'mr-0 sm:flex-row sm:mr-20 sm:ml-12 gap-y-3 mb-18 md:mb-12 gap-x-12',
-        center: 'jusitfy-center mx-auto w-full gap-y-3 mb-18 md:mb-12 gap-x-12',
-        left: 'sm:flex-row-reverse gap-x-12 ml-0 sm:ml-10 gap-y-3 mb-18 md:mb-12 gap-x-12',
+        right: 'mr-0 sm:flex-row gap-y-3 gap-x-12',
+        center: 'jusitfy-center mx-auto w-full gap-y-3 gap-x-12',
+        left: 'sm:flex-row-reverse gap-x-12 ml-0 gap-y-3 gap-x-12',
     };
 
     const getRandomPosition = (prevPosition = -1) => {
@@ -169,23 +180,27 @@ const ProjectSingle = ({ data }) => {
         let sizes = ['small', 'medium', 'large', 'full'];
         let size;
 
-        switch (currentPosition) {
-            case 'right':
-            case 'left':
-                if (type === 'video') {
-                    sizes = ['large']
-                } else {
-                    sizes =
+        // switch (currentPosition) {
+        //     case 'right':
+        //     case 'left':
+        //         if (type === 'video') {
+        //             sizes = ['large']
+        //         } else {
+        //             sizes =
+        //                 orientation === 'portrait'
+        //                     ? ['small', 'medium']
+        //                     : ['small', 'medium', 'large'];
+        //         }
+        //         break;
+        //     case 'center':
+        //         sizes = ['large', 'full'];
+        //         if (orientation === 'portrait') return 'medium';
+        //         break;
+        // }
+        sizes =
                         orientation === 'portrait'
                             ? ['small', 'medium']
                             : ['small', 'medium', 'large'];
-                }
-                break;
-            case 'center':
-                sizes = ['large', 'full'];
-                if (orientation === 'portrait') return 'medium';
-                break;
-        }
 
         do {
             size = sizes[Math.floor(Math.random() * sizes.length)];
@@ -295,7 +310,10 @@ const ProjectSingle = ({ data }) => {
                             {projectsSingle.projectImages.map((block, i) => {
                                 const blockPos = imageBlockPositions[i];
                                 const blockSize = imageBlockSizes[i];
-
+                                const imageBlock = block.image ? block.image : block.video
+                                const orientation = imageBlock.node.width <= imageBlock.node.height
+                                    ? 'portrait'
+                                    : 'landscape'
                                 return (
                                     <div
                                         ref={projectRefs[i]}
@@ -308,7 +326,7 @@ const ProjectSingle = ({ data }) => {
                                         </div>
                                         {(block.image || block.video) && (
                                             <div
-                                                className={`image-to-lightbox image-reveal ${size2Class[blockSize]} flex`}
+                                                className={`image-reveal ${size2Class[blockSize]} flex`}
                                                 onClick={() => !isMobile ? setClickedImageOrder(i) : null}
                                             >
                                                 {
@@ -332,7 +350,7 @@ const ProjectSingle = ({ data }) => {
                                                             </div>
                                                         )
                                                         : <GatsbyImage
-                                                            className="w-full h-full object-cover rounded"
+                                                            className={`w-full h-full object-cover rounded ${orientation === 'landscape' ? 'aspect-[4/3]' : 'aspect-[3/4]'}`}
                                                             image={getImage(block.image.node.gatsbyImage)}
                                                             alt={
                                                                 block.image.node.altText ||

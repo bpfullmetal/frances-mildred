@@ -5,7 +5,7 @@ import FooterSection from './footer-section';
 import SEO from './SEO';
 
 const PageLayout = ({ className, children, options = {}, pageData = null }) => {
-  console.log('page data', pageData)
+  
   return (
     <>
       {
