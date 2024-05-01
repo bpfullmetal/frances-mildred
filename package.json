@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "develop": "gatsby develop",
-    "start": "npm run build && npm run serve",
+    "start": "gatsby build",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
