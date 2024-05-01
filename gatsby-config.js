@@ -12,7 +12,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-wordpress',
       options: {
-        url: "https://fullmetalworkshop.com/clients/francesmildred/graphql",
+        url: "https://francesmildred.wpenginepowered.com/graphql",
         develop: {
           hardCacheMediaFiles: true
         },
