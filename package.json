@@ -7,9 +7,12 @@
   "keywords": [
     "gatsby"
   ],
+  "engines": {
+    "node": "18.16.1"
+  },
   "scripts": {
     "develop": "gatsby develop",
-    "start": "gserve",
+    "start": "gatsby build && gserve",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
