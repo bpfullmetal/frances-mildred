@@ -77,9 +77,9 @@ const BlockLogoBanner = ({ data }) => {
                 ? null 
                 : data.backgroundImage.node 
                   ? (
-                    <GatsbyImage
+                    <img
                       className="w-full h-full object-cover absolute"
-                      image={getImage(data.backgroundImage.node.gatsbyImage)}
+                      src={data.backgroundImage.node.sourceUrl}
                       alt={data.backgroundImage.node.altText}
                     />
                   ) 
