@@ -158,7 +158,7 @@ const SlidePrevBlock = ({ disabled }) => {
   return (
     <div
       className={`absolute top-0 left-0 w-1/2 h-full ${
-        disabled ? 'opacity-75' : 'cursor-pointer'
+        disabled ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer'
       } z-10`}
       onClick={() => !disabled && swiper.slidePrev()}
     ></div>
@@ -171,7 +171,7 @@ const SlideNextBlock = ({ disabled }) => {
   return (
     <div
       className={`absolute top-0 right-0 w-1/2 h-full ${
-        disabled ? 'opacity-75' : 'cursor-pointer'
+        disabled ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer'
       } z-10`}
       onClick={() => !disabled && swiper.slideNext()}
     ></div>
