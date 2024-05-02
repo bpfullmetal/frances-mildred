@@ -184,7 +184,7 @@ const SlidePrevArrow = ({ disabled, width, isLargeLandscape }) => {
   return (
     <div
       className={`fixed top-[50%] ${
-        disabled ? 'opacity-75' : 'transition hover:scale-[1.2] cursor-pointer'
+        disabled ? 'opacity-25' : 'transition hover:scale-[1.2] cursor-pointer'
       } z-10`}
       style={{
         left: isLargeLandscape ? 32 : (window.innerWidth - width) / 2 - 80,

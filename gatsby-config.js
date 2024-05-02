@@ -4,7 +4,7 @@
 module.exports = {
   siteMetadata: {
     title: `Frances Mildred`,
-    siteUrl: `https://fullmetalworkshop.com`,
+    siteUrl: 'https://h8ow0czjuzl799dxcybtqzka2.js.wpenginepowered.com',
     author: 'Full Metal Workshop LLC'
   },
   // pathPrefix: "/clients/frances-mildred-staging/",
