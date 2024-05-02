@@ -4,13 +4,12 @@ import BlockLogoBanner from '../../components/blocks/banner';
 import BlockFeaturedProject from '../../components/blocks/featured-project';
 import BlockFeaturedContent from '../../components/blocks/featured-content';
 import BlockProjectsCarousel from '../../components/blocks/projects-carousel';
-import FooterSection from '../../components/footer-section';
 import HeaderMenu from '../../components/header-menu';
 import PageLayout from '../../components/page-layout';
 
 const PageDefault = ({ data }) => {
   const { wpPage } = data;
-  const [shouldRenderHeader, setShouldRenderheader] = React.useState(true);
+  const [shouldRenderHeader, setShouldRenderheader] = React.useState(false);
   if (!wpPage) return <>No page data found</>;
 
   React.useEffect(() => {
@@ -28,9 +27,9 @@ const PageDefault = ({ data }) => {
     <PageLayout className="default-page" options={ { hiddenHeader: !shouldRenderHeader, currentURI: wpPage.uri } } pageData={wpPage}>
       {wpPage.editorBlocks && (
         <div>
-          {wpPage.editorBlocks.filter(
+          {/* {wpPage.editorBlocks.filter(
             (block) => block.__typename === 'WpAcfHeaderNav'
-          ).length === 0 && <HeaderMenu currentURI={wpPage.uri} />}
+          ).length === 0 && <HeaderMenu currentURI={wpPage.uri} />} */}
           {wpPage.editorBlocks.map((block, i) => {
             switch (block.__typename) {
               case 'WpAcfLogoBanner':
