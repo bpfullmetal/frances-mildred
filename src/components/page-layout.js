@@ -5,17 +5,17 @@ import FooterSection from './footer-section';
 import SEO from './SEO';
 
 const PageLayout = ({ className, children, options = {}, pageData = null }) => {
-  const description = pageData.excerpt ? pageData.excerpt.replace(/<[^>]*>?/gm, '').trim() : null
+  const description = pageData?.excerpt ? pageData.excerpt.replace(/<[^>]*>?/gm, '').trim() : null
   
   return (
     <>
       {
         pageData && (
           <SEO
-            title={pageData.title}
+            title={pageData?.title}
             description={ description }
             image={ pageData?.featuredImage ? pageData.featuredImage.node.mediaItemUrl : null }
-            url={pageData.uri}
+            url={pageData?.uri}
           />
         )
       }
