@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import Helper from '../../helper';
-import ProjectCarouselModal from '../project/carousel-modal';
 
-const DesignProjectsGrid = ({ category, projects }) => {
-  const [isMobile, setIsMobile] = React.useState(false);
-  const [clickedImageOrder, setClickedImageOrder] = React.useState(-1);
+
+const DesignProjectsGrid = ({ category, projects, handleOnClickImage }) => {
 
   const projectRefs = Array(projects.length)
     .fill()
@@ -16,22 +14,6 @@ const DesignProjectsGrid = ({ category, projects }) => {
   React.useEffect(() => {
     setupIntersectionObservers();
   }, [projects]);
-
-  React.useEffect(() => {
-    const handleResize = () => {
-        setIsMobile(window.innerWidth <= 600);
-    };
-
-    handleResize();
-
-    // Event listener for window resize
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-        window.removeEventListener('resize', handleResize);
-    };
-}, [])
 
   const setupIntersectionObservers = () => {
     projectRefs.forEach((ref, i) =>
@@ -59,13 +41,7 @@ const DesignProjectsGrid = ({ category, projects }) => {
     );
   };
 
-  const handleClickImage = (index, url) => {
-    if ( isMobile ) {
-      window.location.href = url;
-      return
-    }
-    setClickedImageOrder(index) 
-  }
+  
 
   if (projectRefs.length < 1) return <></>;
 
@@ -78,7 +54,7 @@ const DesignProjectsGrid = ({ category, projects }) => {
           ref={projectRefs[i]}
         >
           {project.image && (
-            <div className="image-to-lightbox" onClick={() => handleClickImage(i, project.link)}>
+            <div className="image-to-lightbox" onClick={() => handleOnClickImage(i, project.link)}>
               <GatsbyImage
                 className="rounded"
                 image={getImage(project.image.node.gatsbyImage)}
@@ -96,15 +72,6 @@ const DesignProjectsGrid = ({ category, projects }) => {
           </p>
         </div>
       ))}
-      {
-          clickedImageOrder > -1 && (
-              <ProjectCarouselModal
-                  imageBlocks={projects}
-                  initialSlide={clickedImageOrder}
-                  onClose={() => setClickedImageOrder(-1)}
-              />
-          )
-      }
     </div>
   );
 };

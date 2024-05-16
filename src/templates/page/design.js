@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import PageLayout from '../../components/page-layout';
 import CategoryModal from '../../components/discover/category-modal';
 import DesignProjectsGrid from '../../components/discover/projects-grid';
+import ProjectCarouselModal from '../../components/project/carousel-modal';
 
 const DesignPage = ({ data }) => {
   const allProjectsData = data.allWpProject.edges || [];
@@ -10,7 +11,9 @@ const DesignPage = ({ data }) => {
   const currentCategory = data.wpCategory ? data.wpCategory.slug : null;
 
   const [openModal, setOpenModal] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
   const [activeCategories, setActiveCategories] = React.useState(allCategoriesData);
+  const [clickedImageOrder, setClickedImageOrder] = React.useState(-1);
   const [selectedCat, setSelectedCat] = React.useState(
     data.allWpCategory.edges[0].node
   );
@@ -21,6 +24,22 @@ const DesignPage = ({ data }) => {
     title2: false,
     project: false,
   });
+
+  React.useEffect(() => {
+    const handleResize = () => {
+        setIsMobile(window.innerWidth <= 600);
+    };
+
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+        window.removeEventListener('resize', handleResize);
+    };
+  }, [])
 
   React.useEffect(() => {
     const timingsArray = currentCategory ? [0, 0, 0, 250] : [0, 250, 750, 1250];
@@ -47,6 +66,14 @@ const DesignPage = ({ data }) => {
     return shuffled;
   }
 
+  const handleClickImage = (index, url) => {
+    if ( isMobile ) {
+      window.location.href = url;
+      return
+    }
+    setClickedImageOrder(index) 
+  }
+
   React.useEffect(() => {
     const categoryNode = (
       allCategoriesData.find((cat) => cat.node.slug === currentCategory) ||
@@ -58,7 +85,7 @@ const DesignPage = ({ data }) => {
       project.node.categories.nodes.find(
         (category) => category.slug === categoryNode.slug
       )
-    );
+    )
 
     const allProjectImages = allProjectsData.flatMap((project) => {
       if ( project.node.projectsSingle.projectImages ) {
@@ -157,6 +184,7 @@ const DesignPage = ({ data }) => {
           {animationEntrances.project && (
             <DesignProjectsGrid
               category={selectedCat?.slug}
+              handleOnClickImage={ handleClickImage }
               projects={filteredProjectImages}
             />
           )}
@@ -170,6 +198,15 @@ const DesignPage = ({ data }) => {
           onClose={() => setOpenModal(false)}
         />
       )}
+      {
+          (clickedImageOrder > -1 && filteredProjectImages) && (
+              <ProjectCarouselModal
+                  imageBlocks={filteredProjectImages}
+                  initialSlide={clickedImageOrder}
+                  onClose={() => setClickedImageOrder(-1)}
+              />
+          )
+      }
     </PageLayout>
   );
 };
