@@ -5,6 +5,7 @@ import FooterSection from './footer-section';
 import SEO from './SEO';
 
 const PageLayout = ({ className, children, options = {}, pageData = null }) => {
+  const description = pageData.excerpt ? pageData.excerpt.replace(/<[^>]*>?/gm, '').trim() : null
   
   return (
     <>
@@ -12,7 +13,7 @@ const PageLayout = ({ className, children, options = {}, pageData = null }) => {
         pageData && (
           <SEO
             title={pageData.title}
-            description={`Frances Mildred - ${pageData.title}`}
+            description={ description }
             image={ pageData?.featuredImage ? pageData.featuredImage.node.mediaItemUrl : null }
             url={pageData.uri}
           />

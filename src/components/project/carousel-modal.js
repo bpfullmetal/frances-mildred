@@ -66,7 +66,7 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
 
   return (
     <div
-      className="project-carousel-modal fixed w-screen h-screen top-0 left-0 bg-[#FFFFFFE6] z-20"
+      className="project-carousel-modal fixed w-screen h-screen top-0 left-0 bg-[#FFFFFFE6] z-30"
       aria-modal={true}
       ref={backgroundRef}
       onClick={handleClickBackground}

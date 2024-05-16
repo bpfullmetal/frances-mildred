@@ -326,7 +326,7 @@ const ProjectSingle = ({ data }) => {
                                         </div>
                                         {(block.image || block.video) && (
                                             <div
-                                                className={`image-reveal ${size2Class[blockSize]} flex`}
+                                                className={`image-reveal image-to-lightbox ${size2Class[blockSize]} flex`}
                                                 onClick={() => !isMobile ? setClickedImageOrder(i) : null}
                                             >
                                                 {
@@ -444,6 +444,7 @@ export const pageQuery = graphql`
       date
       id
       content
+      excerpt
       featuredImage {
         node {
           mediaItemUrl
@@ -466,7 +467,6 @@ export const pageQuery = graphql`
             }
             label
           }
-          content
           label
         }
         projectImages {

@@ -12,7 +12,7 @@ const CategoryModal = ({ categories, selectedCat, onClose }) => {
     <div
       className={`fixed w-screen h-screen top-0 flex ${
         isEntered ? 'bg-[#1a4b7cc0]' : ''
-      } transition duration-300 z-20`}
+      } transition duration-300 z-30`}
       onClick={onClose}
     >
       <div className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
