@@ -60,7 +60,6 @@ const BlockFeaturedContent = ({ data }) => {
                   <div
                     key={`featured-content-${i}`}
                     className="scroll-reveal mb-6 sm:mb-8"
-                    key={i}
                     ref={scrollRevealRefs[i + 1]}
                   >
                     <GatsbyImage

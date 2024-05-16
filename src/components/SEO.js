@@ -4,7 +4,6 @@ import { graphql, StaticQuery } from 'gatsby';
 import LogoImage from '../assets/images/placeholder.png';
 
 const SEO = ({ title, description, excerpt, image, url }) => {
-  console.log('excerpt', excerpt)
   return (
     <StaticQuery
       query={graphql`
@@ -34,7 +33,6 @@ const SEO = ({ title, description, excerpt, image, url }) => {
         const {
           description: siteDescription
         } = data.wp.generalSettings
-        console.log('site title', siteTitle)
         return (
             <Helmet>
                 {/* General metadata */}

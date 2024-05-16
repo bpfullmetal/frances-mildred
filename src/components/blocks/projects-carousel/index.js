@@ -24,16 +24,20 @@ const BlockProjectsCarousel = ({ data }) => {
       {carouselData.manualSelection && carouselData.projects.length && (
         <ProjectsCarousel
           slides={carouselData.projects.map((project) => {
+            let image = null
+            if ( project.image?.node ) {
+              image = project.image.node
+            } else {
+              if ( project.project.nodes[0].projectSingleAlternateImages.verticalImage ) {
+                image = project.project.nodes[0].projectSingleAlternateImages.verticalImage.node
+              } else {
+                if ( project.project.nodes[0].featuredImage ) {
+                  image = project.project.nodes[0].featuredImage.node
+                }
+              }
+            }
             return {
-              image: project.image
-                ? project.image.node.gatsbyImage
-                  ? project.image.node
-                  : project.project.nodes[0].featuredImage?.node
-                  ? project.project.nodes[0].featuredImage.node
-                  : null
-                : project.project.nodes[0].featuredImage?.node
-                ? project.project.nodes[0].featuredImage.node
-                : null,
+              image: image,
               title: project.title
                 ? project.title
                 : project.project.nodes[0].title,
@@ -51,6 +55,21 @@ const BlockProjectsCarousel = ({ data }) => {
                 edges {
                   node {
                     id
+                    projectSingleAlternateImages {
+                      verticalImage {
+                        node {
+                          altText
+                          gatsbyImage(
+                            layout: FULL_WIDTH
+                            aspectRatio: 0.775
+                            width: 600
+                            fit: COVER
+                            cropFocus: CENTER
+                            placeholder: BLURRED
+                          )
+                        }
+                      }
+                    }
                     featuredImage {
                       node {
                         altText
@@ -76,10 +95,16 @@ const BlockProjectsCarousel = ({ data }) => {
             return (
               <ProjectsCarousel
                 slides={data.allWpProject.edges.map((project) => {
+                  let image = null
+                  if ( project.node.projectSingleAlternateImages.verticalImage ) {
+                    image = project.node.projectSingleAlternateImages.verticalImage.node
+                  } else {
+                    if ( project.node.featuredImage ) {
+                      image = project.node.featuredImage.node
+                    }
+                  }
                   return {
-                    image: project.node.featuredImage
-                      ? project.node.featuredImage.node
-                      : null,
+                    image: image,
                     title: project.node.title,
                     id: project.node.id,
                     link: project.node.link,

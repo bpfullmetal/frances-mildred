@@ -233,6 +233,21 @@ export const pageQuery = graphql`
                 nodes {
                   ... on WpProject {
                     id
+                    projectSingleAlternateImages {
+                      verticalImage {
+                        node {
+                          altText
+                          gatsbyImage(
+                            layout: FULL_WIDTH
+                            aspectRatio: 0.775
+                            width: 600
+                            fit: COVER
+                            cropFocus: CENTER
+                            placeholder: BLURRED
+                          )
+                        }
+                      }
+                    }
                     featuredImage {
                       node {
                         gatsbyImage(

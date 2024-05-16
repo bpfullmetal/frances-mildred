@@ -249,12 +249,6 @@ export const pageQuery = graphql`
           }
           title
           link
-          categories {
-            nodes {
-              name
-              slug
-            }
-          }
           projectsSingle {
             projectImages {
               image {
