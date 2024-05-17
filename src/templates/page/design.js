@@ -80,12 +80,6 @@ const DesignPage = ({ data }) => {
       allCategoriesData[0]
     )?.node;
     setSelectedCat(categoryNode);
-    
-    const matchedProjects = allProjectsData.filter((project) =>
-      project.node.categories.nodes.find(
-        (category) => category.slug === categoryNode.slug
-      )
-    )
 
     const allProjectImages = allProjectsData.flatMap((project) => {
       if ( project.node.projectsSingle.projectImages ) {
