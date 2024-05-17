@@ -28,10 +28,11 @@ const WorkPageContent = (pageData) => {
   const { allWpProject } = useStaticQuery(
     graphql`
       {
-        allWpProject(sort: { date: DESC }) {
+        allWpProject(sort: { menuOrder: ASC }) {
           edges {
             node {
               id
+              menuOrder
               featuredImage {
                 node {
                   altText
@@ -55,7 +56,12 @@ const WorkPageContent = (pageData) => {
 
   React.useEffect(() => {
     // Concatenate new posts to the existing list
-    setAllProjects((prevProjects) => [...prevProjects, ...allWpProject.edges]);
+    const sortedProjects = allWpProject.edges.sort((a, b) => {
+      if (a.node.menuOrder === 0) return -1
+      if (b.node.menuOrder === 0) return 1
+      return a.node.menuOrder - b.node.menuOrder
+    })
+    setAllProjects((prevProjects) => [...prevProjects, ...sortedProjects]);
   }, [allWpProject.edges]);
 
   const handleIntersection = (entries) => {
@@ -136,6 +142,7 @@ const WorkPageContent = (pageData) => {
                   </a>
                 )}
                 <ProjectBlockDetail project={project.node} />
+                <p>{project.node.menuOrder}</p>
               </div>
             );
           })}
