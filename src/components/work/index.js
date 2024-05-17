@@ -32,7 +32,6 @@ const WorkPageContent = (pageData) => {
           edges {
             node {
               id
-              menuOrder
               featuredImage {
                 node {
                   altText
@@ -142,7 +141,6 @@ const WorkPageContent = (pageData) => {
                   </a>
                 )}
                 <ProjectBlockDetail project={project.node} />
-                <p>{project.node.menuOrder}</p>
               </div>
             );
           })}
