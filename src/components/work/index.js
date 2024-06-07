@@ -20,7 +20,7 @@ const ProjectBlockDetail = ({ project }) => {
 const WorkPageContent = (pageData) => {
   const [isPageEntered, setIsPageEntered] = React.useState(false);
   const postsPerPage = 10;
-  const [currentPage, setCurrentPage] = React.useState(2);
+  const [currentPage, setCurrentPage] = React.useState(1);
   const [allProjects, setAllProjects] = React.useState([]);
   const [workProjectRefs, setWorkProjectRefs] = React.useState([]);
   const moreProjectsRef = React.useRef();
@@ -109,7 +109,7 @@ const WorkPageContent = (pageData) => {
       <div className="min-h-screen">
         <section className="w-full grid grid-cols-1 md:grid-cols-2 max-w-wide mx-auto px-5 sm:px-12 gap-x-8">
           {projects.map((project, i) => {
-            const isPreload = i / postsPerPage > currentPage - 1;
+            const isPreload = (i + 1) / postsPerPage > currentPage - 1;
             return (
               <div
                 className={`${
