@@ -143,7 +143,7 @@ const DesignPage = ({ data }) => {
             : ''
         }`}
       >
-        <div className="flex flex-col w-full max-w-main mx-auto px-5 sm:px-12">
+        <div className="flex flex-col w-full max-w-main mx-auto px-5 md:px-12">
           <div className="title flex items-center text-3xl leading-[44px] mb-16 sm:text-4xl sm:mb-32">
             <p
               className={

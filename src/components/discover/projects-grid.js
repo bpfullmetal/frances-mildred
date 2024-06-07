@@ -67,7 +67,7 @@ const DesignProjectsGrid = ({ category, projects, handleOnClickImage }) => {
               />
             </div>
           )}
-          <p className="text-xl leading-none tracking-[0.48px] mb-1 sm:text-lg">
+          <p className="text-xl leading-none tracking-[0.48px] mb-1 sm:text-lg mt-2">
             <a href={project.link}>{project.title}</a>
           </p>
         </div>
