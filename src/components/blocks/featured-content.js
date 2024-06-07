@@ -63,9 +63,7 @@ const BlockFeaturedContent = ({ data }) => {
                     ref={scrollRevealRefs[i + 1]}
                   >
                     <GatsbyImage
-                      image={getImage(
-                        content.imageBlock.image.node.gatsbyImage
-                      )}
+                      image={content?.imageBlock?.image ? getImage(content.imageBlock.image.node.gatsbyImage) : null }
                       alt={
                         content.imageBlock.image.node.altText ||
                         content.imageBlock.link.title
