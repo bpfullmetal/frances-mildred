@@ -68,7 +68,7 @@ const AboutPageContent = (pageData) => {
       return React.useRef();
     });
 
-  const teamMemberRefs = Array(ourTeam.teamMembers.length)
+  const teamMemberRefs = Array(ourTeam?.teamMembers?.length || 0)
     .fill()
     .map((_) => {
       return React.useRef();

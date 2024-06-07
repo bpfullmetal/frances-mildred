@@ -65,8 +65,8 @@ const BlockFeaturedContent = ({ data }) => {
                     <GatsbyImage
                       image={content?.imageBlock?.image ? getImage(content.imageBlock.image.node.gatsbyImage) : null }
                       alt={
-                        content.imageBlock.image.node.altText ||
-                        content.imageBlock.link.title
+                        content?.imageBlock?.image?.node?.altText ||
+                        content?.imageBlock?.link?.title
                       }
                     />
                   </div>
