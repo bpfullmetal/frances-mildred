@@ -311,6 +311,7 @@ const ProjectSingle = ({ data }) => {
                                 const blockPos = imageBlockPositions[i];
                                 const blockSize = imageBlockSizes[i];
                                 const imageBlock = block.image ? block.image : block.video
+                                if (!imageBlock) return <></>
                                 const orientation = imageBlock.node.width <= imageBlock.node.height
                                     ? 'portrait'
                                     : 'landscape'
