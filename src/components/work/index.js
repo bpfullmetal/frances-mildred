@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import PageLayout from '../page-layout';
 import Helper from '../../helper';
+import projectPlaceholder from '../../assets/images/project-placeholder.jpg';
 
 const ProjectBlockDetail = ({ project }) => {
   return (
@@ -32,6 +33,7 @@ const WorkPageContent = (pageData) => {
           edges {
             node {
               id
+              menuOrder
               featuredImage {
                 node {
                   altText
@@ -55,13 +57,13 @@ const WorkPageContent = (pageData) => {
 
   React.useEffect(() => {
     // Concatenate new posts to the existing list
-    // const sortedProjects = allWpProject.edges.sort((a, b) => {
-    //   // if (a.node.menuOrder === 0) return -1
-    //   // if (b.node.menuOrder === 0) return 1
-    //   return a.node.menuOrder - b.node.menuOrder
-    // })
-    // setAllProjects((prevProjects) => [...prevProjects, ...sortedProjects]);
-    setAllProjects(allWpProject.edges);
+    const sortedProjects = allWpProject.edges.sort((a, b) => {
+      // if (a.node.menuOrder === 0) return -1
+      if (b.node.menuOrder === 0) return -1
+      return a.node.menuOrder - b.node.menuOrder
+    })
+    setAllProjects(sortedProjects);
+    // setAllProjects(allWpProject.edges);
   }, [allWpProject.edges]);
 
   const handleIntersection = (entries) => {
@@ -139,6 +141,11 @@ const WorkPageContent = (pageData) => {
                         paddingTop: '66.67%',
                       }}
                     />
+                  </a>
+                )}
+                {!project.node.featuredImage && (
+                  <a className="w-full h-full" href={project.node.link}>
+                    <img src={projectPlaceholder} alt={project.node.title} />
                   </a>
                 )}
                 <ProjectBlockDetail project={project.node} />
