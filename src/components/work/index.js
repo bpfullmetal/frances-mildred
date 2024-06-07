@@ -55,12 +55,13 @@ const WorkPageContent = (pageData) => {
 
   React.useEffect(() => {
     // Concatenate new posts to the existing list
-    const sortedProjects = allWpProject.edges.sort((a, b) => {
-      // if (a.node.menuOrder === 0) return -1
-      // if (b.node.menuOrder === 0) return 1
-      return a.node.menuOrder - b.node.menuOrder
-    })
-    setAllProjects((prevProjects) => [...prevProjects, ...sortedProjects]);
+    // const sortedProjects = allWpProject.edges.sort((a, b) => {
+    //   // if (a.node.menuOrder === 0) return -1
+    //   // if (b.node.menuOrder === 0) return 1
+    //   return a.node.menuOrder - b.node.menuOrder
+    // })
+    // setAllProjects((prevProjects) => [...prevProjects, ...sortedProjects]);
+    setAllProjects(allWpProject.edges);
   }, [allWpProject.edges]);
 
   const handleIntersection = (entries) => {
