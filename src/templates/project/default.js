@@ -12,15 +12,14 @@ const ProjectSingle = ({ data }) => {
 
     const scrollContainerRef = React.useRef();
     const [isMobile, setIsMobile] = React.useState(false);
+    const [projectImages, setProjectImages] = React.useState( projectsSingle.projectImages ? projectsSingle.projectImages.filter( imageBlock => (imageBlock.image?.node || imageBlock.video?.node) ) : []);
     const [revealProjectInfo, setRevealProjectInfo] = React.useState(false);
     const [projectRefs] = React.useState(
-        Array(
-            projectsSingle.projectImages ? projectsSingle.projectImages.length : 0
-        )
-            .fill()
-            .map((_) => {
-                return React.useRef();
-            })
+        Array(projectImages.length)
+        .fill()
+        .map((_) => {
+            return React.useRef();
+        })
     );
     const [clickedImageOrder, setClickedImageOrder] = React.useState(-1);
     const [imageBlockPositions, setImageBlockPositions] = React.useState([]);
@@ -31,11 +30,10 @@ const ProjectSingle = ({ data }) => {
     const imageMaskRef = React.useRef();
 
     React.useEffect(() => {
-        if (!projectsSingle.projectImages) return
         let prevPosition = getRandomPosition();
         let prevSize = getRandomSize();
 
-        const randomPositions = projectsSingle.projectImages.map((_) => {
+        const randomPositions = projectImages.map((_) => {
             const pos = getRandomPosition(prevPosition);
             prevPosition = pos;
             return pos;
@@ -43,7 +41,7 @@ const ProjectSingle = ({ data }) => {
 
         setImageBlockPositions(randomPositions);
 
-        setImageBlockDetails(projectsSingle.projectImages.map((imageBlock, i) => {
+        setImageBlockDetails(projectImages.map((imageBlock, i) => {
             return {
                 type: imageBlock.video ? 'video' : 'image',
                 isLoaded: false
@@ -51,30 +49,28 @@ const ProjectSingle = ({ data }) => {
         }))
 
         setImageBlockSizes(
-            projectsSingle.projectImages
-                .filter( imageBlock => (imageBlock.image?.node || imageBlock.video?.node) )
-                .map((imageBlock, i) => {
-                    const orientation = imageBlock.image
-                        ? imageBlock.image.node.width <= imageBlock.image.node.height
-                            ? 'portrait'
-                            : 'landscape'
-                        : imageBlock.video.node.width <= imageBlock.video.node.height
-                            ? 'portrait'
-                            : 'landscape';
-                    // const blockSize = getRandomSize(
-                    //     randomPositions[i],
-                    //     orientation,
-                    //     prevSize,
-                    //     imageBlock.video ? 'video' : 'image'
-                    // );
-                const blockSize = orientation === 'portrait'
-                    ? ['small']
-                    : ['large'];
-                    prevSize = blockSize;
-                    return blockSize;
-                })
+            projectImages.map((imageBlock, i) => {
+                const orientation = imageBlock.image
+                    ? imageBlock.image.node.width <= imageBlock.image.node.height
+                        ? 'portrait'
+                        : 'landscape'
+                    : imageBlock.video.node.width <= imageBlock.video.node.height
+                        ? 'portrait'
+                        : 'landscape';
+                // const blockSize = getRandomSize(
+                //     randomPositions[i],
+                //     orientation,
+                //     prevSize,
+                //     imageBlock.video ? 'video' : 'image'
+                // );
+            const blockSize = orientation === 'portrait'
+                ? ['small']
+                : ['large'];
+                prevSize = blockSize;
+                return blockSize;
+            })
         );
-    }, [projectsSingle.projectImages]);
+    }, [projectImages]);
 
     React.useEffect(() => {
         projectRefs.forEach((ref) =>
@@ -92,6 +88,9 @@ const ProjectSingle = ({ data }) => {
     };
 
     React.useEffect(() => {
+        // if ( projectsSingle.projectImages ) {
+        //     setProjectImages(projectsSingle.projectImages.filter( imageBlock => (imageBlock.image?.node || imageBlock.video?.node) ))
+        // }
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -307,9 +306,9 @@ const ProjectSingle = ({ data }) => {
                             </div>
                         )
                     }
-                    {projectsSingle.projectImages?.length && (
+                    {projectImages.length && (
                         <div id="project-images-container" ref={scrollContainerRef} className="flex flex-col mt-8 md:mt-20">
-                            {projectsSingle.projectImages.map((block, i) => {
+                            {projectImages.map((block, i) => {
                                 const blockPos = imageBlockPositions[i];
                                 const blockSize = imageBlockSizes[i];
                                 const imageBlock = block.image ? block.image : block.video
@@ -320,7 +319,7 @@ const ProjectSingle = ({ data }) => {
                                 return (
                                     <div
                                         ref={projectRefs[i]}
-                                        className={`project-block${projectsSingle.projectImages.length !== i + 1 ? ' mb-20 md:mb-40' : ''} flex flex-col-reverse items-start ${pos2Class[blockPos]} sm:items-center
+                                        className={`project-block${projectImages.length !== i + 1 ? ' mb-20 md:mb-40' : ''} flex flex-col-reverse items-start ${pos2Class[blockPos]} sm:items-center
                                                 `}
                                         key={`project-image-${i}`}
                                     >
@@ -422,7 +421,7 @@ const ProjectSingle = ({ data }) => {
             {
                 clickedImageOrder > -1 && (
                     <ProjectCarouselModal
-                        imageBlocks={projectsSingle.projectImages}
+                        imageBlocks={projectImages}
                         initialSlide={clickedImageOrder}
                         onClose={() => setClickedImageOrder(-1)}
                     />
