@@ -154,7 +154,8 @@ footer .logo svg {
 
 /* About */
 
-#about .gatsby-image-wrapper > div {
+#about > .gatsby-image-wrapper > div {
+  width: 100%!important;
   max-width: 100%!important;
 }
 
