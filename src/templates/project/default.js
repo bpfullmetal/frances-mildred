@@ -51,26 +51,28 @@ const ProjectSingle = ({ data }) => {
         }))
 
         setImageBlockSizes(
-            projectsSingle.projectImages.map((imageBlock, i) => {
-                const orientation = imageBlock.image
-                    ? imageBlock.image.node.width <= imageBlock.image.node.height
-                        ? 'portrait'
-                        : 'landscape'
-                    : imageBlock.video.node.width <= imageBlock.video.node.height
-                        ? 'portrait'
-                        : 'landscape';
-                // const blockSize = getRandomSize(
-                //     randomPositions[i],
-                //     orientation,
-                //     prevSize,
-                //     imageBlock.video ? 'video' : 'image'
-                // );
-               const blockSize = orientation === 'portrait'
-                ? ['small']
-                : ['large'];
-                prevSize = blockSize;
-                return blockSize;
-            })
+            projectsSingle.projectImages
+                .filter( imageBlock => (imageBlock.image?.node || imageBlock.video?.node) )
+                .map((imageBlock, i) => {
+                    const orientation = imageBlock.image
+                        ? imageBlock.image.node.width <= imageBlock.image.node.height
+                            ? 'portrait'
+                            : 'landscape'
+                        : imageBlock.video.node.width <= imageBlock.video.node.height
+                            ? 'portrait'
+                            : 'landscape';
+                    // const blockSize = getRandomSize(
+                    //     randomPositions[i],
+                    //     orientation,
+                    //     prevSize,
+                    //     imageBlock.video ? 'video' : 'image'
+                    // );
+                const blockSize = orientation === 'portrait'
+                    ? ['small']
+                    : ['large'];
+                    prevSize = blockSize;
+                    return blockSize;
+                })
         );
     }, [projectsSingle.projectImages]);
 
