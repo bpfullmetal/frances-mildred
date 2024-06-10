@@ -152,6 +152,12 @@ footer .logo svg {
   cursor: pointer;
 }
 
+/* About */
+
+#about .gatsby-image-wrapper div {
+  max-width: 100%!important;
+}
+
 /* Home - Our latest work */
 .project-carousel,
 .project-carousel .swiper-slide-image img {
