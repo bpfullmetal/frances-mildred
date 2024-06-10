@@ -40,6 +40,7 @@ export const pageQuery = graphql`
           pageAbout {
             intro {
               introText
+              introSubtext
               byTheNumber {
                 heading
                 metrics {

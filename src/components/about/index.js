@@ -16,7 +16,7 @@ const AboutPageContent = (pageData) => {
   const [jobListings, setJobListings] = React.useState([]);
   const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
   const [teamMembersAnimate, setTeamMembersAnimate] = React.useState(
-    Array(4).fill(false)
+    Array(ourTeam?.teamMembers.length).fill(false)
   );
 
   const stringToSlug = (str) => {
@@ -224,17 +224,36 @@ const AboutPageContent = (pageData) => {
               : <div className="absolute w-full h-full bg-dark_red"></div>
         }
 
+        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+
+
         <div className="relative w-full max-w-main mx-auto px-5 sm:px-12">
           <div className="relative max-w-[860px] flex flex-col items-between ml-auto">
-            {intro.introText && (
-              <div className="flex items-center">
-                <p
-                  className={`animate-reveal text-3xl leading-[40px] pt-24 ${
-                    isPageEntered ? 'reveal' : ''
-                  }`}
-                >
-                  {intro.introText}
-                </p>
+            { (intro.introText || intro.introSubtext ) && (
+              <div className="">
+                {
+                  intro.introText && (
+                    <h2
+                      className={`animate-reveal text-3xl leading-[40px] pt-24 ${
+                        isPageEntered ? 'reveal' : ''
+                      }`}
+                    >
+                      {intro.introText}
+                    </h2>
+                  )
+                }
+                {
+                  intro.introSubtext && (
+                    <p
+                      className={`animate-reveal text-lg leading-[30px] pt-8 ${
+                        isPageEntered ? 'reveal' : ''
+                      }`}
+                      dangerouslySetInnerHTML={{
+                        __html: intro.introSubtext,
+                      }}
+                    />
+                  )
+                }
               </div>
             )}
             {intro.byTheNumber.metrics?.length && (
