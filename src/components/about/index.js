@@ -216,7 +216,7 @@ const AboutPageContent = (pageData) => {
           ) : intro.backgroundImage
               ? (
                 <GatsbyImage
-                  className="w-full h-full object-cover absolute"
+                  className="w-full h-full object-cover absolute inset-0"
                   image={getImage(intro.backgroundImage.node.gatsbyImage)}
                   alt={intro.backgroundImage.node.altText}
                 />
