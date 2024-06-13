@@ -151,11 +151,15 @@ export const pageQuery = graphql`
               backgroundImage {
                 node {
                   altText
-                  gatsbyImage(
-                    layout: FULL_WIDTH
-                    width: 800
-                    placeholder: DOMINANT_COLOR
-                  )
+                  localFile {
+                    childImageSharp {
+                      gatsbyImageData(
+                        layout: FULL_WIDTH
+                        width: 800
+                        placeholder: DOMINANT_COLOR
+                      )
+                    }
+                  }
                 }
               }
               description
@@ -171,11 +175,15 @@ export const pageQuery = graphql`
                     featuredImage {
                       node {
                         altText
-                        gatsbyImage(
-                          layout: FULL_WIDTH
-                          width: 800
-                          placeholder: DOMINANT_COLOR
-                        )
+                        localFile {
+                          childImageSharp {
+                            gatsbyImageData(
+                              layout: FULL_WIDTH
+                              width: 800
+                              placeholder: DOMINANT_COLOR
+                            )
+                          }
+                        }
                       }
                     }
                     title
@@ -196,11 +204,15 @@ export const pageQuery = graphql`
                 image {
                   node {
                     altText
-                    gatsbyImage(
-                      layout: FULL_WIDTH
-                      width: 800
-                      placeholder: BLURRED
-                    )
+                    localFile {
+                      childImageSharp {
+                        gatsbyImageData(
+                          layout: FULL_WIDTH
+                          width: 800
+                          placeholder: BLURRED
+                        )
+                      }
+                    }
                   }
                 }
                 link {
@@ -223,14 +235,20 @@ export const pageQuery = graphql`
               image {
                 node {
                   altText
-                  gatsbyImage(
-                    layout: FULL_WIDTH
-                    aspectRatio: 0.775
-                    width: 600
-                    fit: COVER
-                    cropFocus: CENTER
-                    placeholder: BLURRED
-                  )
+                  localFile {
+                    childImageSharp {
+                      gatsbyImageData(
+                        layout: FULL_WIDTH
+                        aspectRatio: 0.775
+                        width: 600
+                        placeholder: BLURRED
+                        transformOptions: {
+                          fit: COVER
+                          cropFocus: CENTER
+                        }
+                      )
+                    }
+                  }
                 }
               }
               project {
@@ -241,27 +259,39 @@ export const pageQuery = graphql`
                       verticalImage {
                         node {
                           altText
-                          gatsbyImage(
-                            layout: FULL_WIDTH
-                            aspectRatio: 0.775
-                            width: 600
-                            fit: COVER
-                            cropFocus: CENTER
-                            placeholder: BLURRED
-                          )
+                          localFile {
+                            childImageSharp {
+                              gatsbyImageData(
+                                layout: FULL_WIDTH
+                                aspectRatio: 0.775
+                                width: 600
+                                placeholder: BLURRED
+                                transformOptions: {
+                                  fit: COVER
+                                  cropFocus: CENTER
+                                }
+                              )
+                            }
+                          }
                         }
                       }
                     }
                     featuredImage {
                       node {
-                        gatsbyImage(
-                          layout: FULL_WIDTH
-                          aspectRatio: 0.775
-                          width: 600
-                          fit: COVER
-                          cropFocus: CENTER
-                          placeholder: BLURRED
-                        )
+                        localFile {
+                          childImageSharp {
+                            gatsbyImageData(
+                              layout: FULL_WIDTH
+                              aspectRatio: 0.775
+                              width: 600
+                              placeholder: BLURRED
+                              transformOptions: {
+                                fit: COVER
+                                cropFocus: CENTER
+                              }
+                            )
+                          }
+                        }
                         altText
                       }
                     }

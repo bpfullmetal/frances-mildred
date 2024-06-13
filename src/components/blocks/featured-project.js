@@ -71,7 +71,7 @@ const BlockFeaturedProject = ({ data }) => {
       {projectImage && (
         <GatsbyImage
           className="min-h-screen w-full rounded-none object-cover"
-          image={getImage(projectImage.gatsbyImage)}
+          image={getImage(projectImage.localFile.childImageSharp.gatsbyImageData)}
           alt={projectImage.altText}
         />
       )}

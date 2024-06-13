@@ -37,11 +37,15 @@ const WorkPageContent = (pageData) => {
               featuredImage {
                 node {
                   altText
-                  gatsbyImage(
-                    layout: FULL_WIDTH
-                    width: 800
-                    placeholder: BLURRED
-                  )
+                  localFile {
+                    childImageSharp {
+                      gatsbyImageData(
+                        layout: FULL_WIDTH
+                        width: 800
+                        placeholder: BLURRED
+                      )
+                    }
+                  }
                 }
               }
               title
@@ -123,14 +127,14 @@ const WorkPageContent = (pageData) => {
                 data-title={project.node.title}
                 ref={workProjectRefs[i]}
               >
-                {project.node.featuredImage && (
+                {project?.node?.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData && (
                   <a className="w-full h-full" href={project.node.link}>
                     <GatsbyImage
                       // className="w-full h-full aspect-[3/2] rounded"
                       className="w-full rounded"
                       href="/"
                       image={getImage(
-                        project.node.featuredImage.node.gatsbyImage
+                        project.node.featuredImage.node.localFile.childImageSharp.gatsbyImageData
                       )}
                       alt={
                         project.node.featuredImage.node.altText ||

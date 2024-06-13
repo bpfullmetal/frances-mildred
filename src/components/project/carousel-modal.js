@@ -101,7 +101,7 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
             >
               <SlidePrevBlock disabled={i === 0} />
 
-              {(block.image || block.video) && (
+              {(block.image?.node?.localFile?.childImageSharp?.gatsbyImageData || block.video) && (
                 <div className="flex flex-col items-center justify-center h-full">
                   {block.video ? (
                     <video
@@ -121,7 +121,7 @@ const ProjectCarouselModal = ({ imageBlocks, initialSlide, onClose }) => {
                     </video>
                   ) : (
                     <GatsbyImage
-                      image={getImage(block.image.node.gatsbyImage)}
+                      image={getImage(block.image.node.localFile.childImageSharp.gatsbyImageData)}
                       alt={block.image.node.altText || block.description || ''}
                       style={{
                         width: block.width,

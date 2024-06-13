@@ -53,11 +53,11 @@ const DesignProjectsGrid = ({ category, projects, handleOnClickImage }) => {
           key={`${category}-${i}`}
           ref={projectRefs[i]}
         >
-          {project.image && (
+          {project?.image?.node?.localFile?.childImageSharp?.gatsbyImageData && (
             <div className="image-to-lightbox" onClick={() => handleOnClickImage(i, project.link)}>
               <GatsbyImage
                 className="rounded"
-                image={getImage(project.image.node.gatsbyImage)}
+                image={getImage(project.image.node.localFile.childImageSharp.gatsbyImageData)}
                 
                 alt={
                   project.image

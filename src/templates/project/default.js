@@ -217,7 +217,7 @@ const ProjectSingle = ({ data }) => {
                     <div className="relative w-full h-full flex items-center justify-center">
                         <GatsbyImage
                             className="w-full h-full object-cover rounded-none"
-                            image={getImage(featuredImage.node.gatsbyImage)}
+                            image={getImage(featuredImage.node.localFile.childImageSharp.gatsbyImageData)}
                             alt={featuredImage.node.altText || title}
                         />
                         <h1 className="absolute max-w-[480px] text-4xl font-medium !leading-none text-center md:max-w-[580px] md:text-5xl lg:max-w-[680px] lg:text-[58px]">
@@ -353,7 +353,7 @@ const ProjectSingle = ({ data }) => {
                                                         )
                                                         : <GatsbyImage
                                                             className={`w-full h-full object-cover rounded ${orientation === 'landscape' ? 'aspect-[4/3]' : 'aspect-[3/4]'}`}
-                                                            image={getImage(block.image.node.gatsbyImage)}
+                                                            image={getImage(block.image.node.localFile.childImageSharp.gatsbyImageData)}
                                                             alt={
                                                                 block.image.node.altText ||
                                                                 block.description ||
@@ -376,14 +376,14 @@ const ProjectSingle = ({ data }) => {
                     <div
                         className={`flex items-center flex-col items-baseline md:items-center md:justify-center relative ${ !isMobile ? 'w-screen h-screen' : 'py-32 px-8'}`}
                     >
-                        {nextProject.nodes[0].featuredImage && (
+                        {nextProject.nodes[0].featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData && (
                             <a href={nextProject.nodes[0].link} className={ !isMobile ? 'static' : 'relative w-full h-auto' }>
                                 <GatsbyImage
                                     loading="eager"
                                     className={ !isMobile ? '!static' : 'relative w-full h-auto' }
                                     href={nextProject.nodes[0].link}
                                     image={getImage(
-                                        nextProject.nodes[0].featuredImage.node.gatsbyImage
+                                        nextProject.nodes[0].featuredImage.node.localFile.childImageSharp.gatsbyImageData
                                     )}
                                     alt={
                                         nextProject.nodes[0].featuredImage.node.altText ||
@@ -451,13 +451,19 @@ export const pageQuery = graphql`
         node {
           mediaItemUrl
           altText
-          gatsbyImage(
-            layout: FULL_WIDTH
-            width: 1200
-            placeholder: DOMINANT_COLOR
-            fit: COVER
-            cropFocus: CENTER
-          )
+          localFile {
+            childImageSharp {
+              gatsbyImageData(
+                layout: FULL_WIDTH
+                width: 1200
+                placeholder: DOMINANT_COLOR
+                transformOptions: {
+                    fit: COVER
+                    cropFocus: CENTER
+                }
+              )
+            }
+          }
         }
       }
       projectsSingle {
@@ -475,16 +481,22 @@ export const pageQuery = graphql`
           description
           image {
             node {
-              gatsbyImage(
-                layout: FULL_WIDTH
-                width: 1200
-                fit: COVER
-                cropFocus: CENTER
-                placeholder: BLURRED
-              )
-              width
-              height
-              altText
+                localFile {
+                    childImageSharp {
+                        gatsbyImageData(
+                            layout: FULL_WIDTH
+                            width: 1200
+                            placeholder: BLURRED
+                            transformOptions: {
+                                fit: COVER
+                                cropFocus: CENTER
+                            }
+                        )
+                    }
+                }
+                width
+                height
+                altText
             }
           }
           video {
@@ -510,13 +522,19 @@ export const pageQuery = graphql`
         featuredImage {
           node {
             altText
-            gatsbyImage(
-              layout: FULL_WIDTH
-              width: 1200
-              placeholder: DOMINANT_COLOR
-              fit: COVER
-              cropFocus: CENTER
-            )
+            localFile {
+                childImageSharp {
+                    gatsbyImageData(
+                        layout: FULL_WIDTH
+                        width: 1200
+                        placeholder: DOMINANT_COLOR
+                        transformOptions: {
+                            fit: COVER
+                            cropFocus: CENTER
+                        }
+                    )
+                }
+            }
           }
         }
       }

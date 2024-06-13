@@ -53,7 +53,7 @@ const ProjectsCarousel = (props) => {
                   <a href={project.link}>
                     <GatsbyImage
                       className="rounded"
-                      image={getImage(project.image.gatsbyImage)}
+                      image={getImage(project.image.localFile.childImageSharp.gatsbyImageData)}
                       alt={project.image.altText || project.title}
                     />
                   </a>

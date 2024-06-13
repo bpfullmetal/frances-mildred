@@ -238,7 +238,15 @@ export const pageQuery = graphql`
           featuredImage {
             node {
               altText
-              gatsbyImage(layout: CONSTRAINED, width: 800, placeholder: BLURRED)
+              localFile {
+                childImageSharp {
+                  gatsbyImageData(
+                    layout: CONSTRAINED,
+                    width: 800,
+                    placeholder: BLURRED
+                  )
+                }
+              }
             }
           }
           title
@@ -247,13 +255,19 @@ export const pageQuery = graphql`
             projectImages {
               image {
                 node {
-                  gatsbyImage(
-                    layout: FULL_WIDTH
-                    width: 1200
-                    fit: COVER
-                    cropFocus: CENTER
-                    placeholder: BLURRED
-                  )
+                  localFile {
+                    childImageSharp {
+                      gatsbyImageData(
+                        layout: FULL_WIDTH
+                        width: 1200
+                        placeholder: BLURRED
+                        transformOptions: {
+                          fit: COVER
+                          cropFocus: CENTER
+                        }
+                      )
+                    }
+                  }
                   width
                   height
                   altText

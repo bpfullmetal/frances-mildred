@@ -59,28 +59,40 @@ const BlockProjectsCarousel = ({ data }) => {
                       verticalImage {
                         node {
                           altText
-                          gatsbyImage(
-                            layout: FULL_WIDTH
-                            aspectRatio: 0.775
-                            width: 600
-                            fit: COVER
-                            cropFocus: CENTER
-                            placeholder: BLURRED
-                          )
+                          localFile {
+                            childImageSharp {
+                              gatsbyImageData(
+                                layout: FULL_WIDTH,
+                                aspectRatio: 0.775
+                                width: 600
+                                placeholder: BLURRED
+                                transformOptions: {
+                                  fit: COVER,
+                                  cropFocus: CENTER
+                                }
+                              )
+                            }
+                          }
                         }
                       }
                     }
                     featuredImage {
                       node {
                         altText
-                        gatsbyImage(
-                          layout: FULL_WIDTH
-                          aspectRatio: 0.775
-                          width: 600
-                          fit: COVER
-                          cropFocus: CENTER
-                          placeholder: BLURRED
-                        )
+                        localFile {
+                          childImageSharp {
+                            gatsbyImageData(
+                              layout: FULL_WIDTH
+                              aspectRatio: 0.775
+                              width: 600
+                              transformOptions: {
+                                fit: COVER,
+                                cropFocus: CENTER
+                              }
+                              placeholder: BLURRED
+                            )
+                          }
+                        }
                       }
                     }
                     title
