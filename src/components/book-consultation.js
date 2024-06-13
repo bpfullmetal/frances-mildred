@@ -108,7 +108,7 @@ const BookConsultation = () => {
                 <a
                   href={link.url}
                   target={link.target}
-                  className="scroll-reveal max-w-[300px] text-taupe text-[30px] leading-[38px] tracking-[1.2px] text-center cursor-pointer sm:text-4xl sm:leading-[48px] sm:tracking-[1.44px] sm:no-underline"
+                  className="scroll-reveal text-taupe text-[30px] leading-[38px] tracking-[1.2px] text-center cursor-pointer sm:text-4xl sm:leading-[48px] sm:tracking-[1.44px] sm:no-underline"
                   data-block-order="3"
                   ref={scrollRevealRefs[2]}
                 >
