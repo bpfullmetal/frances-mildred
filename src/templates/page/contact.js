@@ -21,7 +21,7 @@ const ContactPage = ({ data }) => {
       }
       <main className="min-h-screen flex flex-col">
         <HeaderMenu options={ { currentURI: wpPage.uri } } />
-        <FooterSection showMenu={false}/>
+        <FooterSection showMenu={false} />
       </main>
     </>
   );

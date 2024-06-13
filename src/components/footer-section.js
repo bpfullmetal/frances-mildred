@@ -13,7 +13,7 @@ import LetterN from '../assets/js/icons/letter-n';
 import LetterR from '../assets/js/icons/letter-r';
 import LetterS from '../assets/js/icons/letter-s';
 
-const FooterSection = ({showMenu = false}) => {
+const FooterSection = ({ showMenu = false }) => {
   const MailchimpForm = ({ status, message, onValidated }) => {
     const [email, setEmail] = React.useState('');
 
@@ -110,23 +110,30 @@ const FooterSection = ({showMenu = false}) => {
         const url = data?.wp?.settings?.fmSettings?.mailchimpFormActionUrl;
 
         return (
-          <footer className={`relative bg-dark_green pt-12 pb-8 z-10 sm:pb-14 ${ showMenu ? 'sm:pt-7' : 'sm:pt-12 sm:min-h-full'}`}>
-            <div className={`flex flex-col max-w-main mx-auto px-5 sm:px-12${ showMenu ? '' : ' min-h-full justify-between'}`}>
+          <footer
+            id="fm-footer"
+            className={`relative bg-dark_green -mt-12 pt-24 pb-8 z-10 sm:pb-14 ${
+              showMenu ? 'mt-0 sm:pt-7' : 'sm:min-h-full'
+            }`}
+          >
+            <div
+              className={`flex flex-col max-w-main mx-auto px-5 sm:px-12${
+                showMenu ? '' : ' min-h-full justify-between'
+              }`}
+            >
               <div className="flex flex-col justify-between md:flex-row">
                 <div className="flex flex-col mr-0 mb-40 md:mr-10 md:mb-0">
-                  {
-                    showMenu && (
-                      <ul className="flex flex-col mb-12 sm:flex-row sm:mb-24 sm:space-x-6">
-                        {menuItems.map((item, i) => (
-                          <li key={i} className="w-fit py-2">
-                            <a target={item.target} href={item.url}>
-                              {item.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    )
-                  }
+                  {showMenu && (
+                    <ul className="flex flex-col mb-12 sm:flex-row sm:mb-24 sm:space-x-6">
+                      {menuItems.map((item, i) => (
+                        <li key={i} className="w-fit py-2">
+                          <a target={item.target} href={item.url}>
+                            {item.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
                   {(contactInfo?.address?.addressLine1 ||
                     contactInfo?.address?.addressLine2 ||
@@ -176,7 +183,11 @@ const FooterSection = ({showMenu = false}) => {
                 />
               </div>
 
-              <div className={`logo flex flex-col mt-24 space-y-6 sm:space-y-24 ${ showMenu ? 'sm:mt-64' : 'sm:mt-36'}`}>
+              <div
+                className={`logo flex flex-col mt-24 space-y-6 sm:space-y-24 ${
+                  showMenu ? 'sm:mt-64' : 'sm:mt-36'
+                }`}
+              >
                 <div className="flex justify-between">
                   <div className="flex justify-center w-8 h-8 sm:w-[56px] sm:h-16 md:w-[84px] md:h-24 lg:w-[95px] lg:h-28">
                     <LetterF />

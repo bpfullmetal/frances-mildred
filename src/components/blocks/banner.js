@@ -75,7 +75,7 @@ const BlockLogoBanner = ({ data }) => {
               {
                 isVideoLoaded 
                 ? null 
-                : data.backgroundImage.node 
+                : data.backgroundImage?.node 
                   ? (
                     <img
                       className="w-full h-full object-cover absolute"
