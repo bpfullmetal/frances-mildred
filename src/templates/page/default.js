@@ -174,7 +174,7 @@ export const pageQuery = graphql`
                         )
                       }
                     }
-                    title # TODO Switch to EXCERPT
+                    title
                     link
                   }
                 }
