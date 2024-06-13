@@ -41,11 +41,15 @@ const BookConsultation = () => {
                 consultationImage {
                   node {
                     altText
-                    gatsbyImage(
-                      layout: FULL_WIDTH
-                      width: 600
-                      placeholder: BLURRED
-                    )
+                    localFile {
+                      childImageSharp {
+                        gatsbyImageData(
+                          layout: FULL_WIDTH
+                          width: 600
+                          placeholder: BLURRED
+                        )
+                      }
+                    }
                   }
                 }
                 consultationHeadingText
@@ -78,7 +82,7 @@ const BookConsultation = () => {
                   {headingText}
                 </p>
               )}
-              {image && (
+              {image?.localFile?.childImageSharp?.gatsbyImageData && (
                 <div
                   className="scroll-reveal w-full max-w-[320px] my-9 sm:max-w-[540px] sm:my-16"
                   data-block-order="2"
@@ -92,7 +96,7 @@ const BookConsultation = () => {
                     <GatsbyImage
                       className="w-full"
                       loading="lazy"
-                      image={getImage(image.gatsbyImage)}
+                      image={getImage(image.localFile.childImageSharp.gatsbyImageData)}
                       alt={
                         image.altText
                           ? image.altText

@@ -192,10 +192,10 @@ const AboutPageContent = (pageData) => {
               {
                 isVideoLoaded
                 ? null
-                : intro.backgroundImage 
+                : intro.backgroundImage?.node?.localFile?.childImageSharp?.gatsbyImageData
                   ? <GatsbyImage
                       className="w-full h-full object-cover absolute"
-                      image={getImage(intro.backgroundImage.node.gatsbyImage)}
+                      image={getImage(intro.backgroundImage.node.localFile.childImageSharp.gatsbyImageData)}
                       alt={intro.backgroundImage.node.altText}
                     />
                   : null
@@ -213,11 +213,11 @@ const AboutPageContent = (pageData) => {
                 ></source>
               </video>
             </div>
-          ) : intro.backgroundImage
+          ) : intro?.backgroundImage?.node?.localFile?.childImageSharp?.gatsbyImageData
               ? (
                 <GatsbyImage
                   className="w-full h-full object-cover absolute inset-0"
-                  image={getImage(intro.backgroundImage.node.gatsbyImage)}
+                  image={getImage(intro.backgroundImage.node.localFile.childImageSharp.gatsbyImageData)}
                   alt={intro.backgroundImage.node.altText}
                 />
               )
@@ -288,10 +288,10 @@ const AboutPageContent = (pageData) => {
           <div className="max-w-[860px] flex flex-col">
             {(ourTeam.featuredImage || ourTeam.description) && (
               <div className="flex flex-col mb-48">
-                {ourTeam.featuredImage && (
+                {ourTeam?.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData && (
                   <div className="animate-reveal" ref={ourTeamRefs[1]}>
                     <GatsbyImage
-                      image={getImage(ourTeam.featuredImage.node.gatsbyImage)}
+                      image={getImage(ourTeam.featuredImage.node.localFile.childImageSharp.gatsbyImageData)}
                       alt={ourTeam.featuredImage.altText || 'Our team'}
                     />
                   </div>

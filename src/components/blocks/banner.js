@@ -107,11 +107,11 @@ const BlockLogoBanner = ({ data }) => {
               </video>
             </div>
           ) 
-          : data.backgroundImage.node 
+          : data.backgroundImage?.node?.localFile?.childImageSharp?.gatsbyImageData
             ? (
               <GatsbyImage
                 className="w-full h-full object-cover absolute"
-                image={getImage(data.backgroundImage.node.gatsbyImage)}
+                image={getImage(data.backgroundImage.node.localFile.childImageSharp.gatsbyImageData)}
                 alt={data.backgroundImage.node.altText}
               />
             ) 

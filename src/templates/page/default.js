@@ -113,10 +113,14 @@ export const pageQuery = graphql`
           blockLogoBanner {
             backgroundImage {
               node {
-                gatsbyImage(
-                  layout: FULL_WIDTH
-                  width: 1200
-                )
+                localFile {
+                  childImageSharp {
+                    gatsbyImageData(
+                      layout: FULL_WIDTH
+                      width: 1200
+                    )
+                  }
+                }
                 sourceUrl
                 altText
                 mediaDetails {
